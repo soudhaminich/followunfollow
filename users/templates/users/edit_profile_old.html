@@ -1,0 +1,55 @@
+{% extends "blogs/base_account.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="profile-main edit-p-main" style="overflow: hidden;">
+    <div>
+        <!-- <div class="d-sm-block d-none"style="border-left:1px solid lightgrey; height:100vh;"></div> -->
+        <!-- <div style="" class="col-sm-1 d-none"></div> -->
+        <div class="">
+            <!-- experiment -->
+            <div class="mt-4 profile-m">
+                <div class="d-flex flex-column tab tab-2">
+                    <div class="profile-user profile-fgtpwd edit-fs">Edit your Profile</div>
+                    <div class="pt-3 mb-1 mt-4 mx-auto profile-img profile-img-2">
+                        <img src="{{ user.profile.image.url }}">
+                    </div>
+                    <div class="profile-user profile-fgtpwd">
+                        {% if user.first_name %}
+                        <span class="profile-user-name">@{{ user.first_name }}</span>
+                        {% else %}
+                        <span class="profile-user-name">@{{ user.username }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="tabcontent edit-tabcontent p-3 mt-3">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <!-- <legend class="border-bottom mb-4">{{ user.username }} Profile</legend> -->
+                        <!-- {{ u_form|crispy }} -->
+                        {{ p_form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+            <!-- experiment end -->
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block extrajs  %}
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+    type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+{% endblock extrajs %}

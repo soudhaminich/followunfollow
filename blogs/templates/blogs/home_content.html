@@ -1,0 +1,228 @@
+{% load static %}
+
+<style>
+    .bbg-3 {
+        box-shadow: 0 0 10px rgb(223, 222, 222);
+        border: none;
+    }
+
+    .add-card:hover {
+        box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.1), -4px -4px 15px #cedde4;
+        cursor: pointer;
+        border: solid 1px #28b0ee;
+    }
+
+    .cards-wrapper-div {
+        padding: 8px 18px;
+        padding-left: 28px;
+        padding-left: 34px;
+    }
+
+    @media (min-width: 992px) and (max-width: 1157px) {
+        .cards-wrapper-div {
+            padding-right: 0px;
+        }
+    }
+    @media only screen and (min-width: 991px) {
+        /* .right-fixed-cards-sctn{
+  position:sticky; 
+  top:50px; 
+  overflow:auto; 
+  height:100vh;
+  } */
+    }
+
+    @media only screen and (min-width: 200px) and (max-width: 991px) {
+        /* .right-fixed-cards-sctn{
+      position: relative;
+      height:100%;
+      margin-left:10%;
+    } */
+    }
+</style>
+
+<div class="cards-wrapper-div text-center">
+    <div class="card bbg-3 add-card mt-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Wanna Post Ad?</h5>
+        <div class="card-body">
+            <h6 class="card-title fs_med text-dark">Reach a large group of audience by posting an ad about your business
+                here.
+                For more details</h6>
+            <a class="text-decoration-none prior-font font-weight-bold" href="/contact/">Drop us a Message</a>
+
+        </div>
+    </div>
+    <div class="card bbg-3 mt-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Why Teckiy?</h5>
+        <div class="card-body">
+            <h6 class="card-title text-dark">Get Support for open source tools/framework with SLA's.</h6>
+        </div>
+    </div>
+    <div class="card bbg-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Are you a
+            Freelancer?</h5>
+        <div class="card-body">
+            <h6 class="card-title text-dark ">Earn money by writing Blogs & solving tickets</h6>
+        </div>
+    </div>
+
+    <div class="card bbg-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Want to become a
+            Techion?</h5>
+        <div class="card-body">
+            <h6 class="card-title text-dark">Signup and start resolving tickets submitted by user</h6>
+
+        </div>
+    </div>
+
+    <div class="card bbg-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Earn Money</h5>
+        <div class="card-body">
+            <h6 class="card-title text-dark">Gain Points and thereby Earn Money </h6>
+        </div>
+    </div>
+</div>
+
+<br>
+
+{% if post_list %}
+<div class="w-75 ml-4 border rounded">
+    <div class="bg-secondary text-white p-2">
+        <h4 class="blog-heading">Blog</h4>
+    </div>
+    {% for post in post_list %}
+    <div class="d-flex bg-light p-4">
+        <img class="mt-1 mr-2" style="width:20px; height:20px;" src="{% static 'blogs/images/blog-post-pen.png' %}"
+            alt="">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+        voluptas
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if post_list %}
+<div class="" style="border: solid 1px lightgrey; padding:18px;">
+    <h4 class="blog-heading">Blog</h4>
+    {% for post in post_list %}
+    <a href="{{ post.get_absolute_url  }}" class="sh-ed-td">{{ post.title }}</a>
+    <br>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- <div class="pc-blog-faq w-75 ml-4" >
+        <h4 class="blog-heading mt-3">FAQ's</h4>
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left text-decoration-none" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            How long would take to response the Urgent Ticket?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Generally Techions from around the globe will response within
+                        the given SLA's. In case if doesnt then Teckiy SME's will work
+                        on this.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed text-decoration-none" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            How can I close the ticket?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Techions doesnt have access to close the ticket.Ideally users
+                        should has to close the ticket. In case if user doesnt update
+                        the ticket for a week, then Teckiy SME's will take a control &
+                        close the ticket.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed text-decoration-none" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            How can I add a comment to existing answer provided by some
+                            techions?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Techions always welcome to submit the new answer. But techions
+                        doesnt not have access to add a comment to another Techions
+                        answer's. Only Users and respective Techions for a given answer
+                        should have accesss to add a comment.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed text-decoration-none" type="button" data-toggle="collapse"
+                            data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            What is the SLA's for HIGH & URGENT ticket?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Response time for HIGH Ticket : 15 to 24 hrs
+                        <br />
+                        Response time for URGENT Ticket : 8 to 15 hrs
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed text-decoration-none" type="button" data-toggle="collapse"
+                            data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            How can Techions earn money & points from answering tickets?
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Teckiy's world everything related to points. For any tickets
+                        techions resolving, respective points will be added to techions
+                        account. But for Urgent/High or $ related tickets techions will
+                        get points along with $ value. Techions could withdraw those
+                        points as a $.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <div class="priority">
+    <h4 class="priority-heading">Are you a Freelancer?</h4>
+    <p class="priority-des fs">Teckiy is a place for you to earn.</p>
+</div>
+<div class="priority">
+    <h4 class="priority-heading">How to Earn?</h4>
+    <p class="priority-des fs">Points = $</p>
+</div>
+<div class="priority">
+    <h4 class="priority-heading">Why Teckiy?</h4>
+    <p class="priority-des fs">Get Support for open source tools/framework with SLA's.</p>
+</div>
+<div class="priority learn-border-bottom">
+    <h4 class="priority-heading">Why not Q & A Site?</h4>
+    <p class="priority-des fs">Techions can Learn & Earn</p>
+</div>
+<div class="priority learn-border-bottom">
+    <h4 class="priority-heading">Want to be a Techion?</h4>
+    <p class="priority-des fs">Just start helping users request</p>
+</div> -->

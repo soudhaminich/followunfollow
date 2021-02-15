@@ -1,0 +1,87 @@
+{% extends "blogs/base.html" %}
+{% block title %}
+Teckiy - {{ object.name }}
+{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<div class="row">
+  <div class="box-element">
+    {% include "blogs/side_navbar.html" %}
+  </div>
+  <div class="col-lg-8">
+
+    <!-- <div id="paypal-button-container"></div> -->
+
+    <h3> {{ object.name }} </h3>
+    <br>
+    <p>{{ object.description }}</p>
+    <br>
+    {% for part in object_list  %}
+
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="heading{{ part.id }}">
+          <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+              data-target="#collapse{{ part.id }}" aria-expanded="true" aria-controls="collapse{{ part.id }}">
+              {{ part.part_name }}
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapse{{ part.id }}" class="collapse" aria-labelledby="heading{{ part.id }}"
+          data-parent="#accordionExample">
+          <div class="card-body">
+            {{ part.video_source|safe }}
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    {% endfor %}
+    <br>
+
+
+    <!-- {% if is_paginated %}
+
+    {% if page_obj.has_previous %} -->
+
+    <!-- <a class="btn btn-outline-info mb-4 float-right"  href="?page=1">First</a> -->
+    <!-- <a class="btn btn-outline-info mb-4 " href="?page={{ page_obj.previous_page_number }}">Back</a>
+
+    {% endif %} -->
+
+    <!-- {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+
+                <a class="btn btn-outline-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+
+            {% endif %}
+
+        {% endfor %} -->
+
+    <!-- {% if page_obj.has_next %} -->
+
+    <!-- <a class="btn btn-outline-info mb-4 float-right" href="?page={{ page_obj.next_page_number }}">Next Section</a> -->
+    <!-- <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.paginator.num_pages }}">Last</a> -->
+
+    <!-- {% endif %}
+
+    {% endif %} -->
+
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+  integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+{% endblock js %}

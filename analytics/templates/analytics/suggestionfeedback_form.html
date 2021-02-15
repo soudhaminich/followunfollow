@@ -1,0 +1,138 @@
+{% extends 'blogs/base_static.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+Teckiy - Suggestion
+{% endblock %}
+{% block content %}
+<!-- QUESTION HEADING -->
+<div class="row right-scrollable-section ">
+	<div class="question-header col-12">
+		<div class="ques-heading-fs">
+			Add Suggestion
+		</div>
+
+		<!-- DESCRIPTION-BOX -->
+		<div class="description-box-left-column descript-suggest">
+			<form method="POST">
+				{% csrf_token %}
+				{{form|crispy}}
+				<button type="submit" class="btn btn-primary submitpg-submit-btn">Submit</button>
+			</form>
+		</div>
+
+		<!-- BLOG section -->
+		<div class="blog">
+			<span>
+				<h4 class="blog-heading">FAQ's</h4>
+				<div class="accordion" id="accordionExample">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+									data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									How long would take to response the Urgent Ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Generally Techions from around the globe will response within
+								the given SLA's. In case if doesnt then Teckiy SME's will work
+								on this.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingTwo">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+									aria-controls="collapseTwo">
+									How can I close the ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Techions doesnt have access to close the ticket.Ideally users
+								should has to close the ticket. In case if user doesnt update
+								the ticket for a week, then Teckiy SME's will take a control &
+								close the ticket.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingThree">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+									aria-controls="collapseThree">
+									How can I add a comment to existing answer provided by some
+									techions?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Techions always welcome to submit the new answer. But techions
+								doesnt not have access to add a comment to another Techions
+								answer's. Only Users and respective Techions for a given answer
+								should have accesss to add a comment.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingFour">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+									aria-controls="collapseFour">
+									What is the SLA's for HIGH & URGENT ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Response time for HIGH Ticket : 15 to 24 hrs
+								<br />
+								Response time for URGENT Ticket : 8 to 15 hrs
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingFive">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
+									aria-controls="collapseFive">
+									How can we earn money & points from answering tickets?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Teckiy's world everything related to points. For any tickets
+								techions resolving, respective points will be added to techions
+								account. But for Urgent/High or $ related tickets techions will
+								get points along with $ value. Techions could withdraw those
+								points as a $.
+							</div>
+						</div>
+					</div>
+				</div>
+			</span>
+		</div>
+		<br>
+	</div>
+
+	<!-- Post your answer section -->
+
+	<!-- Post your answer end -->
+</div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Account Inactive" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column tab tab-2 mt-5">
+    <h1 class="profile-user profile-fgtpwd prior-font mt-5">{% trans "Account Inactive" %}</h1>
+    <div class="profile-user mx-auto w-100 mt-2 mb-1 text-muted pwd-rst">
+        {% trans "This account is inactive." %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "blogs/base_new.html" %}
+{% load humanize %}
+{% block title %}
+Teckiy - Learn,Share & Earn
+{% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="description-box-left-column des-box-left-col">
+    <div class="ques-user-img top-sctn-hp">
+        <h1 class="all-quest-fl">All Questions</h1>
+        <form action="{% url 'support:create' %}">
+            <button type="button" class="btn btn-primary ask-a-quest-btn"><a class="ask-a-quest-link"
+                    href="{% url 'support:create' %}">Submit Ticket</a></button>
+        </form>
+    </div>
+    <hr>
+    {% for obj in object_list %}
+    <div class="row row-sctn-hp">
+        <div class="col-1 stats-col">
+            <div class="stats-view fs">
+                <span class="text-muted">Priority:</span>
+                <span class="text-muted">{{ obj.get_priority_display }}</span>
+            </div>
+            <div class="stats-view fs">
+                <span class="text-muted">Type:</span>
+                <span class="text-muted">{{ obj.get_ticket_type_display }}</span>
+            </div>
+            <!-- <div class="text-muted stats-view fs">Type:</div> -->
+        </div>
+        <div class="col-10 descriptive-col">
+            <a class="quest-head-hp" href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a>
+            <div class="quest-sctn">
+                {{ obj.content|safe|truncatewords_html:20 }}
+            </div>
+            <div class="submit-status-margin tag-name">
+                <span class="text-muted submit-status tags">
+                    <a href="" class="sh-ed-td">{{ obj.get_category_display }}</a>
+                </span>
+            </div>
+            <div class="name-footer-hp">
+                <div class="text-muted footer-submit">
+                    asked {{ obj.timestamp|naturaltime }}
+                </div>
+                <div>
+                    <img class="rounded-circle img-name" src="{{ obj.user.profile.image.url }}">
+                </div>
+                <div>
+                    <a href="{% url 'users:profile' obj.user.username %}"
+                        class="user-name fs img-name">{{ obj.user.username }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="hr-mt-hp">
+    {% endfor %}
+    <!-- PAGINATION -->
+    {% if is_paginated %} {% if page_obj.has_previous %}
+    <a class="btn btn-outline-primary mb-4" href="?page=1">First</a>
+    <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %} {% for num in page_obj.paginator.page_range %}
+    {% if  page_obj.number == num %}
+    <a class="btn btn-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+    <a class="btn btn-outline-primary mb-4" href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+    {% endif %}
+
+    <!-- experiment end -->
+</div>
+<div class="right-column">
+    <div class="features-mb">
+        <div class="priority">
+            <h4 class="priority-heading">Are you a Freelancer?</h4>
+            <p class="priority-des fs">Teckiy is a place for you to earn.</p>
+        </div>
+        <div class="priority">
+            <h4 class="priority-heading">How to Earn?</h4>
+            <p class="priority-des fs">Points ==== $$$</p>
+        </div>
+        <div class="priority">
+            <h4 class="priority-heading">Why Teckiy?</h4>
+            <p class="priority-des fs">Get Support for open source tools/framework with SLA's.</p>
+        </div>
+        <div class="priority learn-border-bottom">
+            <h4 class="priority-heading">Why not Q & A Site?</h4>
+            <p class="priority-des fs">Techions can Learn & Earn</p>
+        </div>
+        <div class="priority learn-border-bottom">
+            <h4 class="priority-heading">Want to be a Techion?</h4>
+            <p class="priority-des fs">Just start helping users request</p>
+        </div>
+    </div>
+
+    <!-- BLOG section -->
+    <!-- <div class="blog-hp fs">
+        <h4 class="blog-heading">Blog</h4>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+        voluptas
+        nihila liquid magnamh
+        placeat qui esse quaerat rem neque odit unde quis repellendus impedit aliquam fugit
+        itaque!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim doloremque laboriosam eos quod,
+        tempora unde facilis repudiandae magni illum quam nobis perspiciatis quasi consequatur ab
+        eveniet maiores doloribus, quo ea.
+    </div> -->
+
+</div>
+{% endblock %}
+{% block extrajs %}
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+    type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+{% endblock extrajs %}

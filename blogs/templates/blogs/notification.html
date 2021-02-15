@@ -1,0 +1,78 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% load notifications_tags %}
+{% load markdown_deux_tags %}
+{% load crispy_forms_tags %}
+{% block internal_css %}
+
+{% endblock  %}
+{% block content %}
+<br />
+<div class="row">
+    <div class="box-element">
+        {% include "blogs/side_navbar.html" %}
+    </div>
+    <div class="col-lg-8">
+        <h4>Notifications </h4>
+        <br />
+        <a href="#">Mark all as read</a>
+        <br />
+        <!-- {% for o in object_notify %}
+        {{ ques }}
+        {% endfor %}
+        <br /> -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                {% for out in output %}
+                <tr>
+                    <td><a href="{% url 'support:detail' out.1 %}" style="color:black">{{ out.0.actor }} commented
+                            on {{ out.0.verb|truncatewords:3 }} {{ out.0.timestamp|timesince }} ago </a> <br /></td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- {% for u in user_unread_message %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ u.actor}}</strong> commented <a href="#">Go</a> on
+            {{ u.timestamp|timesince }} ago
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        {% endfor %} -->
+        <!-- {% for obj in object_notify %}
+
+
+        {% for q in ques %}
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ obj.actor }} commented on <strong><a href="{% url 'support:detail' q %}">Check</a></strong>
+            {{ obj.timestamp|timesince }} ago
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+
+
+        </ul>
+
+        {% endfor %}
+        {% endfor %} -->
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block extrajs  %}
+
+
+{% endblock extrajs %}

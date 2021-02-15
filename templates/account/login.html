@@ -1,0 +1,172 @@
+{% load static %}
+{% load blogs_extras %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% load account socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta property="og:image" content="https://static.teckiy.com/teckiy_logo_fav.jpg">
+    <title>Teckiy - Login</title>
+    <link rel="shortcut icon" href="{% static 'blogs/images/teckiy_fav_icon.ico' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Login Form</title>
+    <!-- CSS Style Sheet -->
+    <link rel="stylesheet" href="{% static 'blogs/css/login/login.css' %}">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166867100-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-166867100-1');
+    </script>
+    <script src="https://kit.fontawesome.com/c6620905da.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    ul {
+        list-style-type: none;
+    }
+</style>
+
+<body>
+
+    <!-- Fixed Nav bar/ Top bar -->
+    <!-- Company Name clickable image on nav bar-->
+
+    <nav class="navbar navbar-expand-xl navbar fixed-top navbar-light bg-light">
+        <a href="/"><img class="navbar-logo" src="{% static 'blogs/images/teckiy-new-logo.png' %}"
+                alt="teckiy-logo"></a>
+
+        <!-- Collapsible button code (three horizontal lines) -->
+        <button class="navbar-toggler navbar-expand-xxl" type="button" data-toggle="collapse"
+            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-expand-xxl" id="navbarNavAltMarkup">
+
+            <!-- Nav bar items to the right (ml auto means it pushes the items to the right)-->
+            <div class="navbar-nav ml-auto">
+                <!-- <form class="form-inline my-2 my-lg-0 ml-auto">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+
+                    <ul class="navbar-nav mr-auto">
+                        <l class="nav-item .d-none"><a class="nav-item nav-link" href="login.html"><button type="button"
+                                    class="btn btn-primary">Log in</button></a></l>
+                        <l class="nav-item .d-none"><a class="nav-item nav-link" href="signup.html"><button
+                                    type="button" class="btn btn-primary">Sign up</button></a></l>
+                    </ul>
+                </form> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login with Google, Github, Facebook -->
+    <div class="container-fluid">
+
+        <!-- mx-auto automatically puts the div/elements in center of page irrespective of screen resolution -->
+        <div class="grid--cell mx-auto">
+            <p>Welcome back Techions!!</p>
+            <div class="login-google-ghub-fb">
+                <!-- <div class="google"><button type="button" class="btn btn-primary btn-lg btn-block btn-white"><i class="fab fa-google"></i> Log in with Google</button></div> -->
+                <div class="google"><a href="{% provider_login_url "google" method="oauth2" %} type=" button"
+                        class="btn btn-primary btn-lg btn-block btn-white"><img
+                            src=" {% static 'blogs/images/login/google-icon.svg' %}" class="g-icon" width="16"
+                            alt="google-icon"> Log in with
+                        Google</a></div>
+                <div class="github"><a href="{% provider_login_url "github" process="oauth2" %}" type="button"
+                        class="btn btn-primary btn-lg btn-block btn-black"><i class="fab fa-github"></i> Log
+                        in with Github</a></div>
+                <div class="facebook"><a href="{% provider_login_url "facebook" method="oauth2" %}" type="button"
+                        class="btn btn-primary btn-lg btn-block btn-blue"><i class="fab fa-facebook-square"></i> Log in
+                        with Facebook</a></div>
+            </div>
+            <div class="form-grid">
+                <form class="user" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <!-- {% if form.non_field_errors %}
+                    <ul class='form-errors'>
+                        {% for error in form.non_field_errors %}
+                    
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <br>
+                        </div>
+
+                        {% endfor %}
+                    </ul>
+                    {% endif %} -->
+                    {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                    <span style="color: #de535e;font-size: small;">
+                        {{ error }}
+                    </span>
+                    {% endfor %}
+
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><strong>Email</strong></label>
+                        <input type="email" name="login" autofocus="autofocus" class="email-inputbox" required
+                            id="id_login">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1"><strong>Password</strong></label>
+                        <div><input type="password" name="password" class="pswd-inputbox" required id="id_password">
+
+                        </div>
+                    </div>
+                    {% if redirect_field_value %}
+                    <!-- {{ redirect_field_value }} -->
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <div class="form-log-in-btn"><button type="submit"
+                            class="btn btn-primary btn-lg btn-block form-log-in-btn">Log in</button></div>
+                </form>
+            </div>
+            <!-- <button type="button" class="btn btn-link">Forgot password?</button><br> -->
+            <div class="links">
+                <a href="{% url 'account_reset_password' %}" style="font-size: small">Forgot Password?</a><br>
+                <a href="{{ signup_url }}" style="font-size: small">Create an Account!</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq ||
+            { widgetcode: "10945d185cfc392a4f1eb60063940d961672622287fa6e11408ccc822c110e8a", values: {}, ready: function () { } };
+        var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true;
+        s.src = "https://salesiq.zoho.in/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); d.write("<div id='zsiqwidget'></div>");
+    </script>
+</body>
+
+</html>

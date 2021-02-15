@@ -1,0 +1,327 @@
+{% extends "blogs/base.html" %}
+{% load humanize %}
+{% block title %}
+Teckiy - {{ object.title }}
+{% endblock %}
+{% load markdown_deux_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/newdesign.css' %}"> -->
+{% block questioncontent %}
+<!-- Page Content Design -->
+<div class="container-fluid parent-container" style="background-color: white;">
+    <div class="main-container" style="background-color: white;">
+        <div class="left-fixed-section fixed-top" style="background-color: white">
+            <ul class="left-navitems" style="list-style: none;">
+                <li><a href="#">Posts</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Donate</a></li>
+                <li><a href="#">Suggestions</a></li>
+            </ul>
+        </div>
+
+        <!-- QUESTION HEADING -->
+        <div class="row right-scrollable-section" style="background-color: white;">
+            <div class="question-header col-12">
+
+                <div class="row">
+                    <div class="col-9">
+                        <h1 class="ques-heading-fs">
+                            {{ object.title }}
+                        </h1>
+
+                        <!-- QUESTION FOOTER -- Submit, Ticket, Language Section -->
+                        <div class="ques-user-img">
+                            <div class="submit-status-margin">
+                                <span class="text-muted submit-status">Submitted</span>
+                                <!-- <span>{{ object.timestamp|timesince}} ago</span> -->
+                                <span>{{ object.date_posted|naturaltime }}</span>
+                            </div>
+                            <div class="ticket-property">
+                                <span class="text-muted submit-status">Ticket</span>
+                                <!-- <span>#{{ question.id }}</span> -->
+                                <span>#{{ question.id }}</span>
+                            </div>
+                            <div class="language">
+                                <span class="text-muted submit-status">Language</span>
+                                <!-- <span>{{ question.get_status_display }}</span> -->
+                                <span>{{ object.get_category_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priority, Status Section-->
+                    <div class="col-3 date">
+                        <table class="table table-borderless date">
+                            <tbody>
+                                <tr class="date">
+                                    <th scope="row" class="date"></th>
+                                    <td class="text-muted date-name">Priority</td>
+                                    <td class="date-info">{{ object.get_priority_display }}</td>
+                                </tr>
+                                <tr class="date">
+                                    <th scope="row" class="date"></th>
+                                    <td class="text-muted date-name">Status</td>
+                                    <!-- <span class="status">{{ question.get_status_display }}</span> -->
+                                    <td class="date-info">{{ question.get_status_display  }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Resolved Button -->
+                        {% if request.user.username == question.user.username %}
+                        <div class="resolved-button">
+                            <form method="POST" action="{% url 'support:update' question.slug %}">
+                                {% csrf_token %}
+                                {% if question.status != 'C' %}
+                                <button type="slug" class="btn btn-success btn-sm resolved-btn">Resolved</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+
+                <!-- DESCRIPTION-BOX -->
+
+                <!-- <div class="row description-box" style="background-color: yellow;">
+                    <div class="col-8 description-box-left-column" style="background-color: rosybrown;"> -->
+                <!-- <div class="description-box" style="background-color: yellow;"> -->
+                <!-- <div class="description-box" style="background-color: aqua;">    -->
+                <div class="description-box-left-column">
+                    <p class="description-msg">
+                        {{ object.content|safe }}
+                    </p>
+                    <!-- Description-Footer--Share, Edit, UserName, UserImage block -->
+
+                    <div class="ques-user-img sh-ed-pl">
+                        <!-- Share -->
+                        <div class="submit-status-margin">
+                            <span class="text-muted submit-status">
+                                <a href="" class="sh-ed-td">Share</a>
+                            </span>
+                        </div>
+                        <!-- Edit -->
+                        {% if request.user.username == question.user.username %}
+                        <div class="ticket-property">
+                            <span class="text-muted submit-status">
+                                <a href="{% url 'support:edit' question.slug %}" class="sh-ed-td">Edit</a>
+                            </span>
+                        </div>
+                        {% endif %}
+                        <!-- User Details Block-->
+                        <div class="name-footer">
+                            <div class="text-muted footer-submit">
+                                Submitted on {{ object.date_posted|date:"M d, y"  }}
+                                <!-- at
+                                {{ object.date_posted|time:"H:i" }} -->
+                            </div>
+                            <div class="img-name">
+                                <span>
+                                    <img class="rounded-circle" src="{{ object.user.profile.image.url }}" width="30px"
+                                        height="30px">
+                                    <!--<span class="text-muted">
+                                                    <a href="{% url 'users:profile' object.user.username %}">{{ object.user.username|title }}</a>
+                                                </span>  -->
+                                    <span class="text-muted">
+                                        <a href="{% url 'users:profile' object.user.username %}"
+                                            class="user-name">{{ object.user.username|title }}</a>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr-mt">
+                    <!-- <hr> -->
+                    <!-- Comments section for question description -->
+                    {% if comment_obj %}
+                    <div class="sub-comment-body" style="background-color: white;">
+                        <span class="sub-comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
+                            minus odio reiciendis.</span>
+                        <a class="sub-comment-username" href="">UserName</a>
+                        <span class="sub-comment-date text-muted">Jan 2 '20 </span>
+                    </div>
+                    <!-- Add a comment section -->
+                    <hr class="hr-mt">
+                    <a class="add-a-cmt" href="">add a comment</a>
+                    {% endif %}
+                    <hr>
+
+
+
+
+                    <div class="cmt-sctn" style="background-color: white;">
+                        <h2 class="comments-heading-size">
+                            <span class="pull-right">3</span>
+                            Answers </h2>
+                        <!-- Answers section description -->
+                        <p class="description-msg comments-msg">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+                            voluptas
+                            nihil aliquid, magnam placeat qui esse quaerat rem neque odit unde quis repellendus
+                            impedit
+                            aliquam fugit itaque!
+                        </p>
+
+                        <!-- Description-Footer for answers section -->
+
+                        <div class="ques-user-img sh-ed-pl">
+                            <div class="submit-status-margin">
+                                <span class="text-muted submit-status">
+                                    <a href="" class="sh-ed-td">Share</a>
+                                </span>
+                            </div>
+                            <div class="ticket-property">
+                                <span class="text-muted submit-status">
+                                    <a href="" class="sh-ed-td">Edit</a>
+                                </span>
+                            </div>
+                            <div class="name-footer">
+                                <div class="text-muted footer-submit">
+                                    Submitted on Jan 1 at 11:00
+                                </div>
+                                <div class="img-name">
+                                    <span>
+                                        <img class="rounded-circle" src="{{ object.user.profile.image.url }}"
+                                            width="30px" height="30px">
+                                        <!--<span class="text-muted">
+                                                        <a href="{% url 'users:profile' object.user.username %}">{{ object.user.username|title }}</a>
+                                                    </span>  -->
+                                        <span class="text-muted">
+                                            <a href="{% url 'users:profile' object.user.username %}"
+                                                class="user-name">User_Name</a>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="hr-mt">
+                    <!-- <hr> -->
+
+                    <!-- Comment for Answers Section -->
+                    <div class="sub-comment-body" style="background-color: white;">
+                        <span class="sub-comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
+                            minus odio reiciendis quam harum quisquam dolor, laudantium porro molestiae amet,
+                            repellendus necessitatibus! Dolorum unde amet voluptate ipsum. Error, enim
+                            laborum.</span>
+                        <a class="sub-comment-username" href="">UserName</a>
+                        <span class="sub-comment-date text-muted">Jan 2 '20 </span>
+                    </div>
+                    <hr class="hr-mt">
+                    <a class="add-a-cmt" href="">add a comment</a>
+                    <!-- </div> -->
+                    <hr>
+
+                </div>
+                <!-- <hr>
+                            <br> -->
+
+
+                <!-- BLOG section -->
+
+                <!-- <div class="col-3 blog" style="background-color: orange;"> -->
+                <div class="blog" style="background-color: white;">
+                    <span>
+                        <h4 class="blog-heading">Blog</h4>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+                        voluptas
+                        nihila liquid magnamh
+                        placeat qui esse quaerat rem neque odit unde quis repellendus impedit aliquam fugit
+                        itaque!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente cumque eos optio, odio
+                        dolor, corporis enim nam nesciunt facilis officiis commodi consequatur similique ut ipsum
+                        consectetur, quo blanditiis libero totam!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, eum cum asperiores,
+                        temporibus molestias laboriosam voluptatem sunt id inventore nisi voluptates aliquam. Beatae
+                        commodi illo consequatur a dolor consectetur soluta!
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum possimus, consequuntur quasi
+                        in cum, odit corporis tenetur veritatis eaque id deleniti quia iste dicta repellat quaerat
+                        necessitatibus, error voluptatem aspernatur.
+                    </span>
+                </div>
+                <!-- </div> -->
+                <!-- <br>
+            <hr> -->
+                <br>
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock questioncontent %}
+
+{% block extrajs %}
+<script type='text/javascript'>
+    userAuthenticate = "{{ request.user.username }}"
+    CKEDITOR.on('instanceCreated', function (e) {
+        e.editor.on('contentDom', function () {
+            e.editor.document.on('keyup', function (event) {
+                // keyup event in ckeditor
+                if (userAuthenticate === '') {
+                    $('.modal').modal('show');
+                }
+
+            }
+            );
+        });
+    });
+    function myLoginRedirect(event) {
+        if (event === 'comment') {
+            $('.modal').modal('show');
+            document.getElementById('logincmt').value = "";
+        }
+        else if (event == 'reply') {
+            $('.modal').modal('show');
+        }
+
+    }
+    // const inputEl = document.getElementById("#logincmt")
+    // inputEl.addEventListener("keydown", (event) => {
+    //   // handle keydown
+    //   console.log('Hi');
+    // });
+
+
+
+
+    function commentEditUpdFunc(commentId) {
+        // document.getElementById("updateform").style.display = "block";
+        alert(commentId)
+    }
+
+    //do work
+
+
+</script>
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+    type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+<script type="text/javascript">
+    function edit_reply(msg_id, reply_id) {
+        let editValue = document.getElementById("edittext-" + msg_id)
+        document.getElementById("edit-form-" + msg_id).style.display = "block";
+        let editTextContent = document.getElementById("reply_content_" + reply_id).innerText;
+        // console.log(editTextContent)
+        editValue.innerHTML = editTextContent
+        // document.getElementById("edittext").innerHTML = document.getElementById("msg_content_" + reply_id).value;
+        document.getElementById("reply_form_" + msg_id).style.display = "none";
+    }
+
+    function edit_comment(msg_id) {
+        let editCommentValue = document.getElementById("edittext-" + msg_id)
+        // console.log(editValue)
+        document.getElementById("edit-form-" + msg_id).style.display = "block";
+        let editTextContent = document.getElementById("msg_content_" + msg_id).innerText;
+        console.log(editTextContent)
+        editCommentValue.innerHTML = editTextContent
+        // document.getElementById("edittext").innerHTML = document.getElementById("msg_content_" + reply_id).value;
+        document.getElementById("reply_form_" + msg_id).style.display = "none";
+    }
+</script>
+
+{% endblock extrajs %}

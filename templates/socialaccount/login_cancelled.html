@@ -1,0 +1,18 @@
+{% extends "socialaccount/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Login Cancelled" %}{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column tab tab-2 mt-5">
+    <h1 class="profile-user profile-fgtpwd prior-font mt-5">{% trans "Login Cancelled" %}</h1>
+    <div class="profile-user mx-auto w-100 mt-2 mb-1 pwd-rst">
+        {% url 'account_login' as login_url %}
+        {% blocktrans %}You decided to cancel logging in to our site using one of your existing accounts. If this was a
+        mistake, please proceed to <a href="{{login_url}}">sign in</a>.{% endblocktrans %}
+
+    </div>
+</div>
+
+{% endblock %}

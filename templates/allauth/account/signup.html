@@ -1,0 +1,61 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Sign Up" %}</h1>
+
+
+<div class="content-section">
+
+
+{% comment %} <p>{% blocktrans %}
+Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p> {% endcomment %}
+
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Already Have An Account? Then Please <a class="ml-2" href="{{ login_url }}">Sign In</a>
+    </small>
+</div>
+
+<br/>
+
+<div class="form-group">
+                <button class="btnbtn-lg btn-block btn-dark"> <a style="color:white;" id="github-button" class="btn btn-block btn-social btn-github" href="{% provider_login_url "github" process="connect" %}">
+  <i class="fa fa-github"></i> Join with Github
+</a></button>
+</div>
+<br/>
+<div class='center-or'>
+<span>
+ <strong> OR </strong></span>
+</div>
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+ <fieldset class="form-group">
+
+    {{ form|crispy }}
+            </fieldset>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+
+<div class="form-group">
+                <button class="btn btn-outline-info btn-lg btn-block" type="submit" width="200">{% trans "Sign Up" %} &raquo;</button>
+            </div>
+
+        
+  {% comment %} <button type="submit">{% trans "Sign Up" %} &raquo;</button> {% endcomment %}
+</form>
+
+ {% comment %} <a id="github-button" class="btn btn-block btn-social btn-github">
+  <i class="fa fa-github"></i> Sign in with Github
+</a> {% endcomment %}
+
+
+  {% comment %} <a class="signup" href="{% provider_login_url "github" process="connect" %}">Github</a><br> {% endcomment %}
+</div>
+{% endblock %}

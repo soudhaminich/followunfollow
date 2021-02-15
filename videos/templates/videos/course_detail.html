@@ -1,0 +1,138 @@
+{% extends "blogs/base.html" %}
+{% block title %}
+Teckiy - {{ object.name }}
+{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="box-element">
+        {% include "blogs/side_navbar.html" %}
+    </div>
+    <div class="col-lg-8">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'videos:course-list' %}">Courses</a>
+            </li>
+        </ul>
+        <br>
+
+        <h3> {{ object.name }} </h3>
+        <br>
+
+        {% if  object.paid_course %}
+        <br>
+        <!-- {{ order_detail }} -->
+        {% if order_obj.payment != True %}
+        <a href="{% url 'videos:checkout' object.slug %}"><button type="button"
+                class="btn btn-danger btn-lg btn-block">${{ object.amount }} Buy
+                Now</button></a>
+        {% endif %}
+        {% endif %}
+        <br>
+        <p>{{ object.description|safe }}</p>
+        <br>
+        {% for part in object_list  %}
+        {% if object.paid_course  %}
+        {% if order_obj.payment %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="heading{{ part.id }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            data-target="#collapse{{ part.id }}" aria-expanded="true"
+                            aria-controls="collapse{{ part.id }}">
+                            {{ part.part_name }}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse{{ part.id }}" aria-labelledby="heading{{ part.id }}" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ part.video_source|safe }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <br>
+
+
+        {% else %}
+        <div class="container">
+            <marquee>
+                <strong>Buy to view the contents</strong>
+            </marquee>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="heading{{ part.id }}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapse{{ part.id }}" aria-expanded="true"
+                            aria-controls="collapse{{ part.id }}">
+                            {{ part.part_name }}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapse{{ part.id }}" class="collapse" aria-labelledby="heading{{ part.id }}"
+                    data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ part.video_source|safe }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        {% endif %}
+
+
+
+
+
+        {% endfor %}
+        <br>
+        {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+
+        <!-- <a class="btn btn-outline-info mb-4 float-right"  href="?page=1">First</a> -->
+        <a class="btn btn-outline-info mb-4 " href="?page={{ page_obj.previous_page_number }}">Back</a>
+
+        {% endif %}
+
+        <!-- {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %} -->
+
+        {% if page_obj.has_next %}
+        {% if object.paid_course %}
+        {% if order_obj.payment  %}
+        <a class="btn btn-outline-info mb-4 float-right" href="?page={{ page_obj.next_page_number }}">Next
+            Section</a>
+
+        {% else %}
+        <a class="btn btn-outline-dark mb-4 float-right" href="#">Next
+            Section</a>
+        {% endif %}
+        {% else %}
+        <a class="btn btn-outline-info mb-4 float-right" href="?page={{ page_obj.next_page_number }}">Next
+            Section</a>
+        {% endif  %}
+        <!-- <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.paginator.num_pages }}">Last</a> -->
+
+        {% endif %}
+
+        {% endif %}
+        <br>
+    </div>
+</div>
+{% endblock %}

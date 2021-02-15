@@ -1,0 +1,222 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow:hidden;
+}
+
+body{
+  height:100%;
+}
+
+html,body{
+  overflow-x:hidden;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+pre{
+  width: 100%;
+}
+
+code{
+  /* width: 400px !important; */
+  width: 100%;
+}
+
+.line-ht{
+  line-height: 1;
+}
+.prior-font{
+font-family: 'Roboto Slab', serif;
+}
+
+.fs {
+  font-size: 12px;
+}
+
+
+.fs_teen{
+    font-size: 13px;
+}
+
+.fs_med{
+  font-size: 15px;
+}
+
+.fs_med2{
+  font-size: 14px;
+}
+
+.fs_medium{
+  font-size: 24px;
+}
+
+.left_nav_fs{
+  font-size: 16px;
+}
+
+.wordwrap{
+    word-break: break-word;
+}
+
+.parent{
+margin-top: 50px;
+min-height:100vh;
+}
+
+/* Scrollable section */
+.all-tkt-fs{
+  font-size: 27px;
+}
+
+.all-tklist-des img{
+  width:100% !important;
+  height:150px !important;
+}
+
+.question-list-component{
+box-shadow: 0 0 10px rgb(238, 236, 236) ;
+}
+
+.question-list-component:hover{
+box-shadow: 4px 4px 10px rgb(238, 236, 236), -4px -4px 10px rgb(180, 177, 177) ;
+}
+
+/*Q-details page scrollable sctn*/
+.mid-scrollable-sctn {
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.modal-outer-div{
+    box-shadow: 4px 2px 16px rgba(136, 165, 191, 0.48) inset,
+                -4px -2px 16px #ffffff inset;
+}
+
+.modal-inner-div{
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+}
+
+.des-user-div{
+  width:165px; 
+  background-color: #e1ecf4;
+}
+
+.sub-comment p {
+    display: inline;
+}
+
+.answer-user-div{
+  width:190px;
+  background-color: #e1ecf4;
+}
+@media only screen and (min-width: 991px) and (max-width: 1100px) {
+.expand-fixed-navbar{
+  width: 425px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1215px) {
+  .grid1 .col-lg-2 {
+      max-width: 16%;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                  -5px -5px 5px rgba(255, 255, 255, 0.5) outset,
+                  5px 5px 5px rgba(0, 0, 0, 0.05),
+                  -5px -5px 5px rgba(255, 255, 255, 0.5);
+  }
+  .grid1 .col-lg-8 {
+      max-width: 61%;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+          -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+          5px 5px 5px rgba(0, 0, 0, 0.05),
+          -5px -5px 5px rgba(255, 255, 255, 0.5);
+  }
+  .grid1 .col-lg-3 {
+      max-width: 20.5%;
+  }
+}
+
+@media (min-width: 1216px) {
+    .grid1 .col-lg-2 {
+        max-width: 13%;
+    }
+    .grid1 .col-lg-3 {
+        max-width: 22.5%;
+    }
+    .grid1 .col-lg-8 {
+        max-width: 64%;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+  }
+}
+  @media (min-width: 992px) and (max-width: 1215px) {
+        .grid1 .col-lg-2 {
+            max-width: 16%;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) outset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .grid1 .col-lg-8 {
+            max-width: 61%;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .grid1 .col-lg-3 {
+            max-width: 20.5%;
+            max-width: 23%;
+        }
+    }
+
+    @media (min-width: 1216px) {
+        .grid1 .col-lg-2 {
+            max-width: 13%;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) outset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .grid1 .col-lg-3 {
+            max-width: 21%;
+            max-width: 22.5%;
+            max-width: 23.5%;
+
+            /* position: sticky;
+        top:50px;
+        height:100vh;
+        overflow-y:auto;*/
+        }
+
+        .grid1 .col-lg-8 {
+            max-width: 65.5%;
+            max-width: 64%;
+            max-width: 63%;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+                -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+                5px 5px 5px rgba(0, 0, 0, 0.05),
+                -5px -5px 5px rgba(255, 255, 255, 0.5);
+        }
+    }
+    @media (min-width: 576px){
+      .modal-width {
+          max-width: 700px;
+      }
+    }
+

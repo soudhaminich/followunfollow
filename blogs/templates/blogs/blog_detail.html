@@ -1,0 +1,415 @@
+{% extends "blogs/base_static.html" %}
+{% load static %}
+{% load humanize %}
+{% load support_extras %}
+{% load notifications_tags %}
+{% load markdown_deux_tags %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- QUESTION HEADING -->
+<!-- QUESTION HEADING -->
+<div class="row right-scrollable-section">
+
+  <div class="question-header2 col-12">
+    <!-- experiment -->
+
+    <!-- experiment end -->
+    <div class="ques-heading-fs2 pc-detail d-flex">
+      <div class="d-flex wap-w">
+        <div class="mr-auto ff-fs2">{{ post.title }}</div>
+        {% if request.user == object.author %}
+        <div><a class="ff-fs2 edit-blog text-decoration-none" href="{% url 'blogs:edit' object.slug %}">Edit</a></div>
+        {% endif %}
+      </div>
+
+    </div>
+    <!-- EXPERIMENT -->
+    <div class="pc-date d-flex mt-2 mb-2 ml-3 flex-wrap">
+      {% for tag in object.tags.all %}
+      {% if tag.name == 'python'%}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-py p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'javascript'%}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-js p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'django'%}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-dj p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'unix' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-unix p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'webdev' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-web p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'oracle' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-ole p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'html' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-html p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'css' %}
+
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-css p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'sql'%}
+
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-sql p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'java'%}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-java p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'c' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-c p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'csharp' %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-csharp p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% elif tag.name == 'devops'%}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-dev p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+      </div>
+      {% else %}
+      <div class="mb-2 mr-1">
+        <a class="bg-tag bg-other p-1 rounded" href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name|lower}}</a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <!-- tag end -->
+    <div class="pc-user mb-4">
+      <div class="pc-user-details text-muted">
+        <div class="pc-user-profile-img">
+          <a href=""><img src="{{ object.author.profile.image.url }}" alt=""></a>
+        </div>
+        <div class="pc-user-nd">
+          <a class="text-muted"
+            href="{% url 'users:profile' object.author.username %}">{% display_name object.author %}</a>
+          <div class="pc-date">{{ object.date_posted|naturaltime }}</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION-BOX -->
+    <div class="left-col-submit-tckt blog-pc-detail">
+      <p class="article-content pc-blog-detail">
+        {{ post.content|safe }}</p>
+      <br>
+      <hr>
+      <div style="font-size:30px;"><strong class="ff-fs2">Discussion</strong></div>
+      <br>
+      {% if request.user.is_authenticated %}
+      <form id="comment-form" method='POST' action="{% url 'comments:comment_view' post.id %}">
+        {% csrf_token %}
+        <div class="marked-content-show">
+        </div>
+        <textarea class='form-control mb-2' rows='6' cols='50' placeholder='Write your comment/question' name='comment'
+          required></textarea>
+        <button type="submit" id="commentmsgtest" class="btn btn-primary mt-2" style="float: right;">Submit</button>
+      </form>
+      {% else %}
+      <form id="commentform" method='POST' action="{% url 'comments:comment_view' post.id %}">
+        {% csrf_token %}
+        <div class="marked-content-show">
+        </div>
+        <textarea id="logincmt" onkeydown="myLoginRedirect('comment')" class='form-control mb-2'
+          id="not-login-comment-form" rows='4' cols='50' placeholder='Write your comment/question' name='comment'
+          required></textarea>
+        <br />
+        <button type="submit" id="commentmsg" class="btn btn-primary mt-2" style="float: right;">Send</button>
+      </form>
+      {% endif %}
+      <br>
+      <br>
+
+      {% if comment_obj %}
+      {% for msg in comment_obj %}
+      <div class="media">
+        <!-- <img class="rounded-circle mr-3" src="{{ msg.user.profile.image.url }}" width="40" height="40"> -->
+        <div class="media-body">
+          <div>
+            <div class="">
+              <div class="pc-user-details">
+                <div class="pc-user-profile-img">
+                  <a href=""><img src="{{ msg.user.profile.image.url }}" alt=""></a>
+                </div>
+                <div class="pc-user-nd">
+                  <a class="" href="{% url 'users:profile' msg.user.username %}">{% display_name msg.user %}</a>
+
+                  <div class="pc-date pc-blog-date2 text-muted">Posted {{ msg.timestamp|naturaltime }} </div>
+                </div>
+              </div>
+            </div>
+            <div class="msg-blog-detail-pc-p">
+              <p>{{ msg.comment|markdown }}</p>
+            </div>
+            {% if request.user.username == msg.user.username and forloop.last and not msg.children %}
+            <small class="pc-blog-delete"> <a href="{% url 'comments:comment_delete' msg.id 'post' %}">Delete</a>
+            </small>
+            {% endif %}
+          </div>
+
+          {% for child_comment in msg.children  %}
+          <!-- <hr> -->
+          <hr class="hr-mt hr-mt-qp-tp-line hr-line2">
+          <div class="sub-comment-body sub-cmt-new fs">
+            <span class="sub-comment">{{ child_comment.comment|markdown  }}</span>
+
+            <a class="sub-comment-username"
+              href="{% url 'users:profile' child_comment.user.username %}">{% display_name child_comment.user %}</a>
+            <span class="sub-comment-date text-muted">Posted {{ child_comment.timestamp|naturaltime }}</span>
+            {% if request.user.username == child_comment.user.username and forloop.last %}
+            <span class="text-muted submit-status ed-del-wrap">
+              <a href="{% url 'comments:reply_delete' child_comment.id 'post' %}" class="sh-ed-td">Delete</a>
+            </span>
+            {% endif %}
+          </div>
+
+          {% endfor %}
+          <!-- <hr> -->
+          {% if request.user.is_authenticated %}
+          <!-- Newly added -->
+          <a id="add-comment-{{msg.id}}" onclick="addComment( '{{msg.id}}');return false;"
+            class="add-a-cmt sub-cmt-new fs add-pc-cmt" href="">add
+            a comment</a>
+          <div id="reply_form_{{msg.id}}" style="display: none;">
+            <form id="cmt-txt-area" method='POST' action="{% url 'comments:comment_view' msg.object_id %}">
+              {% csrf_token %}
+              <div class="marked-content-show">
+                {% comment %} <input type="hidden" onkeypress="codeBlock()"> {% endcomment %}
+              </div>
+              <div class="form-group">
+                <textarea class="form-control add-cmt-txt-area" id="exampleFormControlTextarea1" name='comment'
+                  placeholder='write your reply' rows="5"></textarea>
+              </div>
+              <!-- </form> -->
+              <input type="hidden" name="parent_id" value="{{ msg.id }}">
+              <div class="another-btn-pl">
+                <button type="submit" id="another-btn" class="btn btn-primary">Add a Comment</button>
+              </div>
+            </form>
+          </div>
+          {% else %}
+          <form id="comment-form" method='POST' action="{% url 'account_login' %}?next={{ request.path }}">
+            {% csrf_token %}
+            <div class="marked-content-show">
+              {% comment %} <input type="hidden" onkeypress="codeBlock()"> {% endcomment %}
+            </div>
+            <textarea id="loginreply" onkeydown="myLoginRedirect('reply')" row='10' class='form-control mb-2' rows='4'
+              cols='50' placeholder='write your reply' name='replied'></textarea>
+            <div class='col ml-auto text-right px-0'><button class='btn pull-right btn-primary'><i class="fa fa-reply"
+                  aria-hidden="true"></i>Reply</button></div>
+          </form>
+          {% endif %}
+          <hr>
+          <!-- media body -->
+        </div>
+        <!-- media div -->
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <!-- BLOG section -->
+    <div class="blog pc-blog">
+      <div class="pc-blog-vid">
+        <h6 class="ff-fs2">Latest videos</h6>
+        <div class="embed-responsive embed-responsive-16by9"><iframe width="50" height="35"
+            src="https://www.youtube.com/embed/DsZV2ltp43A" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="pc-blog-faq">
+        <h4 class="blog-heading ff-fs2">FAQ</h4>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  How long would take to response the Urgent Ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                Generally Techions from around the globe will response within
+                the given SLA's. In case if doesnt then Teckiy SME's will work
+                on this.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  How can I close the ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                Techions doesnt have access to close the ticket.Ideally users
+                should has to close the ticket. In case if user doesnt update
+                the ticket for a week, then Teckiy SME's will take a control &
+                close the ticket.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  How can I add a comment to existing answer provided by some
+                  techions?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Techions always welcome to submit the new answer. But techions
+                doesnt not have access to add a comment to another Techions
+                answer's. Only Users and respective Techions for a given answer
+                should have accesss to add a comment.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  What is the SLA's for HIGH & URGENT ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              <div class="card-body">
+                Response time for HIGH Ticket : 15 to 24 hrs
+                <br />
+                Response time for URGENT Ticket : 8 to 15 hrs
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFive">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                  How can Techions earn money & points from answering tickets?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+              <div class="card-body">
+                Teckiy's world everything related to points. For any tickets
+                techions resolving, respective points will be added to techions
+                account. But for Urgent/High or $ related tickets techions will
+                get points along with $ value. Techions could withdraw those
+                points as a $.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <h4 class="modal-title">
+              Hey <strong>{{ request.user.username }}</strong>
+            </h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Urgent Ticket SLA will be 8 Hours</li>
+              <li>High Ticket SLA will be 10 Hours</li>
+              <li>
+                Urgent/High Ticket make sure something production related issue
+              </li>
+              <li>
+                Also for Urgent/High please provide the requierd details to
+                techions at the earliest so that they could help you easily
+              </li>
+              <li>
+                If you like our platform please
+                <a href="{% url 'donate' %}">Support</a> here.
+              </li>
+              <li>
+                This is open source platform for all. So you can start helping
+                others & earn points($)
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block extrajs %} {% csrf_token %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("i").on("click", function () {
+      console.log("Testing....");
+      var this_ = $(this);
+      console.log(this_);
+      var favoriteUrl = this_.attr("href");
+      console.log(favoriteUrl);
+
+      $.ajax({
+        url: favoriteUrl,
+        method: "GET",
+        success: function (data) {
+          console.log(data);
+          $.each(data, function () {
+            $(this_).attr("href", String(data.url));
+            $(this_).attr(
+              "style",
+              "font-size:24px;float: right;color:" + String(data.color)
+            );
+          });
+        },
+        error: function (data) {
+          console.log(data);
+          console.log(error);
+        },
+      });
+    });
+  });
+</script>
+<script>
+  function addComment(msg_id) {
+    let textBoxDisplay = document.getElementById("reply_form_" + msg_id)
+    textBoxDisplay.style.display = "block";
+
+  }
+</script>
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+  type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+
+{% endblock %}

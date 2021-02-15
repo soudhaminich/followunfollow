@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+
+As per your request to reset, here is the link wherein you need to click and complete your process for resetting the password.
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+
+Regards,
+{% include "blogs/common.html"  %} Blog Team
+{% endautoescape %}
+

@@ -1,0 +1,97 @@
+{% load static %}
+<style>
+    .footer {
+        background-color: #131419ea;
+        text-align: center;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    .footer-link {
+        margin-right: 12px;
+        margin-top: 0px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .footer-link:hover {
+        text-decoration: none;
+        color: white;
+        box-shadow: 0 0 5px #28b0ee;
+        border: solid 1px white;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .fb-footer-icon {
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        margin-top: 18px;
+        margin-right: 12px;
+    }
+
+    .fb-footer-icon:hover {
+        width: 50px;
+        height: 50px;
+        border: solid 1px white;
+        transition: 400ms;
+    }
+
+    .fb-footer-icon-shadow {
+        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1), -2px -2px 10px #385997;
+    }
+
+    .fb-twitter-icon-shadow {
+        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1), -2px -2px 10px #00abf1;
+    }
+
+    .fb-youtube-icon-shadow {
+        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1), -2px -2px 10px #ed1f24;
+    }
+
+    .copyright {
+        color: #bbc0c4;
+        margin-top: 18px;
+        padding-left: 0 !important;
+    }
+</style>
+
+<footer>
+    <div class="footer mt-0">
+        <div class="links">
+            <a class="footer-link prior-font font-weight-bold" href="/about/">About Us</a>
+            <a class="footer-link prior-font font-weight-bold" href="/policy/">Policy</a>
+            <a class="footer-link prior-font font-weight-bold" href="/contact/">Contact Us</a>
+        </div>
+
+        <div class="icon-links">
+            <a target='_blank' href="https://www.facebook.com/teckiy/">
+
+                <img class="fb-footer-icon fb-footer-icon-shadow" src="{% static 'blogs/images/fb-latest.svg' %}"
+                    alt="facebook-icon">
+            </a>
+            <a target='_blank' href="https://twitter.com/Teckiy1"><img class="fb-footer-icon fb-twitter-icon-shadow"
+                    src="{% static 'blogs/images/twitter-latest.svg' %}" alt="twitter-icon"></a>
+            <a target='_blank' href="https://www.youtube.com/channel/UC-VJgAi35OkoJ8gj6DU4E8Q"><img
+                    class="fb-footer-icon fb-youtube-icon-shadow" src="{% static 'blogs/images/youtube-latest.svg' %}"
+                    alt="youtube-icon"></a>
+        </div>
+        <div class="copyright text-white prior-font font-weight-bold">
+            Copyright &copy; Teckiy
+            <span class="text-white" id="copyright-year"></span>
+        </div>
+
+        <!-- <div class="ko-fi-div">
+                    <button class="ko-fi">
+                        <img class="ko-fi-img" src="https://storage.ko-fi.com/cdn/cup-border.png" alt="">
+                        Support us on Ko-fi
+                    </button>
+                </div> -->
+    </div>
+</footer>
+<script>
+    // Copyright-Year Update
+    document.getElementById("copyright-year").innerHTML = new Date().getFullYear();
+</script>

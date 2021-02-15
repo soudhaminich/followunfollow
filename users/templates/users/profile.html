@@ -1,0 +1,149 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="parent-container">
+    <div class="container-fluid top-box m-0 p-0">
+        <div class="opt-edit-profile">
+            {% if request.user == profile.user %}
+            <a href="{% url 'users:edit' request.user %}"
+                class="float-right text-decoration-none prior-font font-weight-bold pt-3 pr-3">Edit Profile</a>
+            <br />
+            {% endif %}
+        </div>
+        <div class="opt-edit-profile-sm-scrn">
+            {% if request.user == profile.user %}
+            <a data-toggle="tooltip" title="Edit Profile" href="{% url 'users:edit' request.user %}"
+                class="float-right pt-3 pr-3"><img src="{% static 'blogs/images/edit-blue.svg'%}" alt=""></a>
+            <br />
+            {% endif %}
+        </div>
+    </div>
+    <div class="container mb-5 pb-3 middle-container">
+        <div class="container img-name-container">
+            <img class="border rounded-circle" src="{{ profile.image.url }}" alt="">
+            <div class="text-center mt-1 profile-usr-name font-weight-bold">
+                {% if profile %}
+                {{ profile.user }}
+                {% endif %}
+            </div>
+           
+        </div>
+       
+        <div class="text-muted text-center mb-3" id="joined-date">Joined on
+            {{ user_instance.date_joined|date }}</div>
+        <div class="text-center">
+            {% if  profile.fb_url %}
+            <a href="{{ profile.fb_url }}" target='_blank'><img class="profile-socialicon mr-1"
+                    src="{% static 'blogs/images/profile-fb.svg' %}" alt="facebook-icon"></a>
+            {% endif %}
+            {% if  profile.tw_url %}
+            <a href="{{ profile.tw_url }}" target='_blank'><img class="profile-socialicon mr-1"
+                    src="{% static 'blogs/images/profile-tweet.svg' %}" alt="twitter-icon"></a>
+            {% endif %}
+            {% if  profile.lki_url %}
+            <a href="{{ profile.lki_url }}" target='_blank'><img class="profile-socialicon"
+                    src="{% static 'blogs/images/profile-Lin.svg' %}" alt="linkedin-icon"></a>
+            {% endif %}
+            <!-- {% if follow %} -->
+                <!-- <form action="{% url 'profiles:follow-unfollow-view' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value= {{ object.pk }} > -->
+                    <button type="submit" class="ui negative button ">unfollow</button>
+
+                <!-- </form>
+
+            {% else %}
+                <button id="follow-btn" class="ui positive button">follow</button>
+
+            {% endif%} -->
+        </div>
+    </div>
+    <div class="profile-main-opt container d-flex flex-wrap justify-content-around">
+        <div class="rounded opt-1 p-2 mr-2 mb-4 font-weight-bold text-center">
+            <a class="text-decoration-none text-dark prior-font" href="{% url 'users:profilesummary' profile.user %}">
+                <div class="mt-4 mb-3 profile-opt-box">
+                    <img style="width:100%; height:100%;" src="{% static 'blogs/images/avatar-black.svg' %}" alt="">
+                </div>
+                Profile
+            </a>
+        </div>
+        <div class="rounded opt-1 p-2 mr-2 mb-4 font-weight-bold text-center">
+            <a class="text-decoration-none text-dark prior-font" href="{% url 'users:profilepost' profile.user %}">
+                <div class="mt-4 mb-3 profile-opt-box">
+                    <img class="ml-2" style="width:100%; height:100%;"
+                        src="{% static 'blogs/images/profile-post-img.svg' %}" alt="">
+                </div>
+                Posts
+            </a>
+        </div>
+        <div class="rounded opt-1 p-2 mr-2 mb-4 font-weight-bold text-center">
+            <a class="text-decoration-none text-dark prior-font" href="{% url 'users:profileticket' profile.user %}">
+                <div class="mt-4 mb-3 profile-opt-box">
+                    <img style="width:100%; height:100%;" src="{% static 'blogs/images/profile-tkt.svg' %}" alt="">
+                </div>
+                Tickets
+            </a>
+        </div>
+        <div class="rounded opt-1 p-2 mr-2 mb-4 font-weight-bold text-center">
+            <a class="text-decoration-none text-dark prior-font" href="{% url 'users:profiletechion' profile.user %}">
+                <div class="mt-4 mb-3 profile-opt-box">
+                    <img style="width:100%; height:100%;" src="{% static 'blogs/images/point-badge-img.svg' %}" alt="">
+                </div>
+                Techion
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+{% endblock extrajs %}
+
+
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $('#follow-btn').click(function(){
+            $('.ui.basic.modal')
+  .modal('show')
+
+
+        })
+    ;    
+
+    })
+</script>
+
+{% endblock scripts %}

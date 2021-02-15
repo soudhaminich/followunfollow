@@ -1,0 +1,46 @@
+{% load static %}
+{% with request.resolver_match.url_name as url_name %}
+{% if profile %}
+
+<div class="fixed-left pl-3 pt-5" style="box-shadow: 0 0 10px rgb(216, 226, 236);">
+    <div class="d-flex flex-column flex-wrap ">
+        <span class="{% if url_name == 'profilesummary' %}active-tab-bg{% endif %} text-muted mb-5 prior-font">
+            <img class="mr-3" style="width:20px; height:20px;" src="{% static 'blogs/images/avatar-outline.svg' %}"
+                alt="">
+            <a href="{% url 'users:profilesummary' profile.user %}"
+                class="p-1 tablinks active-tab  text-muted prior-font text-decoration-none">Profile
+            </a>
+        </span>
+        <span class="{% if url_name == 'profileticket' %}active-tab-bg{% endif %} text-muted mb-5 prior-font">
+            <img class="mr-3" style="width:20px; height:20px;" src="{% static 'blogs/images/profile-tkt.svg' %}" alt="">
+            <a href="{% url 'users:profileticket' profile.user %}"
+                class="p-1 tablinks  text-muted prior-font text-decoration-none">Tickets
+            </a>
+        </span>
+        <span class="{% if url_name == 'profiletechion' %}active-tab-bg{% endif %} text-muted mb-5 prior-font">
+            <img class="mr-3" style="width:20px; height:20px;" src="{% static 'blogs/images/star.svg' %}" alt="">
+            <a href="{% url 'users:profiletechion' profile.user %}"
+                class="p-1 tablinks  text-muted prior-font text-decoration-none">Techion
+            </a>
+        </span>
+        <span
+            class="{% if url_name == 'profilepost' %}active-tab-bg{% endif %} left-tablink-posts text-muted mb-5 prior-font">
+            <img class="mr-3" style="width:20px; height:20px;" src="{% static 'blogs/images/profile-post-img.svg' %}"
+                alt="">
+            <a href="{% url 'users:profilepost' profile.user %}"
+                class="p-1 tablinks  text-muted prior-font text-decoration-none">Posts
+            </a>
+        </span>
+        <span class="text-muted mb-5 prior-font">
+
+            {% if request.user == profile.user %}
+            <img class="mr-3" style="width:20px; height:20px;" src="{% static 'blogs/images/edit-pencil.svg' %}" alt="">
+            <a href="{% url 'users:edit' request.user %}"
+                class="text-decoration-none tablinks prior-font text-muted p-1">Edit
+                Profile</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endif %}
+{% endwith %}

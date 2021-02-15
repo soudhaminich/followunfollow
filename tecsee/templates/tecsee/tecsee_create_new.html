@@ -1,0 +1,81 @@
+{% extends "tecsee/base_tekvideo.html" %}
+{% load humanize %}
+{% block title %}
+Teckiy - Learn,Share & Earn
+{% endblock %}
+{% load support_extras %}
+{% load markdown_deux_tags %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+    <meta charset="utf-8">
+    {{ form.media }}
+</head>
+    <!-- Blog Entries Column -->
+      <div class="col-md-8 mt-4">
+        <div class="card mb-4">
+            <h4 class="card-header">Create New Media</h4>
+          <div class="card-body">
+            <form method="POST"> {% csrf_token %}
+                <div>Title: <br>{{form.title}}</div><br>
+                <div>Description: <br>{{form.description}}</div><br>
+                <div>Image: <br>{{form.image}}</div><br><br><br>
+                <div>Video: <br>{{form.video}}</div><br><br><br>
+                <div>Tags: <br>{{form.tags}}</div><br><br><br>
+                <input type="hidden" name="duration" maxlength="100" id="id_duration"><br>
+
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <script>
+        var myVideos = [];
+
+window.URL = window.URL || window.webkitURL;
+
+document.getElementsByClassName('file-input')[1].onchange = setFileInfo;
+
+function setFileInfo() {
+  var files = this.files;
+  myVideos.push(files[0]);
+  var video = document.createElement('video');
+  video.preload = 'metadata';
+
+  video.onloadedmetadata = function() {
+    window.URL.revokeObjectURL(video.src);
+    var duration = video.duration;
+    myVideos[myVideos.length - 1].duration = duration;
+    updateInfos();
+  }
+
+  video.src = URL.createObjectURL(files[0]);;
+}
+
+
+function updateInfos() {
+  var infos = document.getElementById('id_duration');
+  for (var i = 0; i < myVideos.length; i++) {
+    infos.setAttribute('value', parseInt(myVideos[i].duration / 60 / 60, 10) +':'+ parseInt(myVideos[i].duration / 60, 10) +':'+ 
+    Math.trunc(myVideos[i].duration))
+  }
+}
+
+function onLoadBody() {
+    document.getElementById('id_duration').readOnly = true;
+  }
+var title = document.getElementById('id_title')
+var desc = document.getElementById('id_description')
+var du = document.getElementById('id_duration')
+function input() {
+  title.classList.add('form-control')
+  desc.classList.add('form-control')
+  du.classList.add('form-control')
+}
+window.onload = onLoadBody()
+window.onload = input()
+    </script>
+    </html>
+
+{% endblock content %}

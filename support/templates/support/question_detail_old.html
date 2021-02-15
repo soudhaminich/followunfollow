@@ -1,0 +1,206 @@
+{% extends "blogs/base.html" %}
+{% load markdown_deux_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+ <style>
+
+ </style>
+
+{% comment %} <div class="container"> {% endcomment %}
+<div class="col-12 col-md-10 py-3">
+    <div class="row">
+    <img class="rounded-circle" src="{{ object.user.profile.image.url }}" width="104" height="106">
+    <a class="mr-2" href="{% url 'view-user-profile' object.user.id  %}"></a>
+    <div class="card-body">
+        <h4 class="card-title"> By <strong><a class="mr-2" href="{% url 'view-user-profile'  object.user.id %}">{{ object.user.username|title }} {{ object.author.last_name|title }}</a></strong></h4>
+        
+     
+        <small class="text-muted"> Posted on {{ question.timestamp|timesince }} ago </small>
+         <small class="text-muted"> <p>Ticket - #{{ question.id }}</p>  </small>
+
+        <h6 class="card-title"> Status - {{ question.get_status_display  }}  </h6>
+    </div>
+    </div>
+
+        <hr class="dashed">
+
+        
+            <h2><a class="article-title">{{ question.title }}</a></h2>
+            <br/>
+            <p>{{ question.content|safe }}</p>
+            {% if request.user.username == question.user.username %}
+                    <div class="container my-4">
+
+                    <form method="POST" action="{% url 'support:update' question.slug %}">
+                    {% csrf_token %}
+                    <div class="text-center">
+                    {% if question.status != 'C' %}
+                        <button type="slug" class="btn btn-lg btn-primary">Resolved</button>
+                    {% endif %}
+                    </div>
+                    </form>
+                
+                
+                </div>
+            {% endif %}
+            
+    <br/>
+    <br/>
+    <br/>
+ <hr/>
+    {% if request.user.is_authenticated %}
+<div class="container">
+    
+    <form id="comment-form" method='POST' action="{% url 'comments:comment_question_view' question.id %}">
+                {% csrf_token %}
+                    <div class="marked-content-show">
+                        {% comment %} <input type="hidden" onkeypress="codeBlock()">                               {% endcomment %}
+                        </div>
+           <textarea  class='form-control mb-2' rows='4' cols='50' placeholder='Write your comment/question'  name='comment' required></textarea>
+            <button type="submit" id="commentmsgtest" class="btn btn-primary mt-2" style="float: right;">Send</button>
+        </form>
+         
+    </div>
+    
+    {% else %}
+        <form id="commentform" method='POST' action="{% url 'account_login' %}?next={{ request.path }}">
+                {% csrf_token %}
+                       <div class="marked-content-show">
+                        {% comment %} <input type="hidden" onkeypress="codeBlock()">                               {% endcomment %}
+                        </div>
+             <textarea  class='form-control mb-2' rows='4' cols='50' placeholder='Write your comment/question'  name='comment' required></textarea>
+                <br/>
+                <button type="submit" id="commentmsg" class="btn btn-primary mt-2" style="float: right;">Send</button>
+                </div>
+            </form>
+    {% endif %}
+    <br/>
+    <br/>
+    
+
+    <div id='new-load-comments'></div>
+    <div class="container comment-detail">
+    {% if comment_obj %}
+    <blockquote>
+       
+       {% if comment_obj.count == 1 %}
+            <h1><small class="pull-right ">{{ comment_obj.count }}</small> Comment </h1><br/>
+        {% else %}
+            <h1><small class="pull-right ">{{ comment_obj.count }}</small> Comments </h1><br/>
+        {% endif %} 
+
+        
+    {% for msg in comment_obj %}
+        <!-- {% comment %} {% if msg.object_id == post.id %} {% endcomment %} -->
+        
+
+            <div class="media">
+            <img class="rounded-circle mr-3" src="{{ msg.user.profile.image.url }}" width="40" height="40">
+            <div class="media-body">  
+            
+                <p class="mt-0">
+                    <small class="text-muted"> <strong>&nbsp;{{ msg.user.username|title }}</strong> <br/>&nbsp;Posted on {{ msg.created_date|timesince }} ago 
+                    </small>
+                </p>
+                    <!-- {% comment %} {% markdown_allowed %} {% endcomment %} -->
+                    <!-- {% comment %} {% markdown_cheatsheet %} {% endcomment %} -->
+                   {{ msg.comment|markdown  }}
+                   <!-- {% comment %} {% markdown_cheatsheet %} {% endcomment %} -->
+             
+           
+
+                {% if request.user.username == msg.user.username and forloop.counter == 1 and not msg.children %}
+                    <small><a href="{% url 'comments:comment_delete' msg.id 'question' %}">Delete</a>
+                {% endif %}</small>
+
+                
+            {% for child_comment in msg.children reversed  %}
+            <blockquote>
+                <div class="media mt-3">
+                    
+                    <div id ='reply-load-image'>
+                        <img class="rounded-circle mr-2" src="{{ child_comment.user.profile.image.url }}" width="40" height="40">
+                        <a class="pr-3" href="#">
+                        <!-- {% comment %} <img id='reply-image' class="rounded-circle mr-3"> {% endcomment %} -->
+                    </a>
+                    </div>
+                    
+                    <div class="media-body">
+                   <!--  {% comment %} <div id="reply-load">
+                        
+                    </div> {% endcomment %} -->
+                        <p class="mt-0"><small class="text-muted"> <strong>{{ child_comment.user.username|title }}</strong> <br/>Posted on {{ child_comment.created_date|timesince }} ago </p></small> 
+                        {{ child_comment.comment|markdown  }} 
+                        <!-- {% comment %} {% markdown_cheatsheet %} {% endcomment %} -->
+                       
+        {% if request.user.username == child_comment.user.username and forloop.last  %}
+            <small><a href="{% url 'comments:reply_delete' child_comment.id 'question' %}">Delete
+            </a></small>
+            {% endif %}
+                        <hr/>
+                    </div>
+                    <hr/>
+              
+                </blockquote>
+                {% endfor %}
+       
+                       
+            <br/>
+            {% if request.user.is_authenticated %}
+         
+            <form id="reply-comment-form" method='POST' action="{% url 'comments:comment_question_view' question.id %}">
+            {% csrf_token %}
+            <div class="marked-content-show">
+            {% comment %} <input type="hidden" onkeypress="codeBlock()">                               {% endcomment %}
+            </div>
+  
+                <textarea  class='form-control mb-2' rows='4' cols='50' placeholder='write your reply'  name='comment' required></textarea>
+                    
+                                      <input type="hidden" name="parent_id" value="{{ msg.id }}">
+                    <div class='col ml-auto text-right px-0'><button class='btn pull-right btn-primary' type='submit'><i class="fas fa-reply"></i>Reply</button>
+                    </div>
+            </form>
+         
+            {% else %}
+            <form id="comment-form" method='POST' action="{% url 'account_login' %}?next={{ request.path }}">
+            {% csrf_token %}
+                                    <div class="marked-content-show">
+            {% comment %} <input type="hidden" onkeypress="codeBlock()">                               {% endcomment %}
+            </div>
+                <textarea row='10' class='form-control mb-2' rows='4' cols='50' placeholder='write your reply'  name='replied'></textarea>
+                    <div class='col ml-auto text-right px-0'><button class='btn pull-right btn-primary'><i class="fa fa-reply" aria-hidden="true"></i>Reply</button></div>
+            </form>
+            {% endif %}
+             </div>
+            </div>
+        <hr class='dashed'>
+        {% comment %} <div id="commentid"></div>                       {% endcomment %}
+    
+        {% comment %} {% endif %} {% endcomment %}
+        <br/>
+    {% endfor  %}
+    
+
+</blockquote>
+{% endif %}
+        </div>
+            
+
+    </div>
+    
+    </div>
+    </div>
+</div>
+<br/>
+
+
+{% endblock content %}
+
+{% block extrajs  %}
+{% comment %} <script type="text/javascript" src="{% static 'comments/js/delete_comment.js' %}"></script> {% endcomment %}
+<script>
+
+</script>
+{% endblock extrajs %}
+  

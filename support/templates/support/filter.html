@@ -1,0 +1,162 @@
+{% load static %}
+
+<style>
+    .filter-float {
+        margin-left: auto;
+    }
+
+    .filter-btn {
+        padding: 3px 5px;
+        color: black;
+        width: 40px;
+    }
+
+    .filter-btn:hover {
+        color: white;
+        background-color: white;
+        border: solid 2px black;
+    }
+
+    #filter-id {
+        display: none;
+    }
+
+    @media only screen and (min-width: 0px) and (max-width: 279px) {
+        .filter-float {
+            margin-left: 0;
+        }
+    }
+</style>
+
+<div id="filter-id" class="mb-4 filter-box border border-secondary rounded">
+    <form method="get" action="">
+        <div class="d-flex flex-wrap">
+            <div class="priority-check flex-fill border border-light bg-light rounded m-3 p-2 pl-4"
+                style="height:150px;">
+                <div id="id_priority">
+                    <div class="pt-1 pb-2 font-weight-bold prior-font">Priority</div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_priority_0"><input class="form-check-input"
+                                type="checkbox" name="priority" value="L" id="id_priority_0">
+                            Low</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_priority_1"><input class="form-check-input"
+                                type="checkbox" name="priority" value="M" id="id_priority_1">
+                            Medium</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_priority_2"><input class="form-check-input"
+                                type="checkbox" name="priority" value="H" id="id_priority_2">
+                            High</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_priority_3"><input class="form-check-input"
+                                type="checkbox" name="priority" value="U" id="id_priority_3">
+                            Urgent</label>
+                    </div>
+                </div>
+            </div>
+            <div class="status-check flex-fill border border-light bg-light rounded m-3 p-2 pl-4"
+                style="height: 150px;">
+                <!-- <label>Status:</label> -->
+                <div id="id_status">
+                    <div class="pt-1 pb-2 font-weight-bold prior-font">Status</div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_status_0"><input class="form-check-input"
+                                type="checkbox" name="status" value="I" id="id_status_0">
+                            In-Progress</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_status_1"><input class="form-check-input"
+                                type="checkbox" name="status" value="O" id="id_status_1">
+                            Opened</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_status_2"><input class="form-check-input"
+                                type="checkbox" name="status" value="C" id="id_status_2">
+                            Closed</label>
+                    </div>
+                </div>
+            </div>
+            <div class="type-check flex-fill border border-light bg-light rounded m-3 p-2 pl-4" style="height: 150px;">
+                <div id="id_ticket_type">
+                    <div class="pt-1 pb-2 font-weight-bold prior-font">Type</div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_ticket_type_0"><input class="form-check-input"
+                                type="checkbox" name="ticket_type" value="Q" id="id_ticket_type_0">
+                            Question</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_ticket_type_1"><input class="form-check-input"
+                                type="checkbox" name="ticket_type" value="P" id="id_ticket_type_1">
+                            Problem</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="id_ticket_type_2"><input class="form-check-input"
+                                type="checkbox" name="ticket_type" value="T" id="id_ticket_type_2">
+                            Task</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border border-light bg-light rounded m-3 p-2 pl-4" style="height:120px; overflow: auto;">
+            <div class="pt-1 pb-2 font-weight-bold prior-font">Category</div>
+            <div id="id_category">
+                <label for="id_category_0"><input type="checkbox" name="category" value="python" id="id_category_0">
+                    Python</label>
+                <label for="id_category_1"><input type="checkbox" name="category" value="django" id="id_category_1">
+                    Django</label>
+                <label for="id_category_2"><input type="checkbox" name="category" value="sql" id="id_category_2">
+                    SQL</label>
+                <label for="id_category_3"><input type="checkbox" name="category" value="postgresql" id="id_category_3">
+                    PostgreSQL</label>
+                <label for="id_category_4"><input type="checkbox" name="category" value="oracle" id="id_category_4">
+                    Oracle</label>
+                <label for="id_category_5"><input type="checkbox" name="category" value="mysql" id="id_category_5">
+                    MYSQL</label>
+                <label for="id_category_6"><input type="checkbox" name="category" value="javascript" id="id_category_6">
+                    Javascript</label>
+                <label for="id_category_7"><input type="checkbox" name="category" value="java" id="id_category_7">
+                    Java</label>
+                <label for="id_category_8"><input type="checkbox" name="category" value="vuejs" id="id_category_8">
+                    VueJS</label>
+                <label for="id_category_9"><input type="checkbox" name="category" value="html" id="id_category_9">
+                    HTML</label>
+                <label for="id_category_10"><input type="checkbox" name="category" value="css" id="id_category_10">
+                    CSS</label>
+                <label for="id_category_11"><input type="checkbox" name="category" value="unix" id="id_category_11">
+                    Unix</label>
+                <label for="id_category_12"><input type="checkbox" name="category" value="shellscript"
+                        id="id_category_12">
+                    Shell Script</label>
+                <label for="id_category_13"><input type="checkbox" name="category" value="other" id="id_category_13">
+                    Other</label>
+            </div>
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-primary ml-3 mb-3 mt-3">Apply
+                Filter</a></button></div>
+    </form>
+</div>
+<!-- not found page -->
+{% if not object_list %}
+<hr class="m-0 p-0">
+<div class="text-center mt-4">
+    <img height=150 width=100 src="{% static 'blogs/images/magnifying-glass.png' %}" alt="">
+</div>
+<h3 class="prior-font text-center">No Results Found</h3>
+<p class="text-center text-muted">No Questions matched with the selected choices <br> Try Again!!</p>
+{% endif %}
+<!-- end of not found -->
+<script>
+    document.getElementById("filter-btn-id").onclick = function () {
+        var filterdiv = document.getElementById("filter-id");
+        var filterbtn = document.getElementById("filter-btn-id");
+        if (filterdiv.style.display == "block") {
+            filterdiv.style.display = "none";
+        } else {
+            filterdiv.style.display = "block";
+        }
+    }
+</script>

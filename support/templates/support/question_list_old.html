@@ -1,0 +1,33 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+   
+    <a href="{% url 'support:create' %}"><legend class="border-bottom mb-4">Submit Your Question<small>(free support)</small></legend></a>
+    <br/>
+
+    <h4>Questions</h4>
+    <table style="width:100%">
+    
+        {% for obj in object_list %}
+
+           <tr>
+                <div class="container">      
+                    <div class="media-body">
+                
+                    
+                    <td><h2><a class="article-title" href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a></h2>
+                    {% comment %} <p>{{ obj.content|safe|truncatewords:5 }}</p> {% endcomment %}
+                    <p>{{ obj.timestamp|timesince }} ago</p>
+                    </td>
+               
+                </div>
+            </div>
+         </tr>
+    
+    {% endfor %}
+</table>
+</div>
+{% endblock %}

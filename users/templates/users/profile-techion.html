@@ -1,0 +1,135 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+{% block content %}
+<div class="p-2">
+    <div class="row">
+        <div class="col-lg-2 d-lg-block d-none pl-0 pr-3">
+            {% include "users/profileleftnav.html" %}
+        </div>
+        <div class="col-lg-10 col-12 pl-0 pr-0">
+            <div class="container-fluid top-box m-0 p-0 rounded" style="box-shadow: 0 0 20px #28b0ee;">
+                {% include "users/profileleftnav_mobile.html" %}
+            </div>
+            {% include "users/profile-head.html" %}
+            <!-- Techion -->
+            <div id="Techion" class="tabcontent">
+                <div class="container d-flex flex-column flex-wrap justify-content-around p-3 mt-4">
+                    <div class="rounded w-100 opt-1 opt-profile-1 p-2 mr-2 mb-5 font-weight-bold">
+                        <div class="d-flex flex-wrap justify-content-around p-3">
+                            <div class="pl-2 mr-2">
+                                <img width="175" height="200" src="{% static 'blogs/images/teckiybadge.png' %}" alt="">
+                            </div>
+                            {% if profile.badges %}
+                            <div class="flex-grow-1 my-auto text-center">Teckiy SME</div>
+                            {% else %}
+                            <div class="flex-grow-1 my-auto text-center">No Badges at this moment</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="rounded w-100 opt-1 opt-profile-1 p-2 mr-2 mb-5 mt-3 pt-5 font-weight-bold">
+                        <div class="d-flex flex-wrap mb-3 pt-3 justify-content-around">
+                            <div class="rounded-circle mx-auto opt-1 profile-techion-pg p-4 mr-2 mb-4 font-weight-bold">
+                                <!-- ticket points -->
+                                <div class="d-flex flex-wrap justify-content-around p-3 mt-2">
+                                    <div class="pl-2 mr-2 mt-2 mb-3">
+                                        <img width="125" height="125"
+                                            src="{% static 'blogs/images/stackedpoints.png' %}" alt="">
+                                    </div>
+                                    <div class="flex-grow-1 my-auto text-center">
+                                        {% if points %}
+
+                                        <div style="text-align: center;"><strong>{{ points }}</strong> Points
+                                        </div>
+                                        {% else %}
+                                        <div class="flex-grow-1 my-auto text-center">No Ticket Points at this moment
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="rounded-circle mx-auto opt-1  profile-techion-pg p-4 mr-2 mb-4 font-weight-bold">
+                                <!-- blog points -->
+                                <div class="d-flex flex-wrap justify-content-around p-3 mt-2">
+                                    <div class="pl-2 mr-2 mt-2 mb-3">
+                                        <img width="125" height="125"
+                                            src="{% static 'blogs/images/stackedpoints.png' %}" alt="">
+                                    </div>
+                                    <div class="flex-grow-1 my-auto text-center">
+                                        {% if profile.user.username == 'bhavana' or  profile.user.username == 'admin' or  profile.user.username == 'arun' %}
+                                        <div style="text-align: center;"><strong>100</strong>Blog points</div>
+                                        {% elif profile.user.username == 'kaushik.kakdey' %}
+                                        <div style="text-align: center;"><strong>1</strong>Blog points</div>
+                                        {% else %}
+                                        <div class="flex-grow-1 my-auto text-center">No Blog Points at this moment</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-wrap pb-3 justify-content-around">
+                            <!-- points to redeem -->
+                            {% if request.user == profile.user %}
+                            <div class="rounded-circle opt-1  profile-techion-pg p-4 mr-2 mb-4 font-weight-bold">
+                                <div class="d-flex flex-wrap justify-content-around p-3">
+                                    <div class="pl-2 mr-2 mb-3">
+                                        <img width="150" height="175" src="{% static 'blogs/images/moneybag.png' %}"
+                                            alt="">
+                                    </div>
+                                    <div class="flex-grow-1 my-auto">
+                                        <div class="flex-grow-1 my-auto text-center">No Points to Redeem at this moment
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- techion end -->
+            <!-- tickets -->
+
+            <!-- tickets end -->
+            <!-- posts -->
+
+            <!-- posts end -->
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock extrajs %}

@@ -1,0 +1,309 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% load i18n %}
+{% get_providers as socialaccount_providers %}
+
+<style>
+    .auto-popup-outer {
+        max-width: 400px;
+        background: linear-gradient(to right, rgb(167, 161, 161), rgb(198, 214, 223));
+        background: linear-gradient(375deg, #ebe8e8, #2aa3cb);
+        padding: 3px;
+        border-radius: 35px;
+    }
+
+    .modal-body-outerbox {
+        width: 95%;
+    }
+
+    .modal-body-innerbox {
+        width: 100%;
+    }
+
+    .text-popup-container {
+        animation: text2 800ms 1 !important;
+    }
+
+    .modal {
+        height: auto;
+    }
+
+    @keyframes text {
+        0% {
+            margin-top: 50px;
+        }
+
+        25% {
+            margin-top: 0px !important;
+
+        }
+
+        50% {
+            margin-bottom: 50px !important;
+
+        }
+
+        100% {
+            margin-bottom: 0px !important;
+
+        }
+    }
+
+    .text-popup-container2 {
+        animation: text2 1s 1 !important;
+    }
+
+    @keyframes text2 {
+        0% {
+            margin-left: 50px;
+        }
+
+        25% {
+            margin-left: 0px !important;
+
+        }
+
+        50% {
+            margin-right: 50px !important;
+
+        }
+
+        100% {
+            margin-right: 0px !important;
+
+        }
+    }
+
+    .auto-popup,
+    .popup-credential-box {
+        box-shadow: 4px 2px 16px rgba(136, 165, 191, 0.48),
+            -4px -2px 16px #ffffff;
+        border-radius: 25px;
+    }
+
+    .auto-popup-container {
+        border-radius: 35px;
+        border: none;
+        background-color: white;
+    }
+
+    .popup-credential-box {
+        width: 100%;
+        animation: box 1s 1;
+    }
+
+    @keyframes box {
+        0% {
+            margin-left: -40px;
+        }
+
+        100% {
+            margin-left: 0px !important;
+
+        }
+    }
+
+    .auto-popup:hover,
+    .popup-credential-box:hover {
+        border: none;
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.05) inset,
+            -5px -5px 5px rgba(255, 255, 255, 0.5) inset,
+            5px 5px 5px rgba(0, 0, 0, 0.05),
+            -5px -5px 5px rgba(255, 255, 255, 0.5);
+        border-radius: 25px;
+
+    }
+
+
+
+    .popup-btn {
+        width: 45px;
+        height: 45px;
+        background-color: white;
+        box-shadow: 4px 2px 20px rgba(136, 165, 191, 0.48),
+            -4px -2px 20px #ffffff;
+        animation: text2 1s 1;
+    }
+
+    .popup-btn:hover {
+        box-shadow: 3px 3px 7px rgba(136, 165, 191, 0.48),
+            -3px -3px 7px #ffffff inset;
+        background-color: #eaf1f7;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .popup-btn:hover img {
+        transform: scale(1.05);
+    }
+
+    .popup-input input {
+        border-radius: 5px;
+        box-shadow: 4px 2px 8px rgba(136, 165, 191, 0.48),
+            -4px -2px 8px #ffffff;
+        font-size: 12px;
+    }
+
+    .popup-input input:hover {
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05) inset,
+            -2px -2px 2px rgba(255, 255, 255, 0.5) inset,
+            2px 2px 2px rgba(0, 0, 0, 0.05),
+            -2px -2px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .popup-input input::placeholder {
+        font-size: 11px;
+        color: rgb(173, 170, 170);
+        font-family: 'Roboto Slab', serif;
+    }
+
+    .popup-input:hover input::placeholder {
+        color: black;
+    }
+
+    .tooltip-inner {
+        font-family: 'Roboto Slab', serif;
+    }
+
+    .signup-error-msg {
+        color: #de535e;
+        font-size: small;
+    }
+</style>
+
+<div class="modal fade popup-page" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog auto-popup-outer modal-dialog-centered" role="document">
+        <div class="auto-popup-container modal-content pb-4 pr-4 pl-4 pt-2">
+            <button type="button" class="mb-1 pb-1 font-weight-bold close ml-auto mr-2 pl-1 mt-0 pb-0 mb-0"
+                data-dismiss="modal" aria-label="Close">
+                <span class="" aria-hidden="true">&times;</span>
+            </button>
+            <div class="auto-popup bg-white pt-4 pb-2">
+                <div class="modal-header border-0 pb-0 pt-0 mt-0">
+                    <div class="mx-auto text-center prior-font">
+                        <h5 class="modal-title text-popup-container font-weight-bold mx-auto"
+                            id="exampleModalLongTitle">Join the Teckiy Community</h5>
+                        <p class="text-popup-container2">Sign up for Free !!</p>
+                        <p class="text-popup-container">World's first open source developer community with </p>
+                        <p class="text-popup-container2 text-danger prior-font font-weight-bold">Ticketing System</p>
+                    </div>
+                </div>
+                <div class="modal-body modal-body-outerbox mx-auto border-0 pt-0 rounded">
+                    <div class="modal-body-innerbox mx-auto p-2">
+                        <div
+                            class="flex-popup-icon-container d-flex flex-wrap justify-content-around mx-auto mb-3 mt-1">
+                            <!-- Sign up with Google -->
+                            <div data-toggle="tooltip" data-placement="bottom" title="Sign up with Google"
+                                class="text-center mb-1 pt-2 rounded-circle p-1 popup-btn">
+                                <a class="text-decoration-none fs_teen prior-font "
+                                    href=" {% provider_login_url "google" method="oauth2" %}">
+                                    <img src=" {% static 'blogs/images/login/google-icon.svg' %}" width="23"
+                                        alt="google-icon">
+                                </a>
+                            </div>
+                            <!-- Sign up with Github -->
+                            <div data-toggle="tooltip" data-placement="bottom" title="Sign up with GitHub"
+                                class="text-center mb-1 p-1 pt-2 rounded-circle popup-btn">
+                                <a class="text-decoration-none fs_teen prior-font"
+                                    href="{% provider_login_url "github" process="oauth2" %}">
+                                    <img src=" {% static 'blogs/images/github_latest.svg' %}" width="24" alt="">
+                                </a>
+                            </div>
+                            <!-- Sign up with Facebook -->
+                            <div data-toggle="tooltip" data-placement="bottom" title="Sign up with Facebook"
+                                class="text-center mb-1 p-1 pt-2 rounded-circle popup-btn">
+                                <a class="text-decoration-none fs_teen prior-font"
+                                    href="{% provider_login_url "facebook" method="oauth2" %}">
+                                    <img src=" {% static 'blogs/images/fb-latest.svg' %}" width="23" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 popup-credential-box">
+                            <form class="user" method="post" action="{% url 'account_signup' %}">
+                                {% csrf_token %}
+                                {% if form.non_field_errors %}
+                                <ul class='form-errors list-style-none'>
+                                    {% for error in form.non_field_errors %}
+                                    <!-- Alert -->
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{ error }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <br>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                                <div class="popup-input form-group pl-2 pr-2 pt-1 mb-0 pb-0">
+                                    <!-- <label for="exampleInputEmail1"><strong>Email</strong></label> -->
+                                    <input type="email" name="email" class="w-100 pl-2 border email-inputbox"
+                                        placeholder="Email" required id="id_email">
+                                    {% if form.errors %}
+                                    <span class="signup-error-msg">
+                                        {{form.errors.email}}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="popup-input form-group pl-2 pr-2 pt-3">
+                                    <!-- <label for="exampleInputPassword1"><strong>Password</strong></label> -->
+                                    <input class="w-100 border pl-2 pswd-inputbox" type="password" name="password1"
+                                        placeholder="Password" required id="id_password1">
+                                    {% if form.errors %}
+                                    <span class="signup-error-msg">
+                                        {{form.errors.password1}}
+                                    </span>
+                                    {% endif %}
+                                    <small style="font-size:10px;" id="passwordHelpBlock" class="form-text text-muted">
+                                        Passwords must contain at least eight characters, including at least 1 letter
+                                        and 1 number.
+                                    </small>
+                                    <!-- <label for="exampleInputPassword1"><strong>Confirm Password</strong></label> -->
+                                    <input type="password" name="password2" placeholder="Confirm Password" required
+                                        id="id_password2" class="mt-2 w-100 border pl-2 pswd-inputbox">
+                                    {% if form.errors %}
+                                    <span class="signup-error-msg">
+                                        {{form.errors.password2}}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                    value="{{ redirect_field_value }}" />
+                                {% endif %}
+                                <div class="pl-2 pr-2">
+                                    <button type="submit"
+                                        class="w-100 prior-font pl-1 pr-1 pt-0 pb-0 btn btn-primary form-sign-up-btn">Sign
+                                        up</button>
+                                </div>
+                                <div class="fs text-muted pl-2 pr-2 mt-1">By clicking "Sign up" you agree to our
+                                    <a class="text-decoration-none" href="/policy/">terms of service</a>,
+                                    <a class="text-decoration-none" href="/policy/">privacy policy</a>,
+                                    <a class="text-decoration-none" href="/policy/">cookie policy</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // $(document).ready(function(){
+    // $("#myModal").modal('show');
+    //});
+    //auto pop-up on page load show after some delay
+    $(document).on('load', setTimeout(function () {
+        $('#myModal').modal('show');
+    }, 3000));
+
+    //tool-tip
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>

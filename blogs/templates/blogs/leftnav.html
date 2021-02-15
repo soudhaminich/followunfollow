@@ -1,0 +1,109 @@
+{% load static %}
+
+<style>
+    .left-fixed-navbar {
+        position: sticky;
+        top: 50px;
+        height: 100vh;
+        /* overflow-y: auto; */
+        /*background-color: #131419ea;*/
+        background-color: white;
+    }
+
+    .left-fixed-navlinktxt {
+        color: #999999;
+    }
+
+    .left-fixed-navlinktxt:hover {
+        color: red;
+    }
+
+    .left-navlink-img {
+        width: 33px;
+        height: 33px;
+        /*background-color: #131419;*/
+        /*box-shadow: 0 0 3px #28b0ee;*/
+        cursor: pointer;
+    }
+
+    .left_nav_div_top{
+        margin-top:39px;   
+    }
+
+    .left_nav_div:hover {
+        color: red;
+        text-shadow: none;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .arrow {
+        width: 10px;
+    }
+
+    .tooltip-inner {
+        font-size: 10.5px;
+    }
+
+</style>
+
+<div id="left-fixed-nav-sctn" class="d-lg-flex flex-column d-none left-fixed-navbar pl-2 pt-0 align-items-start">
+    <!-- <div class=" "> -->
+        <div class="prior-font left_nav_div left_nav_div_top left_nav_fs mb-5 text-muted">
+            <a href="/"><img data-toggle="tooltip" data-placement="top" title="Home"
+                    class="left-navlink-img mr-2 p-2 rounded-circle" src="{% static 'blogs/images/leftnavhome.svg' %}"
+                    alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold fs_med2 pl-1 text-decoration-none prior-font" href="/">Home</a>
+
+        </div>
+        <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+            <a href="/about/"><img data-toggle="tooltip" data-placement="top" title="About Us"
+                    class="left-navlink-img  mr-2 p-2" src="{% static 'blogs/images/leftnavabt.png' %}"
+                    alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold pl-1 text-decoration-none fs_med2 prior-font" href="/about/">About Us</a>
+        </div>
+        <!-- <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+        <a href="#"><img data-toggle="tooltip" data-placement="top" title="Team" class="left-navlink-img mr-3 p-1 rounded-circle" src="{% static 'blogs/images/leftnavteam.svg' %}"
+            alt=""></a>
+        <a id="" class="left-fixed-navlinktxt text-decoration-none prior-font" href="#">Team</a>
+    </div> -->
+        <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+            <a href="{% url 'blogs:blog-home' %}">
+                <img data-toggle="tooltip" data-placement="top" title="Posts"
+                    class="left-navlink-img mr-2 p-1 rounded-circle" src="{% static 'blogs/images/leftnavpost.svg' %}"
+                    alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold pl-1 text-decoration-none fs_med2 prior-font"
+                href="{% url 'blogs:blog-home' %}">Posts</a>
+        </div>
+        <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+            <a href="{% url 'tecsee:all-videos' %}">
+                <img data-toggle="tooltip" data-placement="top" title="Videos" class="left-navlink-img left-navlink-img2  mr-2 p-1 rounded-circle"
+                    src="{% static 'blogs/images/leftnavvideo.png' %}" alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold pl-1 text-decoration-none fs_med2 prior-font"
+                href="{% url 'tecsee:all-videos' %}">TecSee(Beta)</a>
+        </div>
+        <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+            <a href="{% url 'donate' %}"><img data-toggle="tooltip" data-placement="top" title="Donate"
+                    class="left-navlink-img mr-2 p-1 rounded-circle" src="{% static 'blogs/images/leftnavdonate.svg' %}"
+                    alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold pl-1 text-decoration-none fs_med2 prior-font"
+                href="{% url 'donate' %}">Donate</a>
+        </div>
+        <div class="prior-font left_nav_div left_nav_fs mb-5 text-muted">
+            <a href="{% url 'analytics:suggestion' %}">
+                <img data-toggle="tooltip" data-placement="top" data-container="body" title="Suggestions"
+                    class="left-navlink-img mr-2 p-1 rounded-circle"
+                    src="{% static 'blogs/images/leftnavsuggest.svg' %}" alt=""></a>
+            <a class="left-fixed-navlinktxt font-weight-bold pl-1 text-decoration-none fs_med2 prior-font"
+                href="{% url 'analytics:suggestion' %}">Suggestions</a>
+        </div>
+    <!-- </div> -->
+</div>
+
+<script>
+    //Tooltip
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

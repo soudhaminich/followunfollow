@@ -1,0 +1,112 @@
+{% load static %}
+{% load support_extras %}
+{% load humanize %}
+
+<style>
+    #unfollow{
+        display:none;
+    }
+</style>
+<div class="container mb-5 w-75 pb-3 middle-container">
+    <div class="container img-name-container">
+        <img class="border rounded-circle" src="{{ profile.image.url }}" alt="">
+
+    </div>
+    <div class="text-center mt-1 profile-usr-name font-weight-bold">
+        {% if profile %}
+        {% display_name profile.user %}
+        {% endif %}
+    </div>
+    
+    <div class="text-muted text-center mb-3" id="joined-date">Joined on
+        {{ user_instance.date_joined|date }}</div>
+    <div class="text-center">
+        {% if  profile.fb_url %}
+        <a href="{{ profile.fb_url }}" target='_blank'><img class="profile-socialicon mr-1"
+                src="{% static 'blogs/images/profile-fb.svg' %}" alt="facebook-icon"></a>
+        {% endif %}
+        {% if  profile.tw_url %}
+        <a href="{{ profile.tw_url }}" target='_blank'><img class="profile-socialicon mr-1"
+                src="{% static 'blogs/images/profile-tweet.svg' %}" alt="twitter-icon"></a>
+        {% endif %}
+        {% if  profile.lki_url %}
+        <a href="{{ profile.lki_url }}" target='_blank'><img class="profile-socialicon"
+                src="{% static 'blogs/images/profile-Lin.svg' %}" alt="linkedin-icon"></a>
+        {% endif %}
+    </div>
+    
+
+                {% if follow %}
+                <form action="switch_follow/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value={{ object.pk }} >
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger prior-font p-1 pl-1 pr-1">UnFollow</button>
+                    </div>
+                    
+                   
+                </form>
+                {% else %}
+                <div class="text-center">
+                        <button id="mybtn" type="submit" class="btn btn-success prior-font p-1 pl-1 pr-1" data-toggle="modal"
+                    data-target="#exampleModal">
+                        Follow
+                    </button>
+                </div>
+                
+               {% endif %}
+    <!-- <div class="text-center">
+        <button id="unfollow" type="submit" class="btn btn-danger prior-font p-1 pl-1 pr-1">UnFollow</button>
+    </div>
+    <div class="text-center">
+        <button id="mybtn" type="submit" class="btn btn-success prior-font p-1 pl-1 pr-1" data-toggle="modal"
+            data-target="#exampleModal">
+            Follow
+        </button>
+    </div> -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to follow {{profile.user}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form action="switch_follow/" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value={{ object.pk }}>
+                        <button id="yes" type="submit" class="btn btn-success" data-dismiss="modal">Yes</button>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal end -->
+    <div class="mt-3 text-center prior-font font-weight-bold d-lg-none">
+        {% if request.user == profile.user %}
+        <a href="{% url 'users:edit' request.user %}" class="text-decoration-none prior-font font-weight-bold">Edit
+            Profile</a>
+        <br />
+        {% endif %}
+    </div>
+</div>
+
+    {% block extrajs %}
+    <!-- <script>
+        $(document).ready(function () {
+            $('#mybtn').on('click', function () {
+                $('.ui').show();
+            });
+        });
+    </script> -->
+    <script>
+        document.getElementById("yes").addEventListener("click", function () {
+            document.getElementById("unfollow").style.display = "inline-block";
+            document.getElementById("mybtn").style.display = "none"
+        });
+    </script>
+    {% endblock extrajs %}

@@ -1,0 +1,52 @@
+{% extends "blogs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" width="104" height="106">
+
+        
+              {% comment %} {{ follower }} {% endcomment %}
+
+              {{ user.first_name }}
+
+              <!-- <form method='POST'>
+                {% csrf_token %}
+                <button type="button" class="btn btn-primary float-right"
+                    onclick="this.disabled=true;this.innerHTML= '{{ follower_count}} Unfollow';">{{ follower_count }} Follow</button>
+
+                </form> -->
+
+                {% comment %} <form method="POST">
+                    {% csrf_token %}
+                      <!-- {{ form|crispy }} -->
+                    <div class="form-group">
+                       <button type="button" class="btn btn-primary float-right"
+                    onclick="this.disabled=true;this.innerHTML= '{{ follower_count}} Unfollow';">{{ follower_count }} Follow</button>
+                    </div>
+                </form> {% endcomment %}
+
+
+              {% comment %} <p class="text-secondary">{{ user.email }}</p> {% endcomment %}
+           
+
+</div>
+
+<script>
+function myFunction()
+{
+  document.getElementById("myBtn").disabled
+  // var x = document.getElementById("myBtn").disabled
+  console.log('func')
+      if document.getElementById("myBtn").disabled
+      {
+          document.getElementById("myBtn").enable;
+      }
+
+      else{
+           document.getElementById("myBtn").disabled;
+
+      }
+}
+</script>
+{% endblock content %}

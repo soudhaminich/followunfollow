@@ -1,0 +1,28 @@
+{% load static %}
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<!-- <link rel="stylesheet" href="https://i.icomoon.io/public/temp/aac53693b9/UntitledProject/style.css"> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<footer class="bg-white" id="footer">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span><a href="/about/">About</a>
+                <a href="/policy/">Policy</a>
+                <a href="/contact/">Contact Us</a>
+            </span>
+            <br />
+            <span>
+
+                <a target='_blank' href="https://www.facebook.com/teckiy/"><img
+                        src="{% static 'blogs/images/facebook_20_20.png' %}"></a>
+                <a target='_blank' href="https://twitter.com/Teckiy1"><img
+                        src="{% static 'blogs/images/twitter_20_20.png' %}"></a>
+                <a target='_blank' href="https://www.youtube.com/channel/UC-VJgAi35OkoJ8gj6DU4E8Q"><img
+                        src="{% static 'blogs/images/youtube_20_20.png' %}"></a>
+            </span>
+            <br>
+            <span>{% now "Y" as current_year %}
+                Copyright &copy; Teckiy {{ current_year }}
+            </span>
+        </div>
+    </div>
+</footer>

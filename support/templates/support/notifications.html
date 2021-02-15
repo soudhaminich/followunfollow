@@ -1,0 +1,70 @@
+{% extends "blogs/base_new.html" %}
+{% load humanize %}
+{% block title %}
+Teckiy - Notifications
+{% endblock %}
+{% load support_extras %}
+{% load static %}
+{% block content %}
+
+<div class="description-box-left-column des-box-left-col">
+    <div class="ques-user-img top-sctn-hp">
+        <div class="d-flex">
+            <h1 class="all-quest-fl p-2 mr-auto">Notifications</h1>
+        </div>
+    </div>
+    <hr class="fil-hr">
+    {% if object_list %}
+    <div class="text-center">
+        <a class="text-decoration-none" href="{% url 'support:notification_delete' %}">Mark all as Read</a></div>
+    {% endif %}
+    {% if not object_list %}
+    <h5 class="text-center"> No Notifications</h5>
+    {% endif %}
+    <div class="bg-white container ml-3 mt-4 pl-3 rounded" style="box-shadow:3px 3px 5px 5px lightslategrey;">
+        {% for obj in object_list %}
+        <div class="pb-1 pl-4 pr-3 row row-sctn-hp">
+            {% if request.user == obj.author %}
+            <div class="mt-4 col-11 descriptive-col">
+                <div class="quest-sctn">
+                    <span class="text-muted">
+                        <a class="text-dark font-weight-bold text-decoration-none"
+                            href="{% url 'users:profile' obj.replied_user.username %}">{% display_name obj.replied_user%}</a>
+                        commented on
+                        <div class="pt-1">
+                            <a class="text-decoration-none"
+                                href="/support/questions/{{ obj.commented_on }}/">{{ obj.subject }}</a>
+                        </div>
+                        <div class="mt-2">{{ obj.timestamp|naturaltime }}</div>
+                    </span>
+                </div>
+            </div>
+            {% elif not obj.question and  request.user != obj.author %}
+            <div class="col-11 descriptive-col">
+                <div class="quest-sctn">
+                    <span class="text-muted">
+                        <a class="text-decoration-none"
+                            href="{% url 'users:profile' obj.replied_user.username %}">{% display_name obj.replied_user %}</a>
+                        commented on
+                        <div class="pt-1">
+                            <a class="text-decoration-none"
+                                href="/support/questions/{{ obj.commented_on }}/">{{ obj.subject }}</a>
+                        </div>
+                        <div class="mt-2">{{ obj.timestamp|naturaltime }}</div>
+
+                    </span>
+
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="ml-5 mr-5 mt-3 pl-5 pr-5 hr-mt-hp">
+        {% endfor %}
+    </div>
+</div>
+<div class="right-column">
+    <div class="features-mb">
+        {% include "blogs/home_content.html" %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% load static %}
+
+<style>
+    .bbg-3 {
+        box-shadow: 0 0 10px rgb(223, 222, 222);
+        border: none;
+    }
+
+    .add-card:hover {
+        box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.1), -4px -4px 15px #cedde4;
+        cursor: pointer;
+        border: solid 1px #28b0ee;
+    }
+
+    .cards-wrapper-div {
+        padding: 8px 10px;
+    }
+    
+    .img-opacity{
+        opacity: 0.8;
+    }
+</style>
+
+<!-- Post an ad -->
+<div class="cards-wrapper-div text-center">
+    <div class="card bbg-3 add-card mt-3 mb-4 text-center">
+        <h5 class="card-header bg-gradient-danger prior-font text-danger border-0 font-weight-bold">Wanna Post Ad?</h5>
+        <div class="card-body">
+            <h6 class="card-title fs_med text-dark">Reach a large group of audience by posting an ad about your business
+                here.
+                For more details</h6>
+            <a class="text-decoration-none prior-font font-weight-bold" href="/contact/">Drop us a Message</a>
+        </div>
+    </div>
+</div>
+<!-- Post an ad ends -->
+
+<!-- latest blogs -->
+{% if post_list %}
+<div class="bbg-3 rounded pl-3 pr-3 pb-3 pt-2">    
+    <h4 class="p-2 mb-3 text-center prior-font text-danger fs_large">Latest Blogs</h4>
+    {% for post in post_list %}
+    <div class="row m-0 pb-1">
+        <div class="col-1 my-auto p-0">
+            <img class="img-opacity" width="25" height="25" src="{% static 'blogs/images/blogs-feather.svg' %}" alt="">
+        </div>
+        <div class="col-11 p-0 pl-4">
+            <a href="{{ post.get_absolute_url  }}" class="text-decoration-none text-muted">{{ post.title }}</a>
+        </div>
+    </div>
+    <hr class="m-0 mt-1 mb-1">
+    {% endfor %}
+</div>
+{% endif %}
+<!-- latest blogs ends -->
+
+<!-- latest videos -->
+<div class="bbg-3 pb-3 rounded mt-4">
+    <h4 class="p-2 mb-3 text-center text-danger prior-font fs_large">Latest Videos</h4>
+    <!-- looping starts here -->
+    <div class="pl-4 pr-4">
+        <video class="border rounded card-img-top" poster="" controls>
+            <source src="" type="">
+        </video>
+    </div>
+    <hr class="mt-2 mb-2">
+    <!-- looping ends here -->
+</div>
+<!-- latest videos ends -->

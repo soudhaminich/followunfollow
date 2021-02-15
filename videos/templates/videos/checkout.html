@@ -1,0 +1,106 @@
+{% extends "blogs/base.html" %}
+{% block title %}
+Teckiy - {{ object.name }}
+{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="box-element">
+        {% include "blogs/side_navbar.html" %}
+    </div>
+    <div class="col-lg-8">
+        <div id="paymentmsg"></div>
+        <h3>Checkout</h3>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                {{ course_object.name }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">${{ course_object.amount }}</h5>
+                <!-- <p class="card-text">30-Day Money-Back Guarantee</p> -->
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AULkyLz5AQBw84Czx3Efqgfg5r2xZGq7Cq_C-lHOScG3lIE2ae8StQF5fSBHEIs5G8u4YGO6hpB4cPe8&currency=USD"></script>
+
+<script>
+    // Render the PayPal button into #paypal-button-container
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    const courseAmount = '{{ course_object.amount }}'
+    console.log(courseAmount)
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: courseAmount
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                // Show a success message to the buyer
+                const paymentmsgElt = document.getElementById("paymentmsg");
+                var currentItem = `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Thanks!</strong> You purchased this course..
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>`
+                paymentmsgElt.innerHTML = currentItem
+                submitOrder()
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+
+
+    function submitOrder() {
+        console.log('Payment button clicked')
+        var url = "/videos/o/process_order/"
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'applicaiton/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'payment': 'Done', 'course_slug': '{{ course_object.slug }}' }),
+
+        }).then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+                alert('Transaction completed');
+                window.location.href = "{% url 'videos:course-detail' course_object.slug %}"
+            })
+
+
+    }
+</script>
+{% endblock %}

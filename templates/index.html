@@ -1,0 +1,201 @@
+{% load static %}
+{% load meta %}
+{% load blogs_extras %}
+{% load notifications_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head {% meta_namespaces %}>
+  {% include "meta/meta.html" %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="keywords" content="developer,support,coding,learning,teckiy,tutorials,html,css,python,django,react,java">
+  <meta name="author" content="Teckiy">
+  <meta property="og:image" content="https://static.teckiy.com/teckiy_logo_fav.jpg">
+
+
+  <title>Teckiy - Community to Learn & Earn</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'blogs/landingpage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'blogs/landingpage/css/one-page-wonder.min.css' %}" rel="stylesheet">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166867100-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-166867100-1');
+  </script>
+  <script type="text/javascript" src="/static/ckeditor/ckeditor-init.js"
+    data-ckeditor-basepath="/static/ckeditor/ckeditor/" id="ckeditor-init-script"></script>
+  <script type="text/javascript" src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+  <!-- Hotjar Tracking Code for https://www.teckiy.com/ -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 2030205, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+  <link rel="shortcut icon" href="{% static 'blogs/images/teckiy_fav_icon.ico' %}">
+
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <h1><strong>TECKIY</strong></h1>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="masthead text-center text-white">
+    <div class="masthead-content">
+      <div class="container">
+        <h1 class="masthead-heading mb-0">Learn & Earn</h1>
+        <div class="masthead-subheading mb-0">Become a Techion and be part of world class Developer Community</div>
+        <a href="{% url 'support:all-question' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Browse Questions</a>
+      </div>
+    </div>
+    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+  </header>
+
+  <section>
+    <div class="container text-center">
+      <div class="mx-auto mt-5 mb-5 w-75">
+        <!-- <iframe class=""src="https://player.vimeo.com/video/470707963" width="100%" height="360" frameborder="0"
+            allow="autoplay; fullscreen" allowfullscreen></iframe> -->
+        <video class="border solid 2px lightslategrey bg-light" poster="{% static 'blogs/images/teckiy-new-logo.png' %}"
+          width="90%" height="360" controls>
+          <source src="https://static.teckiy.com/Teckiy+Promo.mp4" type="">
+        </video>
+      </div>
+    </div>
+  </section>
+  <hr class="p-2 w-75">
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="{% static 'blogs/landingpage/img/tech-quest.png' %}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4 text-wrap">Need help with Technical Questions?</h2>
+            <a href="{% url 'support:all-question' %}" class="btn btn-primary btn-xl rounded-pill mt-5">Learn more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <div class="p-5">
+            <img class="img-fluid rounded-circle" src="{% static 'blogs/landingpage/img/money.jpg' %}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="p-5">
+            <h2 class="display-4 text-wrap">Earning money is always easy with Teckiy</h2>
+            <a href="/about/#money" class="btn btn-primary btn-xl rounded-pill mt-5">Know how</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2">
+          <div class="p-5">
+            <img style="width:500px; height:470px;" class="img-fluid rounded-circle"
+              src="{% static 'blogs/landingpage/img/workfh.jpg' %}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+          <div class="p-5">
+            <h2 class="display-4 text-wrap">Are you a Freelancer, then you are at the right place</h2>
+            <a href="/about/#blog-freelancers" class="btn btn-primary btn-xl rounded-pill mt-5">Know more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-3 bg-black">
+    <div class="container">
+      <div class="footer mt-3">
+        <div class="links">
+          <a class="footer-link" href="/about/">About Us</a>
+          <a class="footer-link" href="/policy/">Policy</a>
+          <a class="footer-link" href="/contact/">Contact Us</a>
+        </div>
+
+        <div class="icon-links">
+          <a target='_blank' href="https://www.facebook.com/teckiy/"><img class="img-fluid fb-footer-icon"
+              src="{% static 'blogs/landingpage/img/facebook-icon.svg' %}" alt="facebook-icon"></a>
+          <a target='_blank' href="https://twitter.com/Teckiy1"><img class="img-fluid fb-footer-icon"
+              src="{% static 'blogs/landingpage/img/twitter-icon.svg' %}" alt="twitter-icon"></a>
+          <a target='_blank' href="https://www.youtube.com/channel/UC-VJgAi35OkoJ8gj6DU4E8Q"><img
+              class="img-fluid fb-footer-icon" src="{% static 'blogs/landingpage/img/youtube-icon.svg' %}"
+              alt="youtube-icon"></a>
+        </div>
+        <p class="m-0 text-center text-white small">Copyright &copy; Teckiy 2020</p>
+      </div>
+      <!-- /.container -->
+  </footer>
+
+  <script type="text/javascript">
+    var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq ||
+      { widgetcode: "10945d185cfc392a4f1eb60063940d961672622287fa6e11408ccc822c110e8a", values: {}, ready: function () { } };
+    var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true;
+    s.src = "https://salesiq.zoho.in/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); d.write("<div id='zsiqwidget'></div>");
+  </script>
+
+  <script src="{% static 'blogs/landingpage/js/jquery.min.js' %}"></script>
+  <script src="{% static 'blogs/landingpage/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

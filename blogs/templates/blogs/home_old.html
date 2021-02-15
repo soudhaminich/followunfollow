@@ -1,0 +1,227 @@
+{% extends "blogs/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block internal_css %}
+     {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/favorite.css' %}"> {% endcomment %}
+    {% comment %} <style>
+        .blue {
+          font-size:24px;
+         color: red;
+      } {% endcomment %}
+
+    
+
+
+{% endblock %}
+
+{% block content %}
+
+{% comment %} <div class="container"> {% endcomment %}
+
+    {% for obj in object_list %}
+        {% comment %} <article class="media content-section"> {% endcomment %}
+     {% comment %} <article class="media content-section"> {% endcomment %}
+      <div class="card">
+      <div class="card-body">
+      <div class="row">
+          
+          {% comment %} <div class="media-body">
+          <div class="article-metadata"> {% endcomment %}
+            <a class="mr-2" href="{% url 'view-user-profile' obj.author.id  %}"><img class="rounded-circle article-img" src="{{ obj.author.profile.image.url }}" width="40"><a class="mr-2" href="{% url 'view-user-profile' obj.author.id  %}"></a>
+              <a class="mr-2" href="{% url 'view-user-profile'  obj.author.id %}">{{ obj.author.username|title }}</a>
+              <small class="text-muted">{{ obj.date_posted|date:"F d, Y" }}
+
+              </small>
+          {% comment %} </div>
+          </div> {% endcomment %}
+          <br/>
+         <div class="container">      
+          <div class="media-body">
+            {% comment %} <div class="article-metadata"> {% endcomment %}
+              {% comment %} <a class="mr-2" href="{% url 'view-user-profile'  obj.author.id %}">{{ obj.author }}</a>
+              <small class="text-muted">{{ obj.date_posted|date:"F d, Y" }}
+
+              </small> {% endcomment %}
+             <!--  <i class="fa fa-heart" style="font-size:24px"></i> -->
+               <h2><a class="article-title" href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a></h2>
+            {% comment %} </div> {% endcomment %}
+            {% comment %} {% if user.is_authenticated %} {% endcomment %}
+             
+              <br/>
+              <br/>
+            {% if 'iframe' in obj.content  %}
+                <h6>{{ obj.title }}</h6>
+            {% comment %} <p class="article-content">{{ obj.content|truncatewords:30 | safe  }}</p> {% endcomment %}
+               <p align="center" style="font-size:40px"> <a align="right" href="{{ obj.get_absolute_url  }}">Read more</a></p>
+
+            {% comment %} {% elif 'code' in obj.content %}
+
+                <p class="article-content">{{ obj.content| safe |truncatewords:30   }}</p>
+               <p align="center" style="font-size:40px"> <a align="right" href="{% url 'blogs:detail' obj.slug %}">Read more</a></p> {% endcomment %}
+            
+             {% comment %} {% elif obj.video_poster.url %}
+                {% if obj.video_poster.url %}                 
+               
+                
+                  <img src="{{ obj.video_poster.url }}" width="800" height="400">
+               
+                {% else %}
+                  <img src="{{ obj.blog_image.url }}" width="800" height="400"> 
+                {% endif %} {% endcomment %}
+            {% elif obj.blog_image %}
+                <img class="img-fluid" src="{{ obj.blog_image.url }}">
+            {% else %}
+              <h6>{{ obj.title }}</h6>
+              {% comment %} <p >{{ obj.content|truncatewords:5 | safe  }}</p>                {% endcomment %}
+               <p align="center" style="font-size:40px"> <a align="right" href="{{ obj.get_absolute_url  }}">Read more</a></p>
+
+                             {% comment %} {% if obj.video_upload %}
+                             {{ obj.video_upload.url }}
+                <video width="800" poster="{{ obj.video_poster.url }}" controls controlsList="nodownload">
+                    <source src="{{ obj.video_upload.url }}" type="video/mp4">
+                   
+                    Your browser does not support HTML5 video.
+              </video>
+             {% endif %} {% endcomment %}
+             {% comment %} <video width="800" poster="{{ obj.video_poster.url }}" controls controlsList="nodownload">
+                    <source src="{{ obj.video_upload.url }}" type="video/mp4">
+                   
+                    Your browser does not support HTML5 video.
+              </video> {% endcomment %}
+
+               {% comment %} <p align="right"> <a  align="right" href="{% url 'blogs:detail' obj.slug %}">Read more</a></p> {% endcomment %}
+
+             {% endif %}
+
+            {% comment %} {% if obj.blog_image %}
+                <a href="{% url 'blogs:detail' obj.slug %}" ><img src="{{ obj.blog_image.url }}" width="800" height="400"> </a>
+
+            {% endif %} {% endcomment %}
+
+              {% comment %} <div id="add-favorite"> {% endcomment %}
+     <!--            {% if favorite %}
+                  {% for fav in favorite %}
+                    {% if fav.add_favorite %}
+
+                        {% if request.user == fav.user and obj.id == fav.post.id %}
+                            <a  class="nav-item nav-link" ><i   href="{% url 'blogs:ajax-like' obj.id fav.id %}" class="fa fa-heart"  style="font-size:24px;color:red;float: right"></i></a>
+                        {% else %}
+                          <i href="{% url 'blogs:ajax-like' obj.id 0 %}"  class="fa fa-heart" style="font-size:24px;float: right" ></i>
+                        {% endif %}
+
+                    {% else %}
+                      <i href="{% url 'blogs:ajax-like' obj.id 0 %}"  class="fa fa-heart" style="font-size:24px;float: right" ></i>
+                    {% endif %}
+
+                  {% endfor %}
+                {% else %}
+                       <a  class="nav-item nav-link" ><i href="{% url 'blogs:ajax-like' obj.id 0 %}"  class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+                {% endif %} -->
+                  {% comment %} {{ obj.favorite_set.all.0.add_favorite }}
+                  {% if  obj.favorite_set.all.0.add_favorite %}
+                    {% if favorite %}
+                         {% for fav in favorite %}
+                            {{ fav.user}}
+                            {% if fav.user == request.user %}
+
+                              <a  class="nav-item nav-link" ><i   href="{% url 'blogs:ajax-like' obj.id fav.id %}" class="fa fa-heart"  style="font-size:24px;color:red;float: right"></i></a>
+                            {% endif %}
+                           {% endfor %}
+                    {% else %}
+                              <a  class="nav-item nav-link" ><i href="{% url 'blogs:ajax-like' obj.id 0 %}"  class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+                    {% endif %}
+                  {% else %}
+                   <a  class="nav-item nav-link" ><i href="{% url 'blogs:ajax-like' obj.id 0 %}"  class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+                  {% endif %} {% endcomment %}
+
+
+                  {% comment %} </div> {% endcomment %}
+
+            {% comment %} {% else %}
+              <h2><a class="article-title" href="{% url 'blogs:detail' obj.id %}">{{ obj.title }}</a></h2> {% endcomment %}
+
+              {% comment %} {% if  obj.favorite_set.all  %}
+
+                  <a class="nav-item nav-link"><i class="fa fa-heart" style="font-size:24px;color:red;float: right"></i></a>
+              {% else %}
+                <a class="nav-item nav-link"><i id="favoritecolor" class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+              {% endif %} {% endcomment %}
+              {% comment %} <p class="article-content">{{ obj.content }}</p> {% endcomment %}
+            {% comment %} {% endif %} {% endcomment %}
+            
+          </div>
+          </div>
+        </div>
+       </div>
+      </div>
+      <br/>
+      <br/>
+    {% endfor %}
+
+
+{% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+            
+            <a class="btn btn-outline-info mb-4"  href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.previous_page_number }}">Previous</a>
+
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+
+                <a class="btn btn-outline-info mb-4"  href="?page={{ num }}">{{ num }}</a>
+
+            {% endif %}
+
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info mb-4"  href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+        {% endif %}
+
+    {% endif %}
+{% comment %} </div> {% endcomment %}
+
+{% endblock content %}
+{% block extrajs %}
+{% csrf_token %}
+<script type="text/javascript">
+
+$(document).ready(function(){
+$("i").on('click', function(){
+console.log('Testing....')
+var this_ = $(this);
+console.log(this_);
+var favoriteUrl = this_.attr("href");
+console.log(favoriteUrl)
+
+$.ajax({
+
+    url: favoriteUrl,
+    method: "GET",
+    success: function(data){
+
+      console.log(data);
+      $.each(data , function(){
+        $(this_).attr("href", String(data.url));
+        $(this_).attr("style", "font-size:24px;float: right;color:"+String(data.color));
+
+      })
+    },
+    error: function(data){
+      console.log(data)
+      console.log(error)
+    }
+})
+})
+});
+
+</script>
+{% endblock  %}

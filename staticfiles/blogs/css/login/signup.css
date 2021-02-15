@@ -1,0 +1,177 @@
+body{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+} 
+
+.navbar{
+    background-color: #fafafb;
+    height: 50px;
+}
+.navbar-logo{
+    height: 30px;
+    width: 80px;
+}
+
+/* !important means ignore all subsequent rules and apply that particular property specified */ 
+/* Search bar width changes */
+.form-control{
+    width: 35em !important; 
+}
+
+/* Nav bar log in and sign up buttons */
+.nav-item{
+    color: #0095ff;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: small;
+    display: inline-block;
+    
+}
+.container-fluid{
+    background-color: #eff0f1;
+    padding-top: 50px;
+    padding-bottom: 40px;
+}
+.main{
+    /* background-color: lightgreen;  */
+    margin-top: 30px;
+    width: 1000px;
+}  
+
+.left-grid-cell{
+    /* background-color: yellow; */
+    margin-right: 30px !important;
+    margin-top: 280px;
+    text-align: left !important;
+    width: 500px;
+}
+/* Join the teckiy community font size */
+.tc{
+    font-size: 2rem;
+}
+
+.left-gc-txt{
+    font-size: large;
+}
+p{
+    font-size: 1.5em;
+    padding:0;
+    padding-bottom: 0.25em;
+    margin-top: 25px ;
+}
+
+.grid--cell{
+    width:315px;
+    margin-top: 30px;
+}
+
+/* Google, Github, Fb icon size change */
+i{
+    font-size: large;
+} 
+
+.login-google-ghub-fb{
+    padding-bottom: 10px;
+}
+/* Log in with Google button color, font changes */
+.btn-white{
+    background-color: white;
+    color: black;
+    font-size: small;
+    margin-bottom: 0.75em;
+    border-color: lightgrey;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+    align-items: baseline;
+}
+.btn:hover{
+    background-color: lightgray;
+    color: black;
+    border-color: black;
+}
+/* Google icon changes */
+.g-icon{
+    margin-bottom: 0.4em !important;
+}
+
+/* Log in with ghub, font changes */
+.btn-black{
+    background-color: #211F1F;
+    color: white;
+    font-size: small;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    border-color: lightgrey;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+
+/* Log in with fb button color, font changes */
+.btn-blue{
+    background-color: #3b5998;
+    color: white;
+    font-size: small;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    border-color: lightgrey;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+/* Form block containing username, email, pswd */
+.form-grid{
+    background-color: white;
+    border-color: lightgrey;
+    border-radius: 0.35em;
+    padding: 24px;
+    
+}
+
+.form-sign-up-btn{
+    font-size: small;
+    border-radius: 0.35em;
+}
+
+.email-inputbox, .pswd-inputbox{
+    width: 100%;
+    border-radius: 0.3em;
+    border-color: lightgrey;
+    border-width: 0.5px;
+    height: 35px;
+    padding-left: 10px !important;
+}
+
+/* Email & Password Text */
+.form-group{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+}
+/* User name box sizing */
+.name-box{
+    width: 100% !important;
+    height: 35px !important;
+}
+
+.ts-pp-cp{
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6a737c;
+    text-align: left !important;
+}
+/* already have an account/login section */
+.links{
+    width: 100%;
+    font-size: small;
+    margin-top: 15px;
+}
+
+.form-text{
+    font-size: small !important;
+}
+
+.fas{
+    color: #0095ff;
+}
+
+.left-gc-txt{
+    font-size: 1rem;
+}

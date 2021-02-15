@@ -1,0 +1,303 @@
+{% load static %}
+{% load support_extras %}
+{% load humanize %}
+
+<style>
+    .notify-bg-circle {
+        position: relative;
+        height: 30px;
+        width: 20px;
+        margin-right: 2px;
+        box-shadow: 0 0 3px #28b0ee;
+    }
+
+    .number-span-click {
+        /*animation: bellimgcircleclick;*/
+        animation-play-state: paused;
+    }
+
+    @keyframes bellimgcircleclick {
+
+        0%,
+        25%,
+        50%,
+        75%,
+        100% {
+            transform: none;
+        }
+    }
+
+    .notify-bg-circle:hover {
+        border: solid 1px white;
+        box-shadow: 0 0 5px #28b0ee;
+    }
+
+    .notify-bg-circle img {
+        width: 15px;
+        height: 22px;
+        position: absolute;
+        right: 4px;
+        bottom: 3px;
+    }
+
+    .number-div {
+        width: 12px;
+        height: 13px;
+        font-size: 13px;
+        position: absolute;
+        right: 4.15rem;
+        z-index: 1;
+        top: -0.3rem;
+    }
+
+    .number-span {
+        background-color: red;
+        padding: 0px 2px 1px;
+        font-size: 11px;
+    }
+
+    .number-blinking {
+        animation: numberblink 1s infinite ease-in-out;
+    }
+
+    @keyframes numberblink {
+
+        0%,
+        50%,
+        75%,
+        100% {
+            opacity: 1;
+        }
+
+        25% {
+            opacity: 0;
+        }
+    }
+
+    .popup-notify {
+        position: absolute;
+        z-index: 2;
+        bottom: -12rem;
+        top: 3.1rem;
+        right: 3.25rem;
+        background-color: white;
+        border-radius: 5px;
+        border: none;
+        height: 375px;
+        width: 375px;
+        box-shadow: 4px 4px 10px rgb(238, 236, 236), -4px 0px 10px rgb(180, 177, 177);
+        word-break: break-word;
+        transition: all 300ms ease-in-out 400ms;
+        overflow-y: auto;
+        display: none;
+    }
+
+    .triangle-down {
+        position: absolute;
+        width: 25px;
+        top: 1.75rem;
+        right: 3.75rem;
+        display: none;
+    }
+
+    .triangle-down img {
+        bottom: 5rem;
+    }
+
+    .markreaddiv {
+        position: sticky;
+        top: 0px;
+        z-index: 1;
+    }
+
+    .notify-all {
+        position: absolute;
+        height: 360px;
+    }
+
+    .user-img {
+        width: 60px;
+        height: 65px;
+    }
+
+    .user-img img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .clock img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .see-all {
+        position: sticky;
+        bottom: 0;
+    }
+
+    .notify-txt {
+        width: 250px;
+    }
+
+    .notify-txt-color {
+        /*background-color:#f7f7f7;*/
+        background-color: #eaf1f7;
+    }
+
+    .markallread {
+        color: #0275d8;
+    }
+
+    .markallread:hover {
+        cursor: pointer;
+        color: lightslategrey;
+    }
+
+    .notify-pglink-sm-scrn {
+        display: none;
+    }
+
+    .notify-clicklink-lg-scrn {
+        display: inline-block;
+    }
+
+    .no-notifications-none {
+        /* display: none;*/
+        font-size: 20px;
+    }
+
+    @media only screen and (min-width: 0px) and (max-width: 460px) {
+        .notify-pglink-sm-scrn {
+            display: inline-block;
+        }
+
+        .notify-icon-lg-scrn {
+            display: none;
+        }
+
+        .notify-clicklink-lg-scrn {
+            display: none;
+        }
+
+        .popup-notify,
+        .triangle-down {
+            display: none !important;
+        }
+    }
+</style>
+
+<span>
+    <a href="#" id="notify-btn" class="text-decoration-none notify-clicklink-lg-scrn">
+        <button class="btn btn-primary ml-auto rounded-circle notify-bg-circle" type="button" id="notidropdownMenu"
+            aria-haspopup="true" aria-expanded="false">
+            <img class="user-icon notify-icon notify-icon-lg-scrn" src="{% static 'blogs/images/notification.svg' %}"
+                alt="bell-icon">
+        </button>
+    </a>
+
+    <a href="{% url 'support:notification' %}" class="text-decoration-none notify-pglink-sm-scrn">
+        <button class="btn btn-primary ml-auto rounded-circle notify-bg-circle" type="button" id="notidropdownMenu"
+            aria-haspopup="true" aria-expanded="false">
+            <img class="user-icon notify-icon notify-icon-sm-scrn" src="{% static 'blogs/images/notification.svg' %}"
+                alt="bell-icon">
+        </button>
+    </a>
+
+    <div class="p-1 mt-1 text-center text-danger font-weight-bold number-div" id="notify">
+        {% notify_count request.user as nt_cnt %}
+        {% if nt_cnt > 0 %}
+        <span class="number-blinking text-white prior-font font-weight-bold number-span"
+            id="notify">{% notify_count request.user %}
+        </span>
+        {% endif %}
+    </div>
+</span>
+
+<span id="t-d" class="triangle-down">
+    <img src="{% static 'blogs/images/triangle-latest.svg' %}" alt="">
+</span>
+
+<div id="pop" class="text-secondary popup-notify">
+    <div class="fs_teen p-2 markreaddiv d-flex bg-white text-center font-weight-bold">
+        <div class="prior-font font-weight-bold">Notifications</div>
+        <!-- <span id="markread" class="markallread ml-auto text-decoration-none fs_teen prior-font">Mark all as Read</span> -->
+    </div>
+    <hr class="mt-0 mb-0">
+
+    <div class="notify-all">
+        {% if notify_list %}
+        <!-- code to be used for looping -->
+        {% for notify in notify_list %}
+        <div id="notification-txt-block" class="row notify-txt-row notify-txt-color pt-2 pb-2 pl-3 pr-1 ml-0 mr-0">
+            <div class="col-3 my-auto mr-0">
+                <div class="user-img rounded-circle my-auto">
+                    <img class="rounded-circle" src="{% static 'blogs/images/clock.svg' %}" alt="">
+                </div>
+            </div>
+            <div class="col-9">
+                <!-- <div  class="notify-txt fs_teen pt-1"> -->
+                <div class="fs_teen pt-1">
+                    <div>
+                        <a class="text-decoration-none text-dark" href="">{{ notify.replied_user }}</a>
+                        <span>commented on</span>
+                        <a class="text-decoration-none" href="/support/questions/{{ notify.commented_on }}/">
+                            {{ notify.subject }}</a>
+                    </div>
+                    <div class="mt-1 clock">
+                        <img src="{% static 'blogs/images/clock.svg' %}" alt="">
+                        <span class="ml-2">{{ notify.timestamp|naturaltime }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr id="hr-line" class="mt-0 mb-0 mr-0">
+        {% endfor %}
+        <!-- end of code to be used for looping -->
+        <!-- see all tab -->
+        <div id="see-all-link" class="see-all bg-white border-top p-1 fs_teen text-center">
+            <a class="text-decoration-none prior-font font-weight-bold" href="{% url 'support:notification' %}">See
+                All</a>
+        </div>
+        {% else %}
+        <div id="no-notifications" class="no-notifications-none prior-font text-dark mt-5 pt-5 pl-5">No new
+            notifications to show
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.getElementById("notify-btn").addEventListener('click', function popup() {
+        var popup = document.getElementById("pop");
+        var poptri = document.getElementById("t-d");
+        //triangle display on click
+        if (poptri.style.display == "block") {
+            poptri.style.display = "none";
+        } else {
+            poptri.style.display = "block";
+            //document.getElementById("notify").classList.add("number-blinking");
+        }
+        //popup box display on click
+        if (popup.style.display == "inline-block") {
+            popup.style.display = "none";
+            document.getElementById("notify").classList.remove("number-blinking");
+            //document.getElementById("notification-txt-block").classList.add("notify-txt-color");
+            //Mark All As Read
+            document.getElementById("markread").onclick = function () {
+                var notificationList = document.getElementsByClassName("notify-txt-row");
+                document.getElementById("see-all-link").style.display = "none";
+                document.getElementById("hr-line").style.display = "none";
+                document.getElementById("no-notifications").style.display = "block";
+                for (i = 0; i < notificationList.length; i++) {
+                    //notificationList[i].classList.remove("notify-txt-color");
+                    notificationList[i].style.display = "none";
+                }
+
+            }
+            //End of Mark all as read
+        } else {
+            popup.style.display = "inline-block";
+        }
+
+    });
+</script>

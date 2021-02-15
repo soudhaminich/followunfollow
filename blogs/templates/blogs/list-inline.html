@@ -1,0 +1,60 @@
+
+
+
+<br/>
+
+    {% for obj in blog_obj %}
+
+
+        <article class="media content-section">
+            <a class="mr-2" href="{% url 'view-user-profile' obj.author.id  %}"><img class="rounded-circle article-img" src="{{ obj.author.profile.image.url }}"><a class="mr-2" href="{% url 'view-user-profile' obj.author.id  %}"></a>
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'view-user-profile'  obj.author.id %}">{{ obj.author }}</a>
+              <small class="text-muted">{{ obj.date_posted|date:"F d, Y" }}
+
+              </small>
+             <!--  <i class="fa fa-heart" style="font-size:24px"></i> -->
+
+            </div>
+            {% if user.is_authenticated %}
+              <h2><a class="article-title" href="{% url 'blogs:detail' obj.id %}">{{ obj.title }}</a></h2>
+              <p class="article-content">{{ obj.content }}</p>
+              {% if  obj.favorite_set.all.0.add_favorite  %}
+
+                {% for fav_id in obj.favorite_set.all %}
+
+                    <a  class="nav-item nav-link" ><i id="like-btn1" href="{% url 'blogs:favorite' obj.id fav_id %}" class="fa fa-heart"  style="font-size:24px;color:red;float: right"></i></a>
+                {% endfor %}
+
+
+
+              {% else %}
+
+
+                <a class="nav-item nav-link" ><i id='like-btn' href="{% url 'blogs:favorite' obj.id 0 %}" class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+
+
+              {% endif %}
+
+
+
+            {% else %}
+              <h2><a class="article-title" href="{% url 'blogs:detail' obj.id %}">{{ obj.title }}</a></h2>
+              {% if  obj.favorite_set.all  %}
+
+                  <a class="nav-item nav-link"><i class="fa fa-heart" style="font-size:24px;color:red;float: right"></i></a>
+              {% else %}
+                <a class="nav-item nav-link"><i id="favoritecolor" class="fa fa-heart" style="font-size:24px;float: right" ></i></a>
+              {% endif %}
+              <p class="article-content">{{ obj.content }}</p>
+            {% endif %}
+          </div>
+        </article>
+
+    {% endfor %}
+
+
+
+
+

@@ -1,0 +1,119 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="p-2">
+    <div class="row">
+        <div class="col-lg-2 d-lg-block d-none pl-0 pr-3">
+            {% include "users/profileleftnav.html" %}
+        </div>
+        <div class="col-lg-10 col-12 pl-0 pr-0">
+            <div class="container-fluid top-box m-0 p-0 rounded" style="box-shadow: 0 0 20px #28b0ee;">
+                {% include "users/profileleftnav_mobile.html" %}
+            </div>
+            {% include "users/profile-head.html" %}
+
+            <!-- tickets -->
+            <div id="Tickets" class="tabcontent">
+                <div class="container d-flex flex-column flex-wrap justify-content-around p-3 mt-4">
+                    {% if ticket_details.count > 0 %}
+                    <div class="mb-5 mt-4 text-center profile-tkt-count prior-font">Tickets Submitted
+                        <span class="profile-tkt-count font-weight-bold">
+                            <strong>{{ ticket_instance_count }}</strong>
+                        </span>
+                    </div>
+                    {% if ticket_details %}
+                    {% for t in ticket_details %}
+                    <div class="rounded w-75 mx-auto bg-white opt-1 profile-tkt-pg p-2 mr-2 mb-5">
+                        <div class="d-flex justify-content-between" style="word-break:break-all">
+                            <div class="flex-tkt-width mr-1">
+                                <div class="p-3">
+                                    <a class="text-decoration-none" href="{% url 'support:detail' t.slug %}">
+                                        {{ t.title }}
+                                    </a>
+                                </div>
+                                <div class="d-flex flex-md-row flex-column pl-3 pb-3">
+                                    <div class="d-flex flex-sm-row flex-column">
+                                        <span class="text-muted">Type:</span>
+                                        <span class="pr-2 prior-font">{{ t.get_ticket_type_display }}</span>
+                                    </div>
+                                    <div class="d-flex flex-sm-row flex-column">
+                                        <span class="text-muted">Priority:</span>
+                                        <span class="pr-2 prior-font">{{ t.get_priority_display }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if user == t.user %}
+                            <div class="edit-tkt-page ">
+                                <div class="d-flex flex-wrap pr-1 mr-1">
+                                    {% if t.status != 'C' %}
+                                    <div class="pt-2">
+                                        <a href="{% url 'support:edit' t.slug %}">
+                                            <button class="btn btn-outline-primary">Edit</button>
+                                        </a>
+                                    </div>
+                                    {% else %}
+                                    <div class="pt-2">
+                                        <a href="#">
+                                            <button class="btn btn-outline-danger">Closed</button>
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                    {% if 'P' in t.priority %}
+                                    <div class="pl-2 pr-2">/</div>
+                                    <div class="pt-2">
+                                        <a href="{% url 'support:ticket_pay' t.slug %}"><button
+                                                class="btn btn-danger">Pay</button></a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    {% endif %}
+                    {% else %}
+                    <div class="profile-no-a prior-font font-weight-bold text-center" style="font-size:24px;">No
+                        activities yet</div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- tickets end -->
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock extrajs %}

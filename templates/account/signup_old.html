@@ -1,0 +1,46 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load i18n %}
+{% get_providers as socialaccount_providers %}
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<br/>
+ <h1>{% trans "Sign Up" %}</h1>
+<div class="container col-md-8">
+  <div class="jumbotron">
+      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+      <br/>
+      <div class="form-group">
+
+          <button class="btn btn-lg btn-block btn-dark"> <a style="color:white;" id="github-button" class="btn btn-block btn-social btn-github" href="{% provider_login_url "github" process="oauth2" %}">
+      <i class="fa fa-github"></i> Join with Github
+    </a></button>
+    </div>
+    <div class="form-group">
+
+          <button class="btn btn-lg btn-block btn-primary"> <a style="color:white;" id="facebook-button" class="btn btn-block btn-social btn-github" href="{% provider_login_url "facebook" method="oauth2" %}">
+      <i class="fa fa-facebook"></i> Join with Facebook
+    </a></button>
+    </div>
+
+    <br/>
+      <div class="center-or text-center">
+          <span><hr style="border-center: dotted 1px;" />Or</span>
+          
+      </div>
+
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-lg btn-block btn-info" type="submit">{% trans "Sign Up" %} &raquo;</button>
+      </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,347 @@
+{% extends "blogs/base_static.html" %}
+{% load humanize %}
+{% load support_extras %}
+{% load crispy_forms_tags %}
+{% block title %}
+Teckiy - Blogs
+{% load notifications_tags %}
+{% endblock %}
+{% load static %}
+{% block content %}
+
+<!-- QUESTION HEADING -->
+<!-- QUESTION HEADING -->
+<div class="row right-scrollable-section pc-page">
+  <div class="question-header2 col-12">
+
+    <div class="ques-heading-fs2 posts-col d-flex">
+      <div class="d-flex  wap-w">
+        <div class="mr-auto ff-fs2 tpost-title">Techion Posts</div>
+        <form class="mb-3 " action="">
+          <button type="button" class="btn btn-primary"><a class="ask-a-quest-link" href="{% url 'blogs:create'%}">Write
+              a Post</a></button>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- DESCRIPTION-BOX -->
+    <div class="left-col-submit-tckt left-posts-col">
+
+      {% for obj in object_list %}
+      <div class="post-cards">
+        <div class="pc-display">
+          <div class="pc-img">
+            {% if obj.blog_image %}
+            <img src="{{ obj.blog_image.url }}" alt="no image">
+            {% else %}
+            <img src="{% static 'blogs/images/teckiy.png' %}" alt="">
+            {% endif %}
+          </div>
+          <div class="pc-title">
+            <a style="margin-top:50px;" href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a>
+            <div class="pc-user" style="padding-left:0">
+              <div class="pc-user-details text-muted mt-2">
+                <div class="pc-user-profile-img">
+                  <a href=""><img src="{{ obj.author.profile.image.url }}" alt=""></a>
+                </div>
+                <div class="pc-user-nd">
+                  <a class="text-muted"
+                    href="{% url 'users:profile' obj.author.username %}">{% display_name obj.author %}</a>
+                  <div class="pc-date">{{ obj.date_posted|date:"F d, Y" }}</div>
+                </div>
+              </div>
+
+              <div class="pc-date d-flex mt-3 pl-0 flex-wrap">
+
+                {% for tag in obj.tags.all %}
+                {% if tag.name == 'python'%}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-py p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'javascript'%}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-js p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'django'%}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-dj p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'unix' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-unix p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'webdev' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-web p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'oracle' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-ole p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'html' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-html p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'css' %}
+
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-css p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'sql'%}
+
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-sql p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'java'%}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-java p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'c' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-c p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'csharp' %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-csharp p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% elif tag.name == 'devops'%}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-dev p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name }}</a>
+                </div>
+                {% else %}
+                <div class="mb-2 mr-1">
+                  <a class="bg-tag bg-other p-1 rounded"
+                    href="{% url 'blogs:tag_by_category' tag.name %}">{{ tag.name|lower}}</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      {% endfor %}
+      <!-- Pagination -->
+      {% if is_paginated %} {% if page_obj.has_previous %}
+
+      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+
+      {% endif %} {% for num in page_obj.paginator.page_range %}
+      {% if  page_obj.number == num %}
+      <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+
+      <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+
+      {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+
+      {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- BLOG section -->
+    <div class="blog pc-blog">
+      <div class="pc-blog-vid">
+        <h6 class="ff-fs2">Latest videos</h6>       
+        <div class="embed-responsive embed-responsive-16by9"><iframe width="50" height="35"
+            src="{{ video_list.video  }}" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="pc-blog-faq">
+        <h4 class="blog-heading ff-fs2">FAQ</h4>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  How long would take to response the Urgent Ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                Generally Techions from around the globe will response within
+                the given SLA's. In case if doesnt then Teckiy SME's will work
+                on this.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  How can I close the ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                Techions doesnt have access to close the ticket.Ideally users
+                should has to close the ticket. In case if user doesnt update
+                the ticket for a week, then Teckiy SME's will take a control &
+                close the ticket.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  How can I add a comment to existing answer provided by some
+                  techions?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Techions always welcome to submit the new answer. But techions
+                doesnt not have access to add a comment to another Techions
+                answer's. Only Users and respective Techions for a given answer
+                should have accesss to add a comment.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  What is the SLA's for HIGH & URGENT ticket?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              <div class="card-body">
+                Response time for HIGH Ticket : 15 to 24 hrs
+                <br />
+                Response time for URGENT Ticket : 8 to 15 hrs
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFive">
+              <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                  How can Techions earn money & points from answering tickets?
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+              <div class="card-body">
+                Teckiy's world everything related to points. For any tickets
+                techions resolving, respective points will be added to techions
+                account. But for Urgent/High or $ related tickets techions will
+                get points along with $ value. Techions could withdraw those
+                points as a $.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <h4 class="modal-title">
+              Hey <strong>{{ request.user.username }}</strong>
+            </h4>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Urgent Ticket SLA will be 8 Hours</li>
+              <li>High Ticket SLA will be 10 Hours</li>
+              <li>
+                Urgent/High Ticket make sure something production related issue
+              </li>
+              <li>
+                Also for Urgent/High please provide the requierd details to
+                techions at the earliest so that they could help you easily
+              </li>
+              <li>
+                If you like our platform please
+                <a href="{% url 'donate' %}">Support</a> here.
+              </li>
+              <li>
+                This is open source platform for all. So you can start helping
+                others & earn points($)
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block extrajs %} {% csrf_token %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("i").on("click", function () {
+      console.log("Testing....");
+      var this_ = $(this);
+      console.log(this_);
+      var favoriteUrl = this_.attr("href");
+      console.log(favoriteUrl);
+
+      $.ajax({
+        url: favoriteUrl,
+        method: "GET",
+        success: function (data) {
+          console.log(data);
+          $.each(data, function () {
+            $(this_).attr("href", String(data.url));
+            $(this_).attr(
+              "style",
+              "font-size:24px;float: right;color:" + String(data.color)
+            );
+          });
+        },
+        error: function (data) {
+          console.log(data);
+          console.log(error);
+        },
+      });
+    });
+  });
+</script>
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+  type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+{% endblock %}

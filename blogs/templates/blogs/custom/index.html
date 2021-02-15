@@ -1,0 +1,366 @@
+{% load static %}
+{% load blogs_extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, initial-scale=1.0, width=device-width, initial-scale=1">
+    <meta property="og:site_name"          content="Teckiy">
+    <meta property="og:title" content="Learn to Code." />
+    <meta property="og:image"   content="https://static.teckiy.com/teckiy.png" />
+    <meta property="og:url"                content="https://www.teckiy.com/" />
+    <meta name="description" content="Teckiy is a place to learn which includes Python, Django, Web Application Development, Web Scraping, kids educations & more. "/>
+    <meta name="keywords" content="coding,learning,teckiy,tutorials,html,css,python,django">
+    <meta name="author" content="Teckiy">
+
+   <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- Below 3 lines for Ckeditor code  -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- VISA Tracking Code for https://www.teckiy.com/ -->
+<script>(function(v,i,s,a){if(!v._visaSettings){v._visaSettings={};}v._visaSettings["e504f88f-8c33-11ea-b589-901b0edac50a"]={v:"0.3",s:"e504f88f-8c33-11ea-b589-901b0edac50a",a:"1"};_v=i.getElementsByTagName("head")[0];_a=_v;_i=i.createElement("script");_s=_i;_s.defer="defer";_s.src=s+a+v._visaSettings["e504f88f-8c33-11ea-b589-901b0edac50a"].v;_a.appendChild(_s);})(window,document,"//app-worker.visitor-analytics.io/main",".js?s=e504f88f-8c33-11ea-b589-901b0edac50a&v=")</script><!-- VISA Tracking Code for https://www.teckiy.com/ -->
+
+    {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% endcomment %}
+
+    {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'blogs/main.css' %}"> {% endcomment %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+<script type="text/javascript" src="/static/ckeditor/ckeditor-init.js" data-ckeditor-basepath="/static/ckeditor/ckeditor/" id="ckeditor-init-script"></script>
+<script type="text/javascript" src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166867100-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166867100-1');
+</script>
+
+  <link rel="shortcut icon" href="{% static 'blogs/images/teckiy.png' %}">
+
+          {% block internal_css %}
+
+          {% endblock %}
+
+    {% if post.title %}
+        <title> {{ post.title }} - Blog</title>
+    {% else %}
+        <title>{% include "blogs/common.html"  %}</title>
+        
+    {% endif %}
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'blogs/custom/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'blogs/custom/css/sb-admin-2.min.css' %}" rel="stylesheet">
+<style>
+
+.blog-class{
+
+  font-size: 30px;
+}
+</style>
+</head>
+
+<body id="page-top">
+  
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+
+       <a  href="{% url 'blogs:blog-home' %}"><img style=""  src="{% static 'blogs/images/teckiy.png' %}" class="img-fluid" alt="Responsive image"></a>
+     
+        
+       
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'blogs:blog-home' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Home</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'blogs:donate' %}" >
+          <i class="fas fa-money-bill-alt"></i>
+          <span>Support/Donate</span>
+        </a>
+
+      </li>
+
+      <!-- Nav Item - Utilities Collapse Menu -->
+
+
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
+
+
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action='/search'>
+            <div class="input-group">
+              <input id="mySearch" name='q' onkeyup="myFunction()" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - Alerts -->
+            
+
+            <!-- Nav Item - Messages -->
+            
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+			 {% if request.user.is_authenticated %}
+				<li class="nav-item dropdown no-arrow">
+				  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.username  }}</span>
+					<img class="img-profile rounded-circle" src="{{ user.profile.image.url }}">
+				  </a>
+				  <!-- Dropdown - User Information -->
+				  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="#">
+					  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+					  Profile
+					</a>
+
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="/accounts/logout/" data-toggle="modal" data-target="#logoutModal">
+					  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+					  Logout
+					</a>
+				  </div>
+				</li>
+			 {% else %}
+				<a class="nav-link" href="{% url 'account_login' %}" id="userDropdown" >
+					<strong>Login</strong>
+					
+				  </a>
+			{% endif %}
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+   
+
+          <!-- Content Row -->
+          <div class="row">
+
+			
+       
+				<div class="container blog-class">
+          
+      
+					  {% if messages %}
+						{% for message in messages %}
+
+						  <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+							<strong>{{ message }}</strong>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <!-- <div class="alert alert-{{ message.tags }}">
+							{{ message }}
+						  </div> -->
+						{% endfor %}
+					  {% endif %}
+					  
+					  {% block content %}{% endblock %}
+
+          
+				</div>
+        
+
+          </div>
+
+          <!-- Content Row -->
+
+         
+
+          <!-- Content Row -->
+          
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Teckiy 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+        
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <form method="POST" action="/accounts/logout/">
+          {% csrf_token %}
+           <button class="btn btn-primary" type="submit">Logout</button>
+          {% comment %} <a class="btn btn-primary" href="/accounts/logout/">Logout</a> {% endcomment %}
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'blogs/custom/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'blogs/custom/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'blogs/custom/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'blogs/custom/js/sb-admin-2.min.js' %}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{% static 'blogs/custom/vendor/chart.js/Chart.min.js' %}"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="{% static 'blogs/custom/js/demo/chart-area-demo.js' %}"></script>
+  <script src="{% static 'blogs/custom/js/demo/chart-pie-demo.js' %}"></script>
+<script type="text/javascript">
+  function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("mySearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("customers");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+
+</script> 
+</body>
+
+</html>

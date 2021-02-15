@@ -1,0 +1,31 @@
+{% load static %}
+{% with request.resolver_match.url_name as url_name %}
+{% if profile %}
+<div class="container d-flex flex-wrap justify-content-around d-lg-none">
+    <div
+        class="{% if url_name == 'profilesummary' %}active-tab-bg-mobile{% endif %} prior-font font-weight-bold ml-2 mr-4 mb-3 pt-3">
+        <a href="{% url 'users:profilesummary' profile.user %}"
+            class="p-1 tablinks active-tab tablinks-sm-scrn text-dark prior-font text-decoration-none border-0 bg-transparent">Profile
+        </a>
+    </div>
+    <div
+        class="{% if url_name == 'profileticket' %}active-tab-bg-mobile{% endif %}  prior-font font-weight-bold mr-4 mb-3 pt-3">
+        <a href="{% url 'users:profileticket' profile.user %}"
+            class="p-1 tablinks active-tab tablinks-sm-scrn text-dark prior-font text-decoration-none border-0 bg-transparent">Tickets
+        </a>
+    </div>
+    <div
+        class="{% if url_name == 'profilepost' %}active-tab-bg-mobile{% endif %}  prior-font font-weight-bold mr-4 mb-3 pt-3">
+        <a href="{% url 'users:profilepost' profile.user %}"
+            class="p-1 tablinks active-tab tablinks-sm-scrn text-dark prior-font text-decoration-none border-0 bg-transparent">Posts
+        </a>
+    </div>
+    <div
+        class="{% if url_name == 'profiletechion' %}active-tab-bg-mobile{% endif %}  prior-font font-weight-bold mb-3 pt-3">
+        <a href="{% url 'users:profiletechion' profile.user %}"
+            class="p-1 tablinks active-tab tablinks-sm-scrn text-dark prior-font text-decoration-none border-0 bg-transparent">Techion
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endwith %}

@@ -1,0 +1,270 @@
+{% extends "blogs/base_new.html" %}
+{% load humanize %}
+{% block title %}
+Teckiy - Learn,Share & Earn
+{% endblock %}
+{% load support_extras %}
+{% load static %}
+{% block content %}
+
+<div class="description-box-left-column des-box-left-col">
+  <div class="ques-user-img top-sctn-hp">
+    <div class="d-flex">
+      <h1 class="all-quest-fl p-2 mr-auto">All Tickets</h1>
+      <div class="d-flex flex-column">
+        <form class="mb-3" action="{% url 'support:create' %}">
+          <button type="button" class="btn btn-primary ask-a-quest-btn"><a class="ask-a-quest-link"
+              href="{% url 'support:create' %}">Submit Ticket</a></button>
+        </form>
+        <form class="fil-form ml-auto" action="">
+          <button id="filter-btn-id" type="button" class="btn btn-outline-secondary fil-btn">
+            <img src="{% static 'blogs/images/filter.svg' %}" alt="" class="w-100">
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- experiment -->
+    <div id="filter-id" class="filter-box">
+      <div class="filter-box2 w-100 p-3 ml-auto border">
+        <form method="get" class="fil-form mb-2 p-2 d-flex flex-column" action="">
+          <tr>
+            <th><label for="id_priority">Priority:</label></th>
+            <td><select name="priority" id="id_priority">
+                <option value="">---</option>
+
+                <option value="L">Low</option>
+
+                <option value="M">Medium</option>
+
+                <option value="H">High</option>
+
+                <option value="U">Urgent</option>
+
+              </select></td>
+          </tr>
+          <tr>
+            <th><label for="id_ticket_type">Ticket type:</label></th>
+            <td><select name="ticket_type" id="id_ticket_type">
+                <option value="" selected>---</option>
+
+                <option value="Q">Question</option>
+
+                <option value="P">Problem</option>
+
+                <option value="T">Task</option>
+
+              </select></td>
+          </tr>
+          <tr>
+            <th><label for="id_status">Status:</label></th>
+            <td><select name="status" id="id_status">
+                <option value="" selected>---</option>
+
+                <option value="I">In-Progress</option>
+
+                <option value="O">Open</option>
+
+                <option value="C">Closed</option>
+
+              </select></td>
+          </tr>
+          <tr>
+            <th><label for="id_category">Category:</label></th>
+            <td><select name="category" id="id_category">
+                <option value="" selected>---</option>
+
+                <option value="python">Python</option>
+
+                <option value="django">Django</option>
+
+                <option value="sql">SQL</option>
+
+                <option value="postgresql">PostgreSQL</option>
+
+                <option value="oracle">Oracle</option>
+
+                <option value="mysql">MYSQL</option>
+
+                <option value="javascript">Javascript</option>
+
+                <option value="java">Java</option>
+
+                <option value="vuejs">VueJS</option>
+
+                <option value="html">HTML</option>
+
+                <option value="css">CSS</option>
+
+                <option value="unix">Unix</option>
+
+                <option value="shellscript">Shell Script</option>
+
+                <option value="other">Other</option>
+
+              </select></td>
+          </tr>
+          <br>
+          <button type="submit" class="btn btn-primary">Apply
+            Filter</a></button>
+        </form>
+      </div>
+    </div>
+    <!-- experiment end -->
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+  <hr class="fil-hr">
+  <br>
+  {% if not object_list %}
+  <h3>Oops!!!.Search not found !!!</h3>
+  {% endif %}
+
+  {% for obj in object_list %}
+
+  <div class="row row-sctn-hp">
+
+    <div class="col-1 stats-col ust-col">
+      <div class="stats-view stats-view-nmt fs">
+        <!-- <span class="text-muted">Priority: </span> -->
+        {% if obj.priority == 'H' %}
+        <div class="">
+          <span class="font-weight-bold" style="font-size:18px; color:green;">$5</span></div>
+        <span class="text-muted text-center">{{ obj.get_priority_display }}</span>
+        {% endif %}
+        {% if obj.priority == 'U' %}
+        <div class="">
+          <span class="font-weight-bold" style="font-size:18px; color:green;">$10</span></div>
+        <span class="text-muted text-center">{{ obj.get_priority_display }}</span>
+        {% endif %}
+        {% if obj.priority == 'L' %}
+        <span class="text-muted">{{ obj.get_priority_display }}</span>
+        {% endif %}
+        {% if obj.priority == 'M' %}
+        <span class="text-muted">{{ obj.get_priority_display }}</span>
+        {% endif %}
+      </div>
+      <div class="stats-view stats-view-nmt fs">
+        <!-- <span class="text-muted">Type:</span> -->
+        <span class="text-muted">{{ obj.get_ticket_type_display }}</span>
+      </div>
+      <div class="stats-view stats-view-nmt fs">
+        {% if obj.status == 'I'  %}
+
+        <!-- <span class="text-muted">Status:</span> -->
+        <span class="bg-stat">{{ obj.get_status_display  }}</span>
+
+        {% endif %}
+        {% if obj.status == 'C'  %}
+
+        <!-- <span class="text-muted">Status:</span> -->
+        <span class="bg-stat-closed">{{ obj.get_status_display  }}</span>
+
+        {% endif %}
+        {% if obj.status == 'O'  %}
+
+        <!-- <span class="text-muted">Status:</span> -->
+
+        <span class="bg-stat-open">{{ obj.get_status_display  }}</span>
+        {% endif %}
+      </div>
+      <!-- <div class="text-muted stats-view fs">Type:</div> -->
+    </div>
+    <div class="col-10 descriptive-col">
+      <a class="quest-head-hp" href="{{ obj.get_absolute_url  }}">{{ obj.title }}</a>
+      <div class="quest-sctn">
+        {{ obj.content|safe|truncatewords_html:20 }}
+      </div>
+      <div class="submit-status-margin tag-name">
+        <span class="text-muted submit-status tags">
+          <a href="" class="sh-ed-td">{{ obj.get_category_display }}</a>
+        </span>
+      </div>
+      <div class="name-footer-hp">
+        <div class="text-muted footer-submit">
+          asked {{ obj.date_posted|naturaltime }}
+        </div>
+        <div>
+          <img class="rounded-circle img-name" src="{{ obj.user.profile.image.url }}">
+        </div>
+        <div>
+          <!-- <a href="{% url 'users:profile' obj.user.username %}"
+                          class="user-name fs img-name">{{ obj.user.username }}</a> -->
+          <a href="{% url 'users:profile' obj.user.username %}"
+            class="user-name fs img-name">{% display_name obj.user %}</a>
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr class="hr-mt-hp">
+  {% endfor %}
+
+  <!-- PAGINATION -->
+  {% if is_paginated %}
+
+  {% if page_obj.has_previous %}
+  <a class="btn  btn-outline-primary mb-4" href="?{% paginate_url 'page' 1 request.GET.urlencode %}">First</a>
+  <a class="btn  btn-outline-primary mb-4"
+    href="?{% paginate_url 'page' page_obj.previous_page_number request.GET.urlencode %}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+  {% if page_obj.number == num %}
+  <a class="btn  btn-primary mb-4" href="?{% paginate_url 'page' num request.GET.urlencode %}">{{ num }}</a>
+  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+  <a class="btn  btn-outline-primary mb-4" href="?{% paginate_url 'page' num request.GET.urlencode %}">{{ num }}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <a class="btn btn-outline-primary mb-4"
+    href="?{% paginate_url 'page' page_obj.next_page_number request.GET.urlencode %}">Next</a>
+  <a class="btn  btn-outline-primary mb-4"
+    href="?{% paginate_url 'page' page_obj.paginator.num_pages request.GET.urlencode %}">Last</a>
+  {% endif %}
+
+  {% endif %}
+
+
+  <!-- experiment end -->
+</div>
+<div class="right-column">
+  <div class="features-mb">
+    {% include "blogs/home_content.html" %}
+  </div>
+
+  <!-- BLOG section -->
+  <!-- <div class="blog-hp fs">
+        <h4 class="blog-heading">Blog</h4>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+        voluptas
+        nihila liquid magnamh
+        placeat qui esse quaerat rem neque odit unde quis repellendus impedit aliquam fugit
+        itaque!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim doloremque laboriosam eos quod,
+        tempora unde facilis repudiandae magni illum quam nobis perspiciatis quasi consequatur ab
+        eveniet maiores doloribus, quo ea.
+    </div> -->
+
+</div>
+{% endblock %}
+{% block extrajs %}
+
+<!-- script for checkbox dropdown -->
+
+<script>
+  document.getElementById("filter-btn-id").onclick = function () {
+    var filterdiv = document.getElementById("filter-id");
+    var filterbtn = document.getElementById("filter-btn-id");
+    if (filterdiv.style.display == "block") {
+      filterdiv.style.display = "none";
+    } else {
+      filterdiv.style.display = "block";
+    }
+  }
+</script>
+
+{% endblock extrajs %}

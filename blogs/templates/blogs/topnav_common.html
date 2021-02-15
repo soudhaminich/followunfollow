@@ -1,0 +1,414 @@
+{% load static %}
+
+<style>
+    .navbar {
+        background-color: #131419ea;
+        height: 50px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        border-top: solid 2px red;
+    }
+
+    .btn-padding {
+        padding: 2px 4px;
+        margin-right: 5px;
+        border: solid 1px white !important;
+    }
+
+    .ic-size {
+        background-color: white;
+        box-shadow: 0 0 5px #28b0ee inset;
+    }
+
+    .navbar-logo {
+        /*width: 60px;
+        height: 28px;*/
+        width: 85px;
+        height: 32px;
+        box-shadow: 0 0 5px #28b0ee outset;
+        animation: logo 20s infinite ease-in-out;
+    }
+
+    .navbar-sm-scrn-logo {
+        width: 55px;
+        height: 40px;
+        padding-left: 15px;
+        animation: sm-logo 20s infinite ease-in-out;
+    }
+
+    @keyframes logo {
+        0% {
+            opacity: 1;
+            transform: none;
+            /*transform: rotateY(360deg);*/
+        }
+
+        25% {
+            opacity: 1;
+            transition: 4s;
+        }
+
+        50% {
+            opacity: 1;
+            transition: 4s;
+            transform: rotateY(360deg);
+        }
+
+        75% {
+            opacity: 1;
+            transition: 4s;
+        }
+
+        100% {
+            opacity: 1;
+
+        }
+    }
+
+    @keyframes sm-logo {
+        0% {
+            opacity: 0;
+        }
+
+        25% {
+            opacity: 1;
+            transition: 4s;
+            transform: rotateY(360deg);
+        }
+
+        50% {
+            opacity: 0;
+            transition: 4s;
+            transform: rotateY(360deg);
+        }
+
+        75% {
+            opacity: 1;
+            transition: 4s;
+            transform: rotateY(360deg);
+        }
+
+        100% {
+            opacity: 0;
+            transition: 4s;
+            transform: rotateY(180deg);
+        }
+    }
+
+    .navbar-logo:hover {
+        animation: logohover;
+    }
+
+    @keyframes logohover {
+
+        0%,
+        25%,
+        50%,
+        75%,
+        100% {
+            transform: none;
+        }
+    }
+
+    .nav-ul {
+        padding-left: 5px;
+        box-shadow: 0 0 20px rgb(223, 222, 222);
+    }
+
+    .pcds-display {
+        display: none !important;
+    }
+
+    .mr {
+        flex-grow: 0 !important;
+    }
+
+    .search-box {
+        width: 450px;
+        height: 35px;
+        border: none;
+        background-color: #131419ea;
+        box-shadow: 0 0 5px #28b0ee inset;
+    }
+
+    .search-box:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px #28b0ee;
+        border: solid 1px white;
+    }
+
+    .search-box::placeholder {
+        color: white;
+    }
+
+    .search-btn {
+        height: 35px !important;
+        padding: 0 5px !important;
+        margin-right: 5px;
+    }
+
+    .search-icon {
+        background-color: #131419ea;
+        box-shadow: 0 0 5px #28b0ee inset;
+        border-radius: 5px;
+    }
+
+    .search-icon:hover {
+        background-color: #131419ea;
+        border: solid 1px white;
+        box-shadow: 0 0 5px #28b0ee inset;
+    }
+
+    button .search-icon {
+        width: 30px;
+    }
+
+    .login-hp,
+    .signup-hp {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #131419ea;
+        box-shadow: 0 0 5px #28b0ee inset;
+    }
+
+    .signup-hp {
+        margin-right: 0px !important;
+        margin-left: 3px !important;
+    }
+
+    .login-hp:hover,
+    .signup-hp:hover:hover {
+        /* background-color: #0077cc; */
+        background-color: #131419ea;
+        border: solid 1px white;
+        box-shadow: 0 0 5px #28b0ee;
+    }
+
+    .user-icon {
+        width: 18px;
+        height: 25px;
+        margin: 0 !important;
+        padding-bottom: 3px;
+        padding-top: 3px;
+    }
+
+    .user-button {
+        height: 28px !important;
+        padding: 1px 6px 2px 3px !important;
+        color: white !important;
+        background-color: #131419ea;
+        box-shadow: 0 0 5px #28b0ee;
+    }
+
+    .user-button:hover {
+        border: solid 1px white;
+        box-shadow: 0 0 5px #28b0ee;
+    }
+
+    /* .search-box-sm-scrn{  */
+    #appear-search-bar {
+        display: none;
+    }
+
+    @media only screen and (min-width: 200px) and (max-width: 332px) {
+
+        .search-btn,
+        .login-hp,
+        .signup-hp {
+            padding: 5px 1px;
+        }
+
+        .search-btn {
+            margin-right: 5px;
+        }
+
+        .navbar-logo {
+            width: 60px;
+            height: 29px;
+            margin-top: 0;
+        }
+
+        .ic-size {
+            width: 25px;
+            height: 30px;
+        }
+
+    }
+
+    @media only screen and (min-width: 200px) and (max-width: 991px) {
+        .navbar-logo {
+            width: 70px;
+            height: 28px;
+            margin-top: 0;
+        }
+
+        .nav-left {
+            padding-top: 0;
+        }
+
+        .ic-size {
+            width: 40px;
+            height: 30px;
+        }
+
+        .btn-padding {
+            padding: 0 !important;
+            margin-right: 0px !important;
+        }
+
+        .nav-ul {
+            margin-top: 10px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            background-color: white;
+            width: 150px;
+            line-height: 2.2rem;
+        }
+
+        .pcds-display {
+            display: block !important;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        .navbar-logo {
+            margin-top: 0;
+            padding-top: 0;
+        }
+    }
+
+    @media only screen and (min-width: 200px) and (max-width: 767px) {
+        .search-box {
+            display: none;
+        }
+
+        .user-button {
+            margin-left: 0 !important;
+        }
+
+        .ko-fi-div {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .txt-area-wh {
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            padding-right: 10px;
+        }
+
+        #appear-search-bar {
+            width: 80%;
+            height: 35px;
+            margin-left: 8%;
+            margin-right: 5%;
+            z-index: 1;
+            /*margin-top: 0;*/
+            position: fixed;
+            top: 50px;
+            box-shadow: 0 0 20px rgb(223, 222, 222);
+        }
+    }
+</style>
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div>
+            <div class="nav-left">
+                <button class="navbar-toggler btn-padding" type="button" data-toggle="collapse"
+                    data-target="#navbarNav">
+                    <span class="navbar-toggler-icon ic-size"></span>
+                </button>
+                <!-- for large screens logo -->
+                <!-- <span style="position: relative;"> -->
+                <a href="/"><img style="height:38px;" class="navbar-logo"
+                        src="{% static 'blogs/images/teckiy-new-logo.png' %}" alt="teckiy-logo"></a>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse order-1 order-lg-0 mr" id="navbarNav">
+            <ul class="navbar-nav nav-ul">
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="/">Home</a>
+                </li>
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="/about/">About</a>
+                </li>
+                <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Team</a>
+                    </li> -->
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="{% url 'blogs:blog-home' %}">Posts</a>
+                </li>
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="{% url 'tecsee:all-videos' %}">TecSee</a>
+                </li>
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="{% url 'donate' %}">Donate</a>
+                </li>
+                <li class="nav-item pcds-display">
+                    <a class="nav-link prior-font pl-2" href="{% url 'analytics:suggestion' %}">Suggestions</a>
+                </li>
+            </ul>
+        </div>
+        <form class="search-box-form mx-auto" action="/search/">
+            <input class="form-control search-box prior-font" id="mySearch" onkeyup="myFunction()" name='q'
+                type="search" placeholder="Search" aria-label="Search">
+        </form>
+
+        <a href="#">
+            <img class="search-icon search-btn d-md-none" id="click-search"
+                src="{% static 'blogs/images/iconfinder_icon-111-search_314478.svg' %}" alt="">
+        </a>
+        {% if request.user.is_authenticated %}
+        <div>
+            <!-- notification -->
+            {% include "blogs/notifications.html" %}
+            <!-- USER Dropdown Button - NavBar -->
+            <button class="btn dropdown-toggle user-button dropdown ml-auto" type="button" id="dropdownMenu2"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="user-icon" src="{% static 'blogs/images/iconfinder-icon.svg' %}" alt="avatar-icon">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                <a class="text-decoration-none prior-font" href="{% url 'users:profile' request.user %}"><button
+                        type="button" class="dropdown-item" data-toggle="modal"
+                        data-target="#modal-1">Account</button></a>
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <button class="dropdown-item prior-font" type="submit">Logout</button></a>
+                </form>
+            </div>
+        </div>
+        <!-- experiment below -->
+
+        {% else %}
+        <form action="{% url 'account_login' %}">
+            <button type="submit" class="btn btn-primary login-hp fs">Log in</button>
+        </form>
+        <form action="{% url 'account_signup' %}">
+            <button type="submit" class="btn btn-primary signup-hp fs">Sign up</button>
+        </form>
+        {% endif %}
+    </nav>
+
+    <div>
+        <form id="appear-search-bar" action="/search/">
+            <input class="form-control d-md-none mx-auto" onkeyup="myFunction()" name='q' type="search"
+                placeholder="Search" aria-label="Search">
+        </form>
+    </div>
+
+</div>
+<script>
+    document.getElementById("click-search").onclick = function () {
+        document.getElementById("click-search").style.backgroundColor = "#131419ea";
+        //document.getElementById("click-search").style.border = "solid 1px white";
+        document.getElementById("click-search").style.boxShadow = "0 0 5px #28b0ee inset";
+        var srchBar = document.getElementById("appear-search-bar");
+        if (srchBar.style.display == "block") {
+            srchBar.style.display = "none";
+        } else {
+            srchBar.style.display = "block";
+        }
+    }
+
+</script>

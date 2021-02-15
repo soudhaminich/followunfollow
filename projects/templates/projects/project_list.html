@@ -1,0 +1,33 @@
+{% extends "blogs/base.html" %} {% block title %} Teckiy - Projects {%endblock%}
+{% load staticfiles %} {% block content %}
+<div class="row">
+  <div class="box-element">
+    {% include "blogs/side_navbar.html" %}
+  </div>
+  <div class="col-lg-6">
+    <div class="box-element">
+      <h3>Projects</h3>
+      <br />
+      {% for obj in object_list %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title d-flex justify-content-center">
+            <a target="_blank" href="{{ obj.project_link }}">{{ obj.title }}</a>
+          </h5>
+
+          <p class="card-text">{{ obj.description }}</p>
+          <!-- <p class="card-text"><small class="text-muted">Posted By {{ obj.author.username|title }} - {{ obj.date_posted|date:"F d, Y" }}</small></p> -->
+        </div>
+        <a target="_blank" href="{{ obj.project_link }}"
+          ><img
+            height="200"
+            src="{{ obj.project_image.url }}"
+            class="card-img-top"
+            alt="..."
+        /></a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

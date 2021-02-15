@@ -1,0 +1,28 @@
+{% extends "blogs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ post.author.profile.image.url }}">
+
+        <div class="media-body">
+          {{ follower }}
+
+            {% if request.user != post.author %}
+                {% if post.author.profile.follow_count != 0 %}
+                  <button type="button" class="btn btn-primary float-right">{{ post.author.profile.follow_count }} Follow</button>
+                {% else %}
+                  <button type="button" class="btn btn-primary float-right">Follow</button>
+                {% endif %}
+            {% endif %}
+          <h2 class="account-heading">{{ post.author }}</h2>
+
+
+          <p class="text-secondary">{{ post.author.email }}</p>
+        </div>
+      </div>
+
+
+ </div>
+{% endblock content %}

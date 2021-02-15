@@ -1,0 +1,357 @@
+{% extends "blogs/base_account.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="profile-main">
+    <div class="row profile-r">
+        <div class="col-lg-3 d-lg-block d-none pl-5 profile-c">
+            <div class="profile-sticky">
+                <div class="d-flex flex-column tab">
+                    <div class="pt-3 mb-1 mt-4 profile-img">
+                        <img src="{{ profile.image.url }}">
+                    </div>
+                    <div class="profile-user">
+                        {% if profile %}
+                        <span class="profile-user-name">@{{ profile.user }}</span>
+                        {% endif %}
+                        {% if request.user == profile.user %}
+                        <a data-toggle="tooltip" title="Edit Profile" href="{% url 'users:edit' request.user %}"
+                            class="mb-2 profile-edit"><img src="{% static 'blogs/images/edit-blue.svg'%}" alt=""></a>
+                        <br />
+                        {% endif %}
+                    </div>
+                    <div class="text-muted mb-1 profile-join" id="joined-date">Joined on
+                        {{ user_instance.date_joined|date }}</div>
+                    <div class="text-center profile-join pb-2 mb-2">
+                        {% if  profile.fb_url %}
+                        <a href="{{ profile.fb_url }}" target='_blank'><img class="profile-social mr-1"
+                                src="{% static 'blogs/images/profile-fb.svg' %}" alt="facebook-icon"></a>
+                        {% endif %}
+                        {% if  profile.tw_url %}
+                        <a href="{{ profile.tw_url }}" target='_blank'><img class="profile-social"
+                                src="{% static 'blogs/images/profile-tweet.svg' %}" alt="twitter-icon"></a>
+                        {% endif %}
+                        {% if  profile.lki_url %}
+                        <a href="{{ profile.lki_url }}" target='_blank'><img class="profile-social"
+                                src="{% static 'blogs/images/profile-Lin.svg' %}" alt="linkedin-icon"></a>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <button class="tablinks p-2 mb-2" onclick="openTab(event, 'Professional Summary')"
+                            id="defaultTab">Professional
+                            Summary</button>
+                    </div>
+                    <div>
+                        <button class="tablinks p-2 mb-2" onclick="openTab(event, 'Tickets')">Tickets</button>
+                    </div>
+                    <div><button class="tablinks p-2 mb-2" onclick="openTab(event, 'Techion')">Techion</button>
+                    </div>
+                    <div><button class="tablinks p-2 mb-2" onclick="openTab(event, 'Posts')">Posts</button>
+                    </div>
+                    {% if request.user == profile.user %}
+                    <div class="edit-profile">
+                        <a class="p-2" href="{% url 'users:edit' request.user %}">Edit Profile</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- <div class="d-sm-block d-none"style="border-left:1px solid lightgrey; height:100vh;"></div> -->
+        <!-- <div style="" class="col-sm-1 d-none"></div> -->
+        <div class="col-lg-8 col-12 profile-right-col">
+
+            <!-- experiment -->
+            <div class="mt-4 profile-m d-lg-none d-block">
+                <div class="d-flex flex-column tab tab-2">
+                    <div class="pt-3 mb-1 mt-4 mx-auto profile-img profile-img-2">
+                        <img src="{{ profile.image.url }}">
+                    </div>
+                    <div class="profile-user profile-user2">
+                        {% if profile %}
+                        <span class="profile-user-name">@{{ profile.user }}</span>
+                        {% endif %}
+                        {% if request.user == profile.user %}
+                        <a data-toggle="tooltip" title="Edit Profile" href="{% url 'users:edit' request.user %}"
+                            class="mb-2 profile-edit"><img src="{% static 'blogs/images/edit-blue.svg'%}" alt=""></a>
+                        <br />
+                        {% endif %}
+                    </div>
+                    <div class="text-muted mb-3 profile-join profile-join2" id="joined-date">Joined on
+                        {{ user_instance.date_joined|date }}</div>
+                    <div class="text-center profile-join profile-join2 pb-2 mb-1">
+                        {% if  profile.fb_url %}
+                        <a href="{{ profile.fb_url }}" target='_blank'><img class="profile-social mr-1"
+                                src="{% static 'blogs/images/profile-fb.svg' %}" alt="facebook-icon"></a>
+                        {% endif %}
+                        {% if  profile.tw_url %}
+                        <a href="{{ profile.tw_url }}" target='_blank'><img class="profile-social"
+                                src="{% static 'blogs/images/profile-tweet.svg' %}" alt="twitter-icon"></a>
+                        {% endif %}
+                        {% if  profile.lki_url %}
+                        <a href="{{ profile.lki_url }}" target='_blank'><img class="profile-social"
+                                src="{% static 'blogs/images/profile-Lin.svg' %}" alt="linkedin-icon"></a>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex flex-wrap mx-auto">
+                        <div>
+                            <button class="tablinks tablinks-2 p-2 mb-2"
+                                onclick="openTab(event, 'Professional Summary')" id="defaultTab">Professional
+                                Summary</button>
+                        </div>
+                        <div>
+                            <button class="tablinks tablinks-2 p-2 mb-2"
+                                onclick="openTab(event, 'Tickets')">Tickets</button>
+                        </div>
+                        <div><button class="tablinks tablinks-2 p-2 mb-2"
+                                onclick="openTab(event, 'Techion')">Techion</button>
+                        </div>
+                        <div><button class="tablinks tablinks-2 p-2 mb-2"
+                                onclick="openTab(event, 'Posts')">Posts</button>
+                        </div>
+                        <!-- {% if request.user == profile.user %}
+            <div class="edit-profile edit-profile-2">
+                <a class="p-4 mt-5" href="{% url 'users:edit' request.user %}">Edit Profile</a>
+            </div>
+            {% endif %} -->
+                    </div>
+                </div>
+            </div>
+            <!-- experiment end -->
+            <!-- Professional Summary  -->
+            <div id="Professional Summary" class="tabcontent p-3 mt-4">
+                <!-- <div class="mb-2"> -->
+                <div class="mt-4 pb-3">
+                    <div class="pb-1 pf-ps-title"><strong>Professional Summary</strong></div>
+
+                    {% if profile.professional_summary %}
+                    <div class="pf-ps-content"> {{ profile.professional_summary|safe }}</div>
+                    {% elif request.user == profile.user %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Hi {{ profile.user.username }}!</strong> Your Profile started getting attention. Its
+                        right time to update your profile!!!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% else %}
+                    <p></p>
+                    {% endif %}
+
+                </div>
+                {% if not profile.professional_summary %}
+                <hr class="ps-hr pb-3">
+                {% endif %}
+                <div>
+                    <div class="pb-1 profile-skills">
+                        <strong>Skills</strong>
+                    </div>
+                    {% if profile.skillset %}
+                    <div>
+                        <ul>
+                            <li>{{ profile.skillset }}</li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                <hr class="ps-hr pb-3">
+                <!-- <div class="">
+                    <div class="profile-bp">
+                        <strong>Badges</strong>
+                    </div>
+                    <div>No Badges at this moment</div>
+                </div>
+                <hr class="ps-hr pb-3">
+                <div class="">
+                    <div class="profile-bp">
+                        <strong>Points</strong>
+                    </div>
+                    <div>No Points at this moment</div>
+                </div> -->
+                <hr class="ps-hr pb-3">
+            </div>
+
+            <!-- Professional Summary End -->
+            <div id="Tickets" class="tabcontent p-3 mt-4">
+                {% if ticket_instance_count > 0 %}
+                <div class="mb-4 mt-4 text-muted profile-sub-tckt">Tickets Submitted
+                    <span class="profile-tkt-count">
+                        <strong>{{ ticket_instance_count }}</strong>
+                    </span>
+                </div>
+                {% if ticket_details %}
+                {% for t in ticket_details %}
+                <!-- <div class="row pt-3">
+        <div class="col-12 mb-2 p-2" style="border: solid 1px lightgrey; border-radius:10px;"> -->
+                <div class="d-flex mb-3 p-2 profile-tkt-post">
+                    <div class="mr-2 pl-2 pr-2 profile-tkt-lc">
+                        <div class="pb-2 profile-tkt-pname">
+                            <a href="{% url 'support:detail' t.slug %}">
+                                {{ t.title }}
+                            </a>
+                        </div>
+                        <div class="d-flex">
+                            <div>
+                                <span class="text-muted profile-p-tp">Type</span>
+                                <span class="pr-2 profile-p-tp">{{ t.get_ticket_type_display }}</span>
+                            </div>
+                            <div>
+                                <span class="text-muted profile-p-tp">Priority</span>
+                                <span class="pr-2 profile-p-tp">{{ t.get_priority_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% if user == t.user %}
+                    <div class="d-flex flex-wrap pr-1 mr-1 profile-p-ep">
+                        <div class="p-tkt-edit">
+                            <a href="{% url 'support:edit' t.slug %}">
+                                <button class="btn btn-outline-primary">Edit</button>
+                            </a>
+                        </div>
+                        {% if 'P' in t.priority %}
+                        <div class="pl-2 pr-2">/</div>
+                        <div class="p-tkt-pay">
+                            <a href="{% url 'support:ticket_pay' t.slug %}"><button
+                                    class="btn btn-danger">Pay</button></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- </div> col div end 
+        </div> Row div end -->
+                {% endfor %}
+                {% endif %}
+                {% else %}
+                <div class="profile-no-a">No activities yet</div>
+                {% endif %}
+            </div>
+
+            <!-- Techion -->
+            <div id="Techion" class="tabcontent p-3 mt-4">
+                <div class="d-flex mt-4 p-3 profile-tech">
+                    <div class="pl-2 mr-2 profile-tech-bimg">
+                        <img src="{% static 'blogs/images/badges.png' %}" alt="">
+                        <div class="profile-tech-b">Badges</div>
+                    </div>
+                    <div class="flex-grow-1 my-auto">
+                        {% if profile.badges %}
+                        <div style="text-align: center;">
+                            <h3>{{ profile.get_badges_display }}</h3>
+                        </div>
+                        {% else %}
+                        <div class="flex-grow-1 my-auto profile-tech-b-no">No Badges at this moment</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- points -->
+                <div class="d-flex mt-4 p-3 mb-4 profile-tech">
+                    <div class="pl-2 mr-2 profile-tech-bimg">
+                        <img src="{% static 'blogs/images/point.svg' %}" alt="">
+                        <div class="profile-tech-b">Points</div>
+                    </div>
+                    <div class="flex-grow-1 my-auto">
+                        {% if points %}
+                        <div style="text-align: center;"><strong>{{ points }}</strong> points</div>
+                        {% else %}
+                        <div class="profile-tech-b-no">No Points at this moment</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- points to redeem -->
+                {% if request.user == profile.user %}
+                <div class="d-flex mt-4 p-3 mb-4 profile-tech">
+                    <div class="pl-2 mr-2 profile-tech-bimg">
+                        <img src="{% static 'blogs/images/point.svg' %}" alt="">
+                        <div class="profile-tech-b">Points to Redeem</div>
+                    </div>
+                    <div class="flex-grow-1 my-auto">
+
+                        <div class="profile-tech-b-no">No Points to redeem at this moment</div>
+
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+            <!-- Techion End -->
+
+
+            <div id="Posts" class="tabcontent p-3 mt-4">
+
+                <!-- <div class="mb-4 mt-4 text-muted profile-sub-tckt">Total Posts
+                    <span class="profile-tkt-count">
+                        <strong>{{ ticket_instance_count }}</strong>
+                    </span>
+                </div> -->
+                {% if posts %}
+                {% for t in posts %}
+                <!-- <div class="row pt-3">
+        <div class="col-12 mb-2 p-2" style="border: solid 1px lightgrey; border-radius:10px;"> -->
+                <div class="d-flex mb-3 p-2 profile-tkt-post">
+                    <div class="mr-2 pl-2 pr-2 profile-tkt-lc">
+                        <div class="pb-2 profile-tkt-pname">
+                            <a href="{% url 'blogs:detail' t.slug %}">
+                                {{ t.title }}
+                            </a>
+                            <div class="p-tkt-edit">
+                                {% if user == t.author %}
+                                <a href="{% url 'blogs:edit' t.slug %}" style="float:right;">
+                                    <button class=" btn btn-outline-secondary">Edit</button>&nbsp;
+                                </a>
+                                &nbsp;
+                                {% if t.approved == 'N' %}
+
+                                <button class=" btn btn-outline-info">Approval Pending</button>
+
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+            </div>
+            <!-- post end -->
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+    type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock extrajs %}

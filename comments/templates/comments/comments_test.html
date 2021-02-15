@@ -1,0 +1,98 @@
+{% extends "blogs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <article class="media content-section">
+          <div class="media-body">
+
+            <h2><a class="article-title">{{ post.title }}</a></h2>
+            <p class="article-content">{{ object.content }}</p>
+            {% if object.blog_image %}
+                <img  src="{{ object.blog_image.url }}">
+            {% endif %}
+
+
+
+
+            {% if request.user == post.author or request.user.groups.all.0.name == 'Developer' %}
+            <hr>
+
+
+                    <small><a class="btn btn-primary" href="{% url 'blogs:update' post.id %}">Update</a></small>
+                    <small><a class="btn btn-danger" href="{% url 'blogs:delete' post.id %}" style="float: right;">Delete</a></small>
+
+            {% endif %}
+
+          </div>
+
+
+        </article>
+
+<!--
+            <div class="container">
+
+                    {{ request.user }}
+                    <p id='outmessage'></p>
+            </div>
+ -->
+          <form id="commentform" method='POST' action={% url 'comments:comment-view' %}>
+            {% csrf_token %}
+        <div class="form-group">
+
+          {{ form|crispy }}
+              <br/>
+              <button type="submit" id="commentmsg" class="btn btn-info" style="float: right;">Send</button>
+            </div>
+          </form>
+
+{% endblock content %}
+
+<!-- {% block extrajs %}
+{% csrf_token %}
+<script type="text/javascript">
+
+
+
+  $(document).ready(function(){
+    console.log('Hello Vengat')
+    var frm = $('#commentform');
+      frm.submit(function(e){
+        e.preventDefault()
+
+
+        var this_ = $(this)
+        // var likeUrl = this_.attr("href")
+        // var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        // console.log(likeUrl);
+
+           $.ajax({
+            url: '/comment/',
+
+            method: "POST",
+            data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+            data: $(this).serialize(),
+            dataType: 'json',
+            // data: {},
+            // csrftoken: csrftoken,
+            success: function(data){
+
+              // var newUrl = String(likeUrl.replace('0/',data.obj+'/'))
+              console.log('Success');
+
+              $('p#outmessage').text(data.comment_msg);
+
+
+              },
+              error: function(error){
+              console.log(error)
+              console.log("error")
+            }
+          })
+
+
+      })
+    });
+
+
+</script>
+{% endblock  %} -->

@@ -1,0 +1,231 @@
+{% extends "blogs/base_static.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block title %}
+Teciky - Policy
+{% endblock %}
+{% load static %}
+{% block content %}
+
+<!-- QUESTION HEADING -->
+<div class="row right-scrollable-section ">
+	<div class="question-header col-12">
+
+		<!-- DESCRIPTION-BOX -->
+		<div class="description-box-left-column policy-pg-column">
+			<div>
+				<h4>Privacy Policy</h4>
+				<p>We collect several different types of information for various purposes to continuously provide and
+					improve our services to you.</p>
+			</div>
+			<br>
+			<div>
+				<h5>Types of Data Collected</h5>
+			</div>
+
+			<div>
+				<h5>Personal Data</h5>
+				<p>While using our Service, we may ask you to provide us with certain personally identifiable
+					information that can be used
+					to contact or identify you (“Personal Data”). </p>
+				<p>Personally identifiable information may include, but is <i><strong>not limited</strong></i> to:
+					<li>Email address</li>
+					<li>First name and last name</li>
+					<li>Cookies and Usage Data</li>
+				</p>
+			</div>
+			<br>
+			<div>
+				<h5>Usage Data</h5>
+				<p>We may also collect information on how the Service is accessed and used (“Usage Data”). This Usage
+					Data may include
+					information such as your computer’s Internet Protocol address (e.g. IP address), browser type,
+					browser version, the
+					pages of our Service that you visit, the time and date of your visit, the time spent on those pages,
+					unique device
+					identifiers and other diagnostic data.</p>
+			</div>
+			<br>
+			<div>
+				<h5>Tracking & Cookies Data</h5>
+				<p>We use cookies and similar tracking technologies to track the activity on our Service and hold
+					certain information.
+					<strong>Cookies</strong> are files with small amount of data which may include an anonymous unique
+					identifier. Cookies are sent to your
+					browser from a website and stored on your device. Tracking technologies also used are beacons, tags,
+					and scripts to
+					collect and track information and to improve and analyze our Service.</p>
+			</div>
+			<br>
+			<div>
+				<h5>Disclosure Of Data</h5>
+				<p><strong>Legal Requirements</strong></p>
+				<p><strong>teckiy.com</strong> may disclose your Personal Data in the good faith belief that such action
+					is necessary to:
+					<li>To comply with a legal obligation</li>
+					<li>To protect and defend the rights or property of techwithtim.net</li>
+					<li>To prevent or investigate possible wrongdoing in connection with the Service</li>
+					<li>To protect the personal safety of users of the Service or the public</li>
+					<li>To protect against legal liability</li>
+				</p>
+			</div>
+			<br>
+			<div>
+				<h5>Security Of Data</h5>
+				<p>The security of your data is important to us, but remember that no method of transmission over the
+					Internet, or method
+					of electronic storage is 100% secure. While we strive to use commercially acceptable means to
+					protect your Personal
+					Data, we cannot guarantee its absolute security.</p>
+			</div>
+			<br>
+			<div>
+				<h5>Service Providers</h5>
+				<p>We may employ third party companies and individuals to facilitate our Service (“Service Providers”),
+					to provide the
+					Service on our behalf, to perform Service-related services or to assist us in analyzing how our
+					Service is used.
+					These third parties have access to your Personal Data only to perform these tasks on our behalf and
+					are obligated not to
+					disclose or use it for any other purpose.</p>
+			</div>
+			<br>
+			<div>
+				<h5>Analytics</h5>
+				<p>We may use third-party Service Providers like <strong>Google Analytics</strong> to monitor and
+					analyze the use of our Service.
+					<br>
+					<strong>Google Analytics</strong> is a web analytics service offered by Google that tracks and
+					reports website traffic. Google uses the
+					data collected to track and monitor the use of our Service. This data is shared with other Google
+					services. Google may
+					use the collected data to contextualize and personalize the ads of its own advertising network.
+					You can opt-out of having made your activity on the Service available to Google Analytics by
+					installing the Google
+					Analytics opt-out browser add-on. The add-on prevents the Google Analytics JavaScript (ga.js,
+					analytics.js, and dc.js)
+					from sharing information with Google Analytics about visits activity.
+					<br>
+					For more information on the privacy practices of Google, please visit the Google Privacy & Terms web
+					page:
+					<a target='_blank'
+						href="https://policies.google.com/privacy?hl=en">https://policies.google.com/privacy?hl=en</a>
+				</p>
+			</div>
+		</div>
+		<!-- BLOG section -->
+		<div class="blog">
+			<span>
+				<h4 class="blog-heading">FAQ's</h4>
+				<div class="accordion" id="accordionExample">
+					<div class="card">
+						<div class="card-header" id="headingOne">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+									data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									How long would take to response the Urgent Ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Generally Techions from around the globe will response within
+								the given SLA's. In case if doesnt then Teckiy SME's will work
+								on this.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingTwo">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+									aria-controls="collapseTwo">
+									How can I close the ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Techions doesnt have access to close the ticket.Ideally users
+								should has to close the ticket. In case if user doesnt update
+								the ticket for a week, then Teckiy SME's will take a control &
+								close the ticket.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingThree">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+									aria-controls="collapseThree">
+									How can I add a comment to existing answer provided by some
+									techions?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Techions always welcome to submit the new answer. But techions
+								doesnt not have access to add a comment to another Techions
+								answer's. Only Users and respective Techions for a given answer
+								should have accesss to add a comment.
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingFour">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+									aria-controls="collapseFour">
+									What is the SLA's for HIGH & URGENT ticket?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Response time for HIGH Ticket : 15 to 24 hrs
+								<br />
+								Response time for URGENT Ticket : 8 to 15 hrs
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header" id="headingFive">
+							<h2 class="mb-0">
+								<button class="btn btn-link btn-block text-left collapsed" type="button"
+									data-toggle="collapse" data-target="#collapseFive" aria-expanded="false"
+									aria-controls="collapseFive">
+									How can we earn money & points from answering tickets?
+								</button>
+							</h2>
+						</div>
+						<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+							data-parent="#accordionExample">
+							<div class="card-body">
+								Teckiy's world everything related to points. For any tickets
+								techions resolving, respective points will be added to techions
+								account. But for Urgent/High or $ related tickets techions will
+								get points along with $ value. Techions could withdraw those
+								points as a $.
+							</div>
+						</div>
+					</div>
+				</div>
+			</span>
+		</div>
+		<br>
+	</div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+	type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+{% endblock extrajs %}

@@ -1,0 +1,28 @@
+body {
+  background-color: lightblue;
+  height: 100%;
+}
+
+
+iframe {
+
+	width:1000px;
+	height: 300px;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}

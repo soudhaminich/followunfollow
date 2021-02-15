@@ -1,0 +1,74 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  pre{
+      width:100%;
+  }
+
+  .prior-font{
+  font-family: 'Roboto Slab', serif;
+  }
+
+  .fs {
+    font-size: 12px;
+  }
+
+  .fs_teen{
+      font-size: 13px;
+  }
+
+  .fs_large{
+      font-size: 27px;
+  }
+
+  .left_nav_fs{
+    font-size: 16px;
+  }
+
+  .wordwrap{
+      word-break: break-word;
+  }
+
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body{
+    height:100%;
+    overflow-x: hidden;
+  }
+/* 
+  .ko-fi-div {
+    text-align: left;
+  }
+  
+  .ko-fi {
+    border: solid 1px white;
+    background-color: #bbc0c4;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  .ko-fi:hover {
+    background-color: white;
+  }
+  
+  .ko-fi-img {
+    width: 20px;
+    height: 15px;
+  } */
+
+
+.parent{
+  margin-top: 50px;
+  min-height:100vh;
+}
+

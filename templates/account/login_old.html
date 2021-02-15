@@ -1,0 +1,102 @@
+{% extends "account/base.html" %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+<style>
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+{% block content %}
+<br/>
+<h1>{% trans "Sign In" %}</h1>
+<div class="container-fluid col-md-8">
+  <div class="jumbotron">
+    
+    <br/>
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+    {% comment %} <p>{% blocktrans with site.name as site_name %}Please sign in with one
+    of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+    for a {{ site_name }} account and sign in below:{% endblocktrans %}</p> {% endcomment %}
+
+    <div class="form-group">
+
+          <button class="btn btn-lg btn-block btn-dark"> <a style="color:white;" id="github-button" class="btn btn-block btn-social btn-github" href="{% provider_login_url "github" process="oauth2" %}">
+      <i class="fa fa-github"></i> Join with Github
+    </a></button>
+    </div>
+     <div class="form-group">
+
+          <button class="btn btn-lg btn-block btn-primary"> <a style="color:white;" id="facebook-button" class="btn btn-block btn-social btn-github" href="{% provider_login_url "facebook" method="oauth2" %}">
+      <i class="fa fa-facebook"></i> Join with Facebook
+    </a></button>
+    </div>
+
+    <br/>
+      <div class="center-or text-center">
+          <span><hr style="border-center: dotted 1px;" />Or</span>
+      </div>
+
+    {% comment %} <div class="socialaccount_ballot">
+
+      <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+      </ul>
+
+      <div class="login-or">{% trans 'or' %}</div>
+
+    </div> {% endcomment %}
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+    <p>{% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    {% endif %}
+
+    <form class="form-signin" method="POST" action="{% url 'account_login' %}">
+ 
+      {% csrf_token %}
+      {{ form|crispy }}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      
+      <button class="btn btn-lg btn-block btn-info" type="submit">{% trans "Sign In" %}</button>
+      <center><a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a></center>
+    </form>
+  </div>
+</div>
+{% endblock %}

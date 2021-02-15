@@ -1,0 +1,131 @@
+{% extends "blogs/base_static.html" %}
+<meta property="og:title" content="Submit the request" />
+<meta property="og:image" content="https://static.teckiy.com/teckiy_200.jpg" />
+<meta property="og:site_name" content="Teckiy" />
+<meta name="description" content="Place for techions" />
+{% block title %} Teckiy - Submit Request
+{% endblock %}
+{% load static %}
+{% load crispy_forms_field %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!-- QUESTION HEADING -->
+<div class="row right-scrollable-section">
+    <div class="question-header2 col-12">
+        <!-- <div class="row top-row"> -->
+        <!-- <div class="col-12"> -->
+        {% if object %}<div class="ques-heading-fs2">Edit Ticket</div>
+        {% else %}<div class="ques-heading-fs2">Ask Question</div>
+        {% endif %}
+
+        <!-- <div class="ques-heading-fs2">Ask Question</div> -->
+        <!-- DESCRIPTION-BOX -->
+        <div class="left-col-submit-tckt">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                <!-- </fieldset> -->
+                {% if object %}<button type="submit" class="btn btn-primary submitpg-submit-btn2">
+                    Save
+                </button>
+                {% else %}<button type="submit" class="btn btn-primary submitpg-submit-btn2">
+                    Create
+                </button>
+                {% endif %}
+
+            </form>
+        </div>
+        <!-- BLOG section -->
+        <div class="blog">
+            {% include "blogs/side_content.html" %}
+        </div>
+        <!-- <div class="blog">
+            <span>
+                <h4 class="blog-heading">Blog</h4>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga sit amet architecto
+                voluptas
+                nihila liquid magnamh
+                placeat qui esse quaerat rem neque odit unde quis repellendus impedit aliquam fugit
+                itaque!
+                
+            </span>
+        </div> -->
+        <br />
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                        <h4 class="modal-title">
+                            Hey <strong>{{ request.user.username }}</strong>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Urgent Ticket SLA will be 8 to 15 hrs</li>
+                            <li>High Ticket SLA will be 15 to 24 hrs</li>
+                            <li>
+                                Also for Urgent/High please provide the requierd details to
+                                techions at the earliest so that they could help you easily
+                            </li>
+                            <li>
+                                User's ticket amount will be shared to techions based on right answer or number of votes
+                            </li>
+                            <li>
+                                This is open source platform for all. So you can start helping
+                                others & earn points($)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block extrajs %}
+<script>
+    const priorityValue = document.getElementById("id_priority");
+    priorityValue.addEventListener("change", popuppriority);
+
+    function popuppriority() {
+        if (priorityValue.value == "U" || priorityValue.value == "H") {
+            $(".modal").modal("show");
+        }
+    }
+</script>
+
+<script type="application/javascript">
+    $(document).ready(function () {
+        var price, msg, value, text;
+        var select = $('#id_priority');
+        var old_val = select.val();
+
+        select.change(function () {
+            value = $(this).children("option:selected").val();
+            text = $(this).children("option:selected").text();
+
+            if (['H', 'U'].indexOf(value) >= 0) {
+                if (value == 'H')
+                    price = 5;
+                else
+                    price = 10;
+                msg = 'Its ' + text + ' ticket ' + price + '$ has to pay . Do you want to continue?';
+
+                if (!confirm(msg)) {
+                    $(this).val(old_val);
+                    return false;
+                }
+            }
+            old_val = value;
+        });
+    });
+</script>
+{% endblock extrajs %}

@@ -1,0 +1,146 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="p-2">
+    <div class="row">
+        <div class="col-lg-2 d-lg-block d-none pl-0 pr-3">
+            {% include "users/profileleftnav.html" %}
+        </div>
+        <div class="col-lg-10 col-12 pl-0 pr-0">
+            <div class="container-fluid top-box m-0 p-0 rounded" style="box-shadow: 0 0 20px #28b0ee;">
+                {% include "users/profileleftnav_mobile.html" %}
+            </div>
+
+            {% include "users/profile-head.html" %}
+            <!-- profile professional summary -->
+            <div id="Professional Summary" class="tabcontent">
+                <div class="container d-flex flex-column flex-wrap justify-content-around">
+                    <div class="rounded w-100 summary-box-ht opt-1 opt-profile-1 p-2 mr-2 mb-4 font-weight-bold">
+                        Professional Summary
+                        {% if request.user == profile.user %}
+                        {% if profile.professional_summary %}
+                        <div class="p-summary-font font-weight-normal p-3"> {{ profile.professional_summary|safe }}
+                        </div>
+                        {% else %}
+                        <div class="skill-font alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Hi {{ profile.user.username }}!</strong> Your Profile started getting attention. Its
+                            right time to update your profile!!!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        {% endif %}
+                        {% else %}
+                        <p></p>
+                        {% endif %}
+                    </div>
+
+                    <div class="rounded w-100 opt-1 opt-profile-1 p-2 mr-2 mb-4 font-weight-bold">
+                        Skills/Languages
+                        {% if profile.skillset %}
+                        <div class="skill-font p-2">
+                            <ul>
+                                <li>{{ profile.skillset }}</li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- <div class="rounded w-100 opt-1 opt-profile-1 p-2 mr-2 mb-4 font-weight-bold">
+                        Learning/Trying
+                        <div class="skill-font p-2">
+                            <ul>
+                                <li>Confused ?|</li>
+                                <li>Django</li>
+                                <li>Javascript</li>
+                            </ul>
+                        </div>
+                    </div> -->
+
+                    <div class="container d-flex flex-wrap justify-content-around">
+                        {% if posts %}
+                        <div class="rounded text-center opt-1 opt-profile-1 p-2 pt-4 mr-2 mb-4 font-weight-bold">
+                            Total Posts
+                            <div class="answer-number">
+                                {{ posts.count }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if answered %}
+                        <div class="rounded text-center opt-1 opt-profile-1 p-2 pt-4 mr-2 mb-4 font-weight-bold">
+
+                            Answered
+                            <div class="answer-number">
+                                {{ answered }}
+                            </div>
+                            Tickets
+                        </div>
+                        {% endif %}
+                        {% if profile.preferences %}
+                        {% if profile.preferences == 'active' %}
+                        <div class="rounded text-center pt-4 opt-1 opt-profile-1 p-2 mr-2 mb-4 font-weight-bold">
+                            Actively looking for
+                            <div class="answer-number">
+                                Jobs
+                            </div>
+                        </div>
+                        {% elif profile.preferences == 'freelancer' %}
+                        <div class="rounded text-center pt-4 opt-1 opt-profile-1 p-2 mr-2 mb-4 font-weight-bold">
+                            Interested in
+                            <div class="answer-number">
+                                Freelancing
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <!-- Professional summary end -->
+            <!-- Techion -->
+
+            <!-- techion end -->
+            <!-- tickets -->
+
+            <!-- tickets end -->
+            <!-- posts -->
+
+            <!-- posts end -->
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock extrajs %}

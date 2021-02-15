@@ -1,0 +1,596 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  /* Added this below p tag new */
+  p {
+    margin-bottom: 0;
+  }
+  
+  .fs {
+    font-size: 12px;
+  }
+  
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  body{
+    height:100%;
+  }
+  
+  .footer {
+    background-color: #242729;
+    text-align: center;
+    padding: 10px;
+    margin-bottom:0;
+  }
+  
+  .footer-link {
+    color: #bbc0c4;
+    margin-right: 12px;
+    margin-top: 0px;
+  }
+  
+  .footer-link:hover {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .fb-footer-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #bbc0c4;
+    border-radius: 5px;
+    margin-top: 12px;
+    padding: 1px;
+    margin-right: 12px;
+  }
+  
+  .fb-footer-icon:hover {
+    background-color: white;
+  }
+  
+  .copyright {
+    color: #bbc0c4;
+    margin-top: 12px;
+    padding-left: 0 !important;
+  }
+  
+  .ko-fi-div {
+    text-align: left;
+  }
+  
+  .ko-fi {
+    border: solid 1px white;
+    background-color: #bbc0c4;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  
+  .ko-fi:hover {
+    background-color: white;
+  }
+  
+  .ko-fi-img {
+    width: 20px;
+    height: 15px;
+  }
+  
+  .navbar {
+    background-color: #fafafb;
+    height: 50px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-top: solid 2px red;
+    border-bottom: solid 5px #fafafbc2;
+  }
+  
+  .btn-padding {
+    padding: 2px 4px;
+    margin-right: 5px;
+  }
+  
+  .navbar-logo {
+    width: 80px;
+    height: 30px;
+  }
+  
+  .nav-ul {
+    margin-left: 5px;
+  }
+  
+  .pcds-display {
+    display: none !important;
+  }
+  
+  .mr {
+    flex-grow: 0 !important;
+  }
+  
+  .search-box {
+    width: 450px;
+    height: 35px;
+  }
+  
+  .search-btn {
+    height: 35px !important;
+    padding: 0 5px !important;
+    margin-right: 5px;
+  }
+  
+  .search-icon:hover {
+    background-color: lightgrey;
+    border-radius: 5px;
+  }
+  
+  button .search-icon {
+    width: 30px;
+  }
+  
+  .login-hp,
+  .signup-hp {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .signup-hp {
+    margin-right: 0px !important;
+    margin-left: 3px !important;
+  }
+  
+  .login-hp:hover,
+  .signup-hp:hover,
+  .ask-a-quest-btn:hover {
+    background-color: #0077cc;
+  }
+  
+  .user-icon {
+    width: 18px;
+    height: 25px;
+    margin: 0 !important;
+    padding-bottom: 3px;
+    padding-top: 3px;
+  }
+  
+  .user-button {
+    height: 28px !important;
+    padding: 1px 6px 2px 3px !important;
+    color: white !important;
+  }
+  
+  /* .search-box-sm-scrn{  */
+  #appear-search-bar {
+    width: 80%;
+    height: 35px;
+    margin-left: 8%;
+    margin-right: 5%;
+    margin-top: 65px;
+    display: none;
+  }
+  
+  .right-abt-us {
+    margin-left: 0 !important;
+    border-left: none !important;
+    padding: 0 !important;
+  }
+  
+  .abt-us-col {
+    padding: 0 !important;
+    border-left: none;
+  }
+  
+  .top-row {
+    height: 125px;
+  }
+  
+  a.abt-sctn-hp {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #535a60;
+  }
+  
+  a.abt-sctn-hp:hover {
+    color: black;
+  }
+  
+  .search-box-form-hp {
+    width: 50%;
+    margin-left: 50px;
+    border: solid 1px #535a60;
+  }
+  
+  .search-btn:hover {
+    background-color: lightgrey;
+    border-radius: 5px;
+  }
+  
+  /* MAIN CONTENT */
+  .parent-container {
+    margin-top: 50px;
+    min-height:100vh;
+    padding:0;
+    /* background-color:#f8f9fa; */
+  }
+  .profile-main{
+    background-color:white; 
+    width:100%;
+  }
+  .edit-p-main{
+    overflow: hidden;
+  }
+  .profile-r{
+    margin-left:0px; 
+    margin-right:0px;
+    padding:0!important;
+  }
+  
+  .profile-c{
+    /* padding-left:6%;  */
+    /* padding-left:3%;  */
+    word-wrap:break-word;
+    /* background-color:#f8f9fa; */
+  }
+  /* Left Sticky Col Data */
+  .profile-sticky{
+    position:sticky; 
+    top:75px;
+    /* max-width:260px; */
+    /* padding-left:15%; */
+    height:100vh;
+    background-color:#f8f9fa;
+    border:solid 1px lightgrey;
+    border-radius: 5px;
+  }
+  
+  .profile-img{
+    width:90%; 
+    height:200px; 
+    border:solid 1px lightgrey;
+    border-radius:10px;
+  }
+  .profile-img-2{
+    /* width:30%;  */
+    width:200px; 
+    height:175px; 
+    border:solid 1px lightgrey;
+    border-radius:10px;
+  }
+  .profile-user2, .profile-join2{
+    margin-left:6%;
+  }
+  .profile-img img{
+    width:80%;
+    height:90%; 
+    border-radius:100%; 
+    margin-left:20px;
+  }
+  
+  .profile-user{
+    text-align:center;
+    width:90%;
+  }
+  
+  .profile-user-name, .edit-fs{
+    font-size:1.75rem;
+  }
+  
+  .profile-edit img{
+    width:20px; 
+    height:20px; 
+    vertical-align:text-bottom;
+  }
+  
+  .profile-join{
+    font-size:13px; 
+    text-align:center;
+    width:90%;
+  }
+  
+  .tablinks{
+    border:none;
+    margin-left:10px; 
+    word-wrap:word-break;
+    /* width:90%; */
+  }
+  
+  .edit-profile a{
+    text-decoration:none; 
+    margin-left:10px;
+    /* width:90%; */
+  }
+  .edit-profile-2 a{
+    margin-top:20px;
+  }
+  .edit-profile-2{
+    padding-top:7px;
+  }
+  .tab{
+    width:100%;
+    padding-left: 12%;
+    padding-right: 6%;
+  }
+  .tab-2{
+    padding-left:6%;
+    padding-right:6%;
+  }
+  .tab button {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    color: lightslategray;
+    outline:none;
+  }
+  .tab-2 button {
+    color:blue;
+    word-wrap: break-word;
+  }
+  
+  .tab button:hover {
+    background-color: #ddd;
+    color:black;
+  }
+  
+  .tab button.active {
+    background-color: #ccc;
+    border-radius:10px;
+    color:black;
+  }
+  /* Left Sticky Col Data end*/
+  /* Professional Summary */
+  .profile-right-col{
+    margin-top:0; 
+    padding:0 0 0 0px;
+  }
+  .profile-social{
+    width:20px;
+    height:20px;
+  }
+  .tabcontent{
+    margin-left:5%;
+    border: solid 1px lightgrey;
+    border-radius:5px;
+    min-height:100vh;
+    background-color:#f8f9fa;
+  }
+  .django-ckeditor-widget{
+    display:block !important;
+  }
+  .edit-tabcontent{
+    margin-left:0
+  }
+  .pwd-reset-tabcontent {
+    width: 375px;
+    height: 250px;
+    min-height:0;
+  }
+  .pwd-rst{
+    width:300px;
+  }
+  .pf-ps-title{
+    font-size:1.5rem;
+  }
+  .pf-ps-content{
+    word-wrap:break-word;
+  }
+  .profile-skills{
+    font-size:1.5rem;
+  }
+  .profile-bp{
+    font-size:1.5rem;
+  }
+  .ps-hr{
+      width: 30%!important;
+      height: 2px !important;
+      border-top: dotted;
+      border-width: thick;
+      border-color: lightgray;
+      text-align: center;
+  }
+  /* Professional Summary end*/
+  
+  /* Tickets */
+  .profile-sub-tckt{
+    font-size:1.75rem; 
+    /* padding-left:22%; */
+    text-align: center;
+  }
+  .profile-tkt-count{
+    color:black;
+  }
+  .profile-tkt-post{
+    width: 100%; 
+    border: solid 1px lightgrey; 
+    background-color:white; 
+    border-radius:5px;
+  }
+  .profile-tkt-lc{
+    width:70%; 
+    word-wrap:break-word;
+  }
+  .profile-tkt-pname{
+    word-wrap:break-word;
+  }
+  .profile-tkt-pname a{
+    word-wrap:break-word;
+    text-decoration: none;
+  }
+  .profile-p-tp{
+    font-size:12px
+  }
+  .profile-p-ep{
+    width:20%;
+  }
+  .p-tkt-edit a{
+    text-decoration: none;
+  }
+  .p-tkt-edit button, .p-tkt-pay button{
+    padding:3px 5px;
+    margin-bottom:4px;
+  }
+  .profile-no-a{
+    text-align: center;
+  }
+  .profile-tech{
+    border: solid 1px lightgrey; 
+    border-radius:5px;
+    word-break:break-word;
+  }
+  .profile-tech-bimg img{
+    width:120px; 
+    height:120px;
+  }
+  .profile-tech-b{
+    text-align:center;
+  }
+  .profile-tech-b-no{
+    text-align:center; 
+    font-size:1.5rem;
+  }
+  /* Tickets end */
+  
+  /* Techions */
+  /* Techions end */
+  @media only screen and (min-width: 200px) and (max-width: 332px) {
+    .search-btn,
+    .login-hp,
+    .signup-hp {
+      padding: 5px 1px;
+    }
+    .search-btn {
+      margin-right: 5px;
+    }
+    .navbar-logo {
+      width: 60px;
+      height: 29px;
+      margin-top: 0;
+    }
+    .ic-size {
+      width: 25px;
+      height: 30px;
+    }
+  }
+  
+  @media only screen and (min-width: 992px) {
+    #appear-search-bar {
+      position: absolute;
+      z-index: 1;
+      margin-top: 0;
+    }
+    .edit-tabcontent{
+      margin-left:8%;
+      margin-right:8%;
+  }
+  }
+  
+  @media only screen and (min-width: 200px) and (max-width: 767px) {
+    .search-box {
+      display: none;
+    }
+    .user-button {
+      margin-left: 0 !important;
+    }
+    .ko-fi-div {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .txt-area-wh {
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      padding-right: 10px;
+    }
+    
+  }
+  
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .navbar-logo {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+  
+  @media only screen and (min-width: 200px) and (max-width: 991px) {
+    .navbar-logo {
+      width: 70px;
+      height: 28px;
+      margin-top: 0;
+    }
+    .nav-left {
+      padding-top: 0;
+    }
+    .ic-size {
+      width: 40px;
+      height: 30px;
+    }
+    .btn-padding {
+      padding: 0 !important;
+      margin-right: 0px !important;
+    }
+    .nav-ul {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      background-color: white;
+      width: 150px;
+      line-height: 2.2rem;
+    }
+    .pcds-display {
+      display: block !important;
+    }
+    #appear-search-bar {
+      position: absolute;
+      z-index: 1;
+      margin-top: 0;
+    }
+    .tabcontent{
+      margin-left:4%;
+      margin-right:4%;
+      /* padding-left:5%; */
+    }
+    .profile-m{
+      margin-left:4%;
+      margin-right:4%;
+    }
+    .profile-tkt-post{
+      width:100%;
+    }
+    .profile-tkt-lc{
+      width:75%;
+    }
+    .profile-p-ep{
+      width:25%;
+    }
+    .pwd-rst-pg{
+      margin-top: 150px;
+    }
+    .pwd-reset-tabcontent {
+    width: 80%;
+    height: 400px;
+  }
+  .pwd-form{
+    padding: 10%;
+  }
+  .sub-pwd{
+    margin-top:50px;
+  }
+  }
+  @media only screen and (min-width: 200px) and (max-width: 530px) {
+    .p-tkt-edit button{
+      margin-bottom:3px;
+    }
+    .tablinks-2{
+      margin-left:0;
+    }
+  }
+  @media only screen and (min-width: 200px) and (max-width: 410px) {
+  .pwd-reset-tabcontent {
+    width: 90%;
+  }
+  .pwd-rst{
+    width:90%;
+  }
+  }
+  @media only screen and (min-width: 200px) and (max-width: 1200px) {
+    .profile-img {
+      height: 250px;
+    }
+  }

@@ -1,0 +1,23 @@
+{% extends "blogs/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+
+<form action="{% url 'blogs:test_post' %}"  method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+
+  <input type="file" name="upload-file">
+ <button type="submit">Upload</button>
+</form> 
+
+{% for test in obj %}
+           <video width="800" poster="{{ test.file_test }}" controls controlsList="nodownload">
+                    <source src="{{ test.file_test }}" type="video/mp4">
+                    {% comment %} <source src="mov_bbb.ogg" type="video/ogg"> {% endcomment %}
+                    Your browser does not support HTML5 video.
+              </video>
+{% endfor %}
+{% endblock content %}

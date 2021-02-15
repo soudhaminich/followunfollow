@@ -1,0 +1,467 @@
+{% load static %}
+{% load meta %}
+{% load blogs_extras %}
+{% load notifications_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head {% meta_namespaces %}>
+	{% include "meta/meta.html" %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, initial-scale=1.0, width=device-width, initial-scale=1">
+	<meta name="keywords"
+		content="developer,support,coding,learning,teckiy,tutorials,html,css,python,django,react,java">
+	<meta name="author" content="Teckiy">
+	<meta property="og:title" content="Teckiy - About Us">
+	<meta property="og:url" content="https://www.teckiy.com/about/">
+	<meta name="description" content="Teckiy | Online Community for Techions">
+	<meta property="og:site_name" content="Teckiy">
+	<meta property="fb:pages" content="True">
+	<meta property="og:image" content="https://static.teckiy.com/teckiy_logo_fav.jpg">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- Below 3 lines for Ckeditor code  -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+	<!-- <link rel="shortcut icon" type="image/png" href="https://static.teckiy.com/teckiy_200.jpg"> -->
+
+	<!-- CSS Style Sheet -->
+	<link rel="stylesheet" href="{% static 'blogs/css/about.min.css' %}">
+	<!-- <link rel="icon" href="{% static 'blogs/images/iconfinder_icon-111-search_314478.svg' %}">
+    <link rel="fbicon" href="{% static 'blogs/images/facebook-icon.svg' %}">
+    <link rel="tweeticon" href="{% static 'blogs/images/twitter-icon.svg' %}">
+    <link rel="youtubeicon" href="{% static 'blogs/images/youtube-icon.svg' %}">  -->
+
+
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166867100-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'UA-166867100-1');
+	</script>
+	<script type="text/javascript" src="/static/ckeditor/ckeditor-init.js"
+		data-ckeditor-basepath="/static/ckeditor/ckeditor/" id="ckeditor-init-script"></script>
+	<script type="text/javascript" src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+	<link rel="shortcut icon" href="{% static 'blogs/images/teckiy_fav_icon.ico' %}">
+
+	<title>
+		Teckiy - About Us
+	</title>
+
+</head>
+
+<body>
+
+	<div class="container-fluid parent-container parent-container2 ">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+			<div>
+				<div class="nav-left">
+					<button class="navbar-toggler btn-padding" type="button" data-toggle="collapse"
+						data-target="#navbarNav">
+						<span class="navbar-toggler-icon ic-size"></span>
+					</button>
+					<a href="/"><img class="navbar-logo" src="{% static 'blogs/images/teckiy-new-logo.png' %}"
+							alt="teckiy-logo"></a>
+				</div>
+			</div>
+
+			<div class="collapse navbar-collapse order-1 order-lg-0 mr" id="navbarNav">
+				<ul class="navbar-nav nav-ul">
+					<!-- <li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li> -->
+					<!-- <li class="nav-item">
+                                <a class="nav-link" href="#">Team</a>
+                            </li> -->
+					<li class="nav-item pcds-display">
+						<a class="nav-link" href="{% url 'blogs:blog-home' %}">Posts</a>
+					</li>
+					<!-- <li class="nav-item pcds-display">
+                                <a class="nav-link" href="#">Courses</a>
+                            </li> -->
+					<li class="nav-item pcds-display">
+						<a class="nav-link" href="{% url 'donate' %}">Donate</a>
+					</li>
+					<li class="nav-item pcds-display">
+						<a class="nav-link" href="{% url 'analytics:suggestion' %}">Suggestions</a>
+					</li>
+				</ul>
+			</div>
+			<form class="search-box-form mx-auto" action="/search/">
+				<input class="form-control search-box" id="mySearch" onkeyup="myFunction()" name='q' type="search"
+					placeholder="Search" aria-label="Search">
+			</form>
+
+			<a href="#">
+				<img class="search-icon search-btn d-md-none" id="click-search"
+					src="{% static 'blogs/images/iconfinder_icon-111-search_314478.svg' %}" alt="">
+			</a>
+			{% if request.user.is_authenticated %}
+			<div>
+				{% include "blogs/notifications.html" %}
+				<!-- USER Dropdown Button - NavBar -->
+				<button class="btn btn-primary dropdown-toggle user-button dropdown ml-auto" type="button"
+					id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img class="user-icon" src="{% static 'blogs/images/iconfinder-icon.svg' %}" alt="avatar-icon">
+				</button>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+					<a href="{% url 'users:profile' request.user %}"><button type="button" class="dropdown-item"
+							data-toggle="modal" data-target="#modal-1">Account</button></a>
+					<form method="post" action="{% url 'account_logout' %}">
+						{% csrf_token %}
+						<button class="dropdown-item" type="submit">Logout</button></a>
+					</form>
+				</div>
+			</div>
+
+			{% else %}
+			<form action="{% url 'account_login' %}">
+				<button type="submit" class="btn btn-primary login-hp fs">Log in</button>
+			</form>
+			<form action="{% url 'account_signup' %}">
+				<button type="submit" class="btn btn-primary signup-hp fs">Sign up</button>
+			</form>
+
+			{% endif %}
+		</nav>
+		<div>
+			<form id="appear-search-bar" action="/search/">
+				<input class="form-control d-md-none mx-auto" onkeyup="myFunction()" name='q' type="search"
+					placeholder="Search" aria-label="Search">
+			</form>
+		</div>
+		<!-- QUESTION HEADING -->
+		<div class="row right-scrollable-section right-scrollable-section-hp right-abt-us">
+			<div class="abt-us-col col-12">
+				<div class="abt-us-heading">
+					<div class="img-blur">
+						<img class="abt-us-img" src="{% static 'blogs/images/teckiy.png' %}" alt=""><br>
+						<strong>"Solve, Earn & Learn"</strong>
+					</div>
+				</div>
+				<div class="abt-us-heading2">About Us</div>
+				<div class="abt-us-top">
+					<div class="top-img-div">
+						<img class="hands-raising" src="{% static 'blogs/images/pexels-fauxels-3184433.jpg' %}" alt="">
+						<!-- <div class="img-blur">Community</div> -->
+					</div>
+					<div class="abt-us-descript">
+						<div class="who-we-are">
+							Who we are
+						</div>
+						<div class="one-stop">
+							A one stop platform connecting all developers, enthusiast programmers, technologists,
+							students,
+							freelancers all around the globe to share their expertise, learn and earn money.</div>
+						<div>
+							Teckiy is a ticketing platform to support our open source community along with extra <a
+								href="#services">features</a> like
+							one-to-one training, freelancing, blog writing etc., which covers wide range of topics in
+							computer programming and
+							technologies.
+							{% if not request.user.is_authenticated %}
+							<a href="#tech">Techions</a>
+							{% else %}
+							<strong>Techions</strong>
+							{% endif %}
+							who answers questions, provides training and write blogs earn
+							Teckiy points, badges and thereby <strong>earn money</strong>.
+						</div>
+					</div>
+				</div>
+				<div id="services" class="abt-us-heading2">Features</div>
+				<div class="abt-us-middle">
+					<div class="box1">
+						<div class="box1-img">
+						</div>
+						<div class="box1-content">
+							<div>
+								<strong>Have a Question?<br>Submit Ticket</strong>
+							</div>
+							<div>
+								<a href="#ticket">Learn More</a>
+							</div>
+						</div>
+					</div>
+					<div class="box2">
+						<div class="box2-img">
+						</div>
+						<div class="box2-content">
+							<div>
+								<strong>Earn Points and Money by Resolving Tickets</strong>
+							</div>
+							<div>
+								<a href="#money">Learn More</a>
+							</div>
+						</div>
+					</div>
+					<div class="box3">
+						<div class="box3-img">
+						</div>
+						<div class="box3-content">
+							<div>
+								<strong>Online One to One Training / Project Guidance</strong>
+							</div>
+							<div>
+								<a href="#training">Learn More</a>
+							</div>
+						</div>
+					</div>
+					<div class="box4">
+						<div class="box4-img">
+						</div>
+						<div class="box4-content">
+							<div>
+								<strong>Bloggers / Freelancers</strong>
+							</div>
+							<div>
+								<a href="#blog-freelancers">Learn More</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% if not request.user.is_authenticated %}
+				<hr class="abt-us-hr" id="tech">
+				<div class="techion">
+					<div>Want to be part of Teckiy Community and become a <strong>TECHION</strong> ?? </div>
+					<a href="{% url 'account_signup' %}">Click here to Signup</a>
+				</div>
+				{% endif %}
+				<hr class="abt-us-hr3" id="ticket">
+				<div class="abt-us-bottom">
+					<!-- <div class="abt-us-bottom-heading"><strong>Submit Ticket</strong></div> -->
+					<div class="abt-us-bottom1">
+						<div class="content1-des-img">
+							<img class="content1-img" src="{% static 'blogs/images/question-2736480_1920.jpg' %}"
+								alt="">
+						</div>
+						<div class="content1-des">
+							<div class="abt-us-bottom-heading"><strong>Submit Ticket</strong></div>
+							<ul>
+								<li>Got stuck ? Not sure how to resolve the issue ?</li>
+								<li>Seek help from the experts around the world just by posting your question on Teckiy.
+								</li>
+								<li>The uniquess of our platform is it allows you to prioritize your question/ticket
+									based
+									on how fast you want the issue to be resolved.</li>
+								<li>One can prioritize questions as <strong>Low, Medium, High, Urgent</strong>.<br>
+									For eg: If you have question related to production which needs to be resolved
+									immediately then
+									prioritize your ticket as "Urgent".</li>
+							</ul>
+							{% if request.user.is_authenticated %}
+							<a class="click-to-submit" href="{% url 'support:create' %}">Click to Submit your
+								Question</a>
+							{% else %}
+							<a class="click-to-submit" href="{% url 'account_login' %}">Click to Submit your
+								Question</a>
+							{% endif %}
+						</div>
+					</div>
+					<hr class="abt-us-hr2" id="money">
+					<div class="abt-us-bottom2">
+						<div class="content2-des-img">
+							<img class="content2-img"
+								src="{% static 'blogs/images/pexels-andrea-piacquadio-3758105.jpg' %}" alt="">
+						</div>
+						<div class="content2-des">
+							<div class="abt-us-bottom-heading"><strong>Earn Points & Money</strong></div>
+							Techions who answers <strong>High or Urgent</strong> priority questions or help other
+							techions
+							by clarifying their doubts through one to one sessions will earn Techion Points which will
+							converted as money later.<br>
+							<ul>
+								<li> Techions will get access to High & Urgent priority questions only after resolving
+									50
+									Low/Medium priority questions. </li>
+								<li> Techion who answers High priority questions will get Teckiy points and amount
+									equivalent to points earned.</li>
+								<li> Techion who answers Urgent priority questions will get Teckiy points and amount
+									equivalent to points earned.</li>
+							</ul>
+							<div class="abt-us-asterik-txt text-muted"><strong>*</strong> Teckiy points and amount will
+								be
+								shared between the
+								Techions who
+								gives the correct answer</div><br>
+							<div><a class="click-to-submit" href="/">Click to Answer Questions</a></div>
+						</div>
+					</div>
+					<hr class="abt-us-hr2" id="training">
+					<div class="abt-us-bottom3">
+						<div class="content3-des-img">
+							<img class="content3-img"
+								src="{% static 'blogs/images/pexels-julia-m-cameron-4145190.jpg' %}" alt="">
+						</div>
+						<div class="content3-des">
+							<div class="abt-us-bottom-heading"><strong>Online One to One Training / Project Work
+									Guidance</strong></div>
+							<ul>
+								<li>User can request fellow Techions for one to one training on a specific topic or
+									framework or for project guidance.</li>
+								<li>Techions can submit the proposal to the user's training request.</li>
+								<li>User has liberty to choose the right Techion based on Techion's profile for his/her
+									training request.</li>
+								<li>User and Techion can schedule the training sessions using our <strong>Training
+										service
+										platform</strong>.</li>
+								<li>Techions who provides the sessions for User will get Teckiy points and money.</li>
+							</ul>
+							<a class="click-to-submit" href="">Click to submit proposal for one-to-one training</a>
+						</div>
+					</div>
+
+					<hr class="abt-us-hr2" id="blog-freelancers">
+					<div class="abt-us-bottom4">
+						<div class="content4-des-img">
+							<img class="content4-img" src="{% static 'blogs/images/pexels-ivan-samkov-4458553.jpg' %}"
+								alt="">
+						</div>
+						<div class="content4-des">
+							<div class="abt-us-bottom-heading"><strong>Bloggers / Freelancers</strong></div>
+							<ul>
+								<li> Techions can post blogs. </li>
+								<li> Techions will get points based on the time user spent on reading the post and on
+									number
+									of views.</li>
+								<li> Users or other Techions can share their earned points to the blogger if they like
+									the
+									post.</li>
+								<li> <strong>Freelancers</strong> can become Techions and starting earning money by
+									answering questions or wiriting blogs or by providing one to one training sessions.
+								</li>
+							</ul>
+							<a class="click-to-submit" href="{% url 'blogs:blog-home' %}">Click here for Blogs</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<footer>
+		<div class="footer">
+			<div class="links">
+				<a class="footer-link" href="/about/">About</a>
+				<a class="footer-link" href="/policy/">Policy</a>
+				<a class="footer-link" href="/contact/">Contact Us</a>
+			</div>
+
+			<div class="icon-links">
+				<a target='_blank' href="https://www.facebook.com/teckiy/"><img class="fb-footer-icon"
+						src="{% static 'blogs/images/facebook-icon.svg' %}" alt="facebook-icon"></a>
+				<a target='_blank' href="https://twitter.com/Teckiy1"><img class="fb-footer-icon"
+						src="{% static 'blogs/images/twitter-icon.svg' %}" alt="twitter-icon"></a>
+				<a target='_blank' href="https://www.youtube.com/channel/UC-VJgAi35OkoJ8gj6DU4E8Q"><img
+						class="fb-footer-icon" src="{% static 'blogs/images/youtube-icon.svg' %}"
+						alt="youtube-icon"></a>
+			</div>
+			<div class="copyright">Copyright &copy; Teckiy <span id="copyright-year"></span></div>
+
+			<!-- <div class="ko-fi-div">
+                        <button class="ko-fi">
+                            <img class="ko-fi-img" src="https://storage.ko-fi.com/cdn/cup-border.png" alt="">
+                            Support us on Ko-fi
+                        </button>
+                    </div> -->
+		</div>
+	</footer>
+	<script>
+		document.getElementById("click-search").onclick = function () {
+			var srchBar = document.getElementById("appear-search-bar");
+			if (srchBar.style.display == "block") {
+				srchBar.style.display = "none";
+			} else {
+				srchBar.style.display = "block";
+			}
+		}
+		// Copyright-Year Update
+		document.getElementById("copyright-year").innerHTML = new Date().getFullYear();
+	</script>
+
+
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<!-- Optional JavaScript -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		function myFunction() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("mySearch");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("customers");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+
+	</script>
+
+	<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+	<script type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();
+	</script>
+
+	<script type="text/javascript">
+		$(".comment-detail img code").each(function () {
+			$(this).addClass("img-responsive");
+		});
+
+		$(".marked-content-show").each(function () {
+			var content = "<small><b>**bold**</b> <code>`code`</code> <i>_italics_</i> <code>```long code```</code>" +
+				"<a target='_blank' href='https://daringfireball.net/projects/markdown/syntax#code' id='markdownURL' data-toggle='tooltip' data-placement='top'" +
+				"title='This text input uses Markdown syntax. Learn more here" +
+				"'>?</a><div id='myDIV'></div></small>"
+
+			$(this).html(content)
+			check()
+		})
+		function check() {
+			return false;
+		}
+
+
+		function markdownUnhide() {
+			console.log('True')
+		}
+
+
+	</script>
+	<script type="text/javascript">
+		var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq ||
+			{ widgetcode: "10945d185cfc392a4f1eb60063940d961672622287fa6e11408ccc822c110e8a", values: {}, ready: function () { } };
+		var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true;
+		s.src = "https://salesiq.zoho.in/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); d.write("<div id='zsiqwidget'></div>");
+	</script>
+	<script type="text/javascript" src="{% static 'blogs/js/moment.js' %}"></script>
+	{% block extrajs  %}
+	{% endblock extrajs %}
+	<script type="text/javascript" src="{% static 'blogs/js/notifications.js' %}"></script>
+	<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+</body>
+
+</html>

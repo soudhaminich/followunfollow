@@ -1,0 +1,407 @@
+{% load static %}
+{% load meta %}
+{% load blogs_extras %}
+{% load notifications_tags %}
+<!DOCTYPE html>
+<html>
+
+<head {% meta_namespaces %}>
+  {% include "meta/meta.html" %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0, initial-scale=1.0, width=device-width, initial-scale=1">
+  <!-- <meta property="og:site_name"          content="Teckiy"> -->
+  <!-- <meta property="og:image" content="https://static.teckiy.com/teckiy_200.jpg" />
+  <meta property="og:image:alt" content="https://static.teckiy.com/teckiy_support_200_200.jpg" /> -->
+  <!-- <meta property="og:title" content="Welcome to Teckiy" /> -->
+  <!-- {% comment %} <meta property="og:title" content="Learn to Code." /> {% endcomment %}
+    {% comment %} <meta property="og:image"   content="https://static.teckiy.com/teckiy.png" /> {% endcomment %} -->
+  <!-- <meta property="og:url" content="https://www.teckiy.com/" /> -->
+  <!-- <meta name="description" content="Teckiy is a place where get the support to our developer community. " /> -->
+  <meta name="keywords" content="developer,support,coding,learning,teckiy,tutorials,html,css,python,django,react,java">
+  <meta name="author" content="Teckiy">
+  <meta property="og:image" content="https://static.teckiy.com/teckiy_logo_fav.jpg">
+  <link href="{% static 'blogs/custom/css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Below 3 lines for Ckeditor code  -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <!-- VISA Tracking Code for https://www.teckiy.com/ -->
+  {% comment %}
+  <script>(function (v, i, s, a) { if (!v._visaSettings) { v._visaSettings = {}; } v._visaSettings["e504f88f-8c33-11ea-b589-901b0edac50a"] = { v: "0.3", s: "e504f88f-8c33-11ea-b589-901b0edac50a", a: "1" }; _v = i.getElementsByTagName("head")[0]; _a = _v; _i = i.createElement("script"); _s = _i; _s.defer = "defer"; _s.src = s + a + v._visaSettings["e504f88f-8c33-11ea-b589-901b0edac50a"].v; _a.appendChild(_s); })(window, document, "//app-worker.visitor-analytics.io/main", ".js?s=e504f88f-8c33-11ea-b589-901b0edac50a&v=")</script>
+  <!-- VISA Tracking Code for https://www.teckiy.com/ --> {% endcomment %}
+
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+
+  <!-- {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'blogs/main.css' %}"> {% endcomment %} -->
+  <!-- <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/blog_new.main.css' %}"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  {% comment %}
+  <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+  </script> {% endcomment %}
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166867100-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-166867100-1');
+  </script>
+  <script type="text/javascript" src="/static/ckeditor/ckeditor-init.js"
+    data-ckeditor-basepath="/static/ckeditor/ckeditor/" id="ckeditor-init-script"></script>
+  <script type="text/javascript" src="/static/ckeditor/ckeditor/ckeditor.js"></script>
+  <!-- Hotjar Tracking Code for https://www.teckiy.com/ -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 2030205, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+
+  <link rel="shortcut icon" href="{% static 'blogs/images/teckiy_fav_icon.ico' %}">
+
+
+
+  <!-- {% if post.title %}
+        <title> {{ post.title }} - Blog</title>
+    
+    {% elif request.path == '/support/' %}
+        <title>{% include "blogs/common.html"  %} - Developer Support </title>
+    {% elif request.path == '/search/' %}
+      <title>{% include "blogs/common.html"  %} - Search </title>
+      {% elif request.path == '/about/' %}
+      <title>{% include "blogs/common.html"  %} - About </title>
+    {% elif request.path in request.build_absolute_uri %}
+      <title>Teckiy - {{ question.title }}</title>
+      {% elif request.path in request.build_absolute_uri %}
+      <title>Teckiy - {{ course.name }}</title>
+    {% else %}
+        <title>{% include "blogs/common.html"  %}</title>
+        
+    {% endif %}
+    {% if question.title %}
+        <title> {{ post.title }}</title>
+    {% endif %} -->
+
+  <title>
+    {% block title %}
+
+    {% endblock %}
+
+  </title>
+
+  <style>
+    /* body {
+      height: 100%;
+    } */
+    html,
+    body {
+      margin: 0px;
+      padding: 0px;
+      min-height: 100%;
+      height: 100%;
+    }
+
+    .fullheight {
+      min-height: 100%;
+      height: auto !important;
+      margin-bottom: -50px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    .borderlist {
+      list-style-position: inside;
+      border: 1px outset greenyellow;
+      font-style: italic;
+      font-weight: 600;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+    }
+
+    .notification {
+      background-color: #555;
+      color: white;
+      text-decoration: none;
+      padding: 15px 26px;
+      position: relative;
+      display: inline-block;
+      border-radius: 2px;
+    }
+
+    .notification:hover {
+      background: red;
+    }
+
+    .notification .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      padding: 5px 10px;
+      border-radius: 50%;
+      background-color: red;
+      color: white;
+    }
+
+    .headnavbar {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+
+    }
+
+    .fa:hover {
+      opacity: 0.7;
+    }
+
+    .fa-youtube {
+      background: #bb0000;
+      color: white;
+    }
+
+    .fa-twitter {
+      background: #55ACEE;
+      color: white;
+    }
+  </style>
+  {% block internal_css %}
+
+  {% endblock %}
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-sm navbar-light bg-dark fixed-top headnavbar">
+    <a class="navbar-brand mr-4" href="/"><img class="img-fluid" src="{% static 'blogs/images/teckiy-new-logo.png' %}"
+        width="100" height="50"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto ">
+        <!-- <a href="{% url 'support:question' %}" style="color:white;font-size:20px">Developer Support</a> -->
+        &nbsp; &nbsp;&nbsp;
+        <!-- <a href="{% url 'blogs:donate' %}" style="color:white;font-size:20px">Donate</a> -->
+        <li class="nav-item active d-none">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item d-none">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+        <li class="nav-item dropdown d-none">
+          <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">Projects</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">Action</a>
+            {% comment %} <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a> {% endcomment %}
+          </div>
+
+        </li>
+
+
+        <form class="form-inline my-2 my-lg-0" action="/search/">
+          <input id="mySearch" onkeyup="myFunction()" class="form-control mr-lg-2" type="search"
+            placeholder="Search Questions/Blogs" name='q' aria-label="Search" width="508">
+        </form>
+
+      </ul>
+
+      {% if request.user.is_authenticated %}
+
+      <div class="dropdown navbar-btn pull-right">
+
+        <!-- <button type="button" class="btn btn-primary mr-2">
+          <a href="{% url 'blogs:send-notify' %}" style="color: white">Inbox <span class="badge badge-light"
+              id="load-notify">
+            </span></a>
+
+        </button> -->
+
+
+        <button class="btn btn-info dropdown-toggle navbar-btn pull-right" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ request.user.username }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <a href="{% url 'users:profile' request.user %}"><button type="button" class="dropdown-item"
+              data-toggle="modal" data-target="#modal-1">Account</button></a>
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button class="dropdown-item" type="submit">Log out</button>
+          </form>
+        </div>
+      </div>
+      {% comment %} <a class="nav-item nav-link" style="color:#ffffff"
+        href="{% url 'profile' %}">{{ request.user.username }}</a>
+
+
+      <a class="nav-item nav-link" style="color:#ffffff" href="{% url 'account_logout' %}">Logout</a> {% endcomment %}
+      <!-- <p>Welcome {{ user.username }} !!!</p> -->
+      <!--  <a class="nav-item nav-link" href="{% url 'register' %}">Register</a> -->
+      {% else %}
+
+      <button type="button" class="btn btn-warning"><a href="{% url 'account_login' %}"
+          style="font-family:verdana;font-color:#000000">Login</a></button>
+
+
+
+      {% comment %} <a class="nav-item nav-link" style="color:#ffffff" href="{% url 'account_signup' %}">Register</a>
+      {% endcomment %}
+
+      {% endif %}
+    </div>
+  </nav>
+
+
+  <br />
+
+
+  <div class="container-fluid fullheight">
+
+    <!--   <div class="container my-auto"> -->
+    <br>
+    {% if messages %} {% for message in messages %} <div class="alert alert-{{ message.tags }} alert-dismissible"
+      role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!-- <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div> -->
+    {% endfor %}
+    {% endif %}
+
+    <br>
+
+    {% block content %}
+
+
+    {% endblock content %}
+
+
+    <!-- </div> -->
+
+  </div>
+
+  <br />
+  <br />
+  <br />
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  {% block js %}
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+  {% endblock %}
+
+
+
+
+
+
+  <script type="text/javascript">
+    function myFunction() {
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("mySearch");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("customers");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+  </script>
+
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'></script> -->
+
+  <script type="text/javascript">
+    $(".comment-detail img code").each(function () {
+      $(this).addClass("img-responsive");
+    });
+
+    $(".marked-content-show").each(function () {
+      var content = "<small><b>**bold**</b> <code>`code`</code> <i>_italics_</i> <code>```long code```</code>" +
+        "<a target='_blank' href='https://daringfireball.net/projects/markdown/syntax#code' id='markdownURL' data-toggle='tooltip' data-placement='top'" +
+        "title='This text input uses Markdown syntax. Learn more here" +
+        "'>?</a><div id='myDIV'></div></small>"
+
+      $(this).html(content)
+      check()
+    })
+    function check() {
+      return false;
+    }
+
+
+    function markdownUnhide() {
+      console.log('True')
+    }
+  </script>
+  <script type="text/javascript">
+    var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq ||
+      { widgetcode: "10945d185cfc392a4f1eb60063940d961672622287fa6e11408ccc822c110e8a", values: {}, ready: function () { } };
+    var d = document; s = d.createElement("script"); s.type = "text/javascript"; s.id = "zsiqscript"; s.defer = true;
+    s.src = "https://salesiq.zoho.in/widget"; t = d.getElementsByTagName("script")[0]; t.parentNode.insertBefore(s, t); d.write("<div id='zsiqwidget'></div>");
+  </script>
+  <script type="text/javascript" src="{% static 'blogs/js/moment.js' %}"></script>
+  {% block extrajs  %}
+  {% endblock extrajs %}
+
+  {% include "blogs/footer.html" %}
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+</body>
+
+</html>

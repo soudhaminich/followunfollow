@@ -1,0 +1,824 @@
+{% extends "blogs/base_question.html" %}
+{% load humanize %}
+{% load support_extras %}
+{% block title %}
+Teckiy - {{ object.title }}
+{% endblock %}
+{% load markdown_deux_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row grid1 mt-5">
+    <div class="col-lg-2 d-lg-block d-none pl-2 pr-1">
+        {% include "blogs/leftnav.html" %}
+    </div>
+    <div class="mid-scrollable-sctn col-lg-8 col-12 pb-0 pt-3">
+        <div class="" style="height:100%;">
+            <!-- signed out alert message -->
+            <div class="pt-4">
+                {% if messages %}
+                {% for message in messages %}
+                <div style="border-radius: 25px;"
+                    class="mb-4 bg-info text-white text-center prior-font font-weight-bold alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message|safe }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <!-- signed out alert message -->
+                <!-- all-tkts-scrollable sctn -->
+                <div class="row m-0 pt-0">
+                    <div class="col-sm-10 col-8 p-0">
+                        <div class="d-flex flex-column">
+                            <h1 class="wordwrap prior-font text-dark fs_medium mr-auto">{{ object.title }}</h1>
+                            <input type="hidden" id="questionId" value="{{ object.id }}"/>
+                            <!-- QUESTION FOOTER -- Submit, Ticket, Language Section -->
+                            <div class="mt-3 d-sm-flex flex-wrap fs_teen">
+                                <div class="mr-3 mb-2">
+                                    <span class="text-muted prior-font">Submitted</span>
+                                    <span class="font-weight-bold text-info">{{ object.date_posted|naturaltime }}</span>
+                                </div>
+                                <div class="mr-3 mb-2">
+                                    <span class="text-muted prior-font">Ticket</span>
+                                    <span class="font-weight-bold text-info">#{{ question.id }}</span>
+                                </div>
+                                <div class="mr-3 mb-2">
+                                    <span class="text-muted prior-font">Views</span>
+                                    <span class="font-weight-bold text-info"> {% if question.objectviewed_set.count > 0 %}
+                                      <strong>{{ question.objectviewed_set.count }}</strong>
+                                      {% else %}
+                                      <strong>1</strong>
+                                      {% endif %}</span>
+                                </div>
+                                <div class="mr-3 mb-2">
+                                    <span class="text-muted prior-font">Language</span>
+                                    <span
+                                        class="prior-font font-weight-bold text-info">{{ object.get_category_display }}</span>
+                                </div>
+                                <div class="mr-3 mb-2">
+                                    <span class="prior-font text-muted">Priority</span>
+                                    <span
+                                        class="prior-font font-weight-bold text-info">{{ object.get_priority_display }}</span>
+                                </div>
+                                {% if question.status == 'I'  %}
+                                <div class="mr-3 mb-2">
+                                    <span class="prior-font text-muted">Status</span>
+                                    <span
+                                        class="bg-warning fs_teen prior-font p-1 rounded">{{ question.get_status_display  }}</span>
+                                </div>
+                                {% endif %}
+                                {% if question.status == 'C'  %}
+                                <div class="mr-3 mb-2">
+                                    <span class="prior-font text-muted">Status</span>
+                                    <span
+                                        class="bg-danger fs_teen prior-font text-white p-1 rounded">{{ question.get_status_display  }}</span>
+                                </div>
+                                {% endif %}
+                                {% if question.status == 'O'  %}
+                                <div class="mr-3 mb-2">
+                                    <span class="prior-font text-muted">Status</span>
+                                    <span
+                                        class="bg-success fs_teen prior-font text-white p-1 rounded">{{ question.get_status_display  }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-4">
+                        <div class="d-flex flex-wrap flex-column">
+                            {% if request.user.username == question.user.username or request.user.username == 'aruntck' %}
+                            <div class="mx-auto">
+                                {% if question.status != 'C'%}
+                                <button data-toggle="modal" data-target="#exampleModal"
+                                    class="mt-1 font-weight-bold btn btn-outline-success p-1 prior-font fs_teen">Resolved</button>
+                                {% endif %}
+                            </div>
+                            <!-- Button trigger modal -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalTitle" aria-hidden="true">
+                                <div class="modal-width modal-dialog" role="document">
+                                    <div class="p-4 rounded bg-white modal-outer-div">
+                                        <div class="border-0 modal-content modal-inner-div">
+                                            <div class="bg-white modal-header p-0 ">
+                                                <nav class="wordwrap w-100 mx-auto navbar navbar-expand-sm navbar-light bg-light border-0">
+                                                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                                        data-target="#navbarNav" aria-controls="navbarNav"
+                                                        aria-expanded="false" aria-label="Toggle navigation">
+                                                        <span class="navbar-toggler-icon"></span>
+                                                    </button>
+                                                    <div class="collapse navbar-collapse" id="navbarNav">
+                                                        <ul class="navbar-nav">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link text-info prior-font"
+                                                                    href="#">Answers</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link text-info prior-font"
+                                                                    href="{% url 'analytics:suggestion' %}">Suggestions</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </nav>
+                                            </div>
+                                            <div class="wordwrap modal-body">
+                                                <p class="prior-font mb-4 text-danger font-weight-bold fs_med modal-title"
+                                                    id="exampleModalLongTitle">Select all the answers which helped you
+                                                    in
+                                                    resolving the issue</p>
+                                                {% for msg in comment_obj %}
+                                                <div class="form-check fs_teen">
+                                                    <a href="{% url 'users:profile' msg.user.username %}"
+                                                        class="mb-2 wordwrap prior-font fs text-decoration-none user-name img-name">{% display_name msg.user %}</a>
+                                                    <label class="w-100 mb-2 form-check-label selectedCheckbox" for="">
+                                                        <!-- <input class="form-check-input"
+                                                            onclick="toggleVisibility('verifiedimgsym');"
+                                                            type="checkbox"> -->
+                                                        <input class="form-check-input" type="checkbox" id="{{ msg.id }}">
+                                                        <p class="fs_teen">{{ msg.comment|safe|truncatewords_html:25 }} </p>
+                                                    </label>
+                                                    <hr class="mt-0 mb-0 p-1">
+                                                </div>
+                                                {% endfor %}
+                                                <!-- <div class="form-check">
+                                                    <label class="w-100 form-check-label" for="">
+                                                        <input class="form-check-input" type="checkbox">
+                                                        <p class="font-weight-bold fs_teen prior-font text-danger">I resolved it by myself</p>
+                                                    </label>
+                                                </div> -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary pl-1 pr-1 p-0 prior-font " data-dismiss="modal">Cancel</button>
+                                            <form action="">
+                                                <!-- <a class="text-decoration-none" href=""> -->
+                                                    <button type="button"
+                                                        class="btn btn-primary pl-1 pr-1 p-0 prior-font "
+                                                        data-dismiss="modal" id="ticketCloseBtn" onclick="ticetClose()">
+                                                        Submit to close
+                                                    </button>
+                                                <!-- </a> -->
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- Question description starts here -->
+                <!-- DESCRIPTION-BOX -->
+                <div class="">
+                    <div class="fs_med wordwrap">
+                        {{ object.content|safe }}
+                    </div>
+
+                    <!-- Description-Footer--Share, Edit, UserName, UserImage block -->
+                    <div class="mt-3 d-flex flex-sm-row flex-column flex-wrap">
+                        <!-- Edit -->
+                        {% if request.user.username == question.user.username %}
+                        <div class="mr-auto mb-2">
+                            {% if question.status != 'C' %}
+                            <span class="">
+                                <a class="prior-font fs_teen text-decoration-none"
+                                    href="{% url 'support:edit' question.slug %}">Edit</a>
+                            </span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <!-- User Details Block-->
+                        <div class="des-user-div ml-auto mb-3 rounded pl-2 pr-2 pb-2 pt-1">
+                            <div class="prior-font text-muted fs">
+                                Submitted on {{ object.date_posted|date:"M d, y"}}
+                            </div>
+                            <div class="row p-0 ml-0 mr-0 mt-1">
+                                <div class="col-3 my-auto p-0 m-0">
+                                    <img class="rounded-circle img-name" src="{{ object.user.profile.image.url }}"
+                                        width="40" height="40">
+                                </div>
+                                <div class="col-9 text-muted my-auto line-ht" style="">
+                                    <a href="{% url 'users:profile' object.user.username %}"
+                                        class="wordwrap prior-font fs_teen text-decoration-none">{% display_name object.user %}</a>
+                                    <!-- <p class="fs prior-font font-weight-bold text-muted">(Teckiy SME)</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end of Question description -->
+                    {% if question_comment %}
+                    {% for ques_com in question_comment %}
+                    <hr class="m-0">
+                    <div class="pb-1 pt-1 fs">
+                        <span class="wordwrap sub-comment"
+                            id="edit_quest_content_{{ques_com.id}}">{{ ques_com.content }}</span> -
+                        {% if request.user.username == 'aruntck' and ques_com.user.username == 'aruntck' %}
+                        <a class="" href="{% url 'users:profile' ques_com.user.username %}">
+                            {% display_name ques_com.user %}
+                            <span class="mr-1 fs prior-font font-weight-bold text-danger"><img width="18" height="18"
+                                    src="{% static 'blogs/images/icons8-knight-helmet-480.png' %}" alt="" title="Teckiy SME">
+                                </span> 
+                            </a>
+                        {% else %}
+                        <a class="prior-font bg-light rounded text-decoration-none"
+                            href="{% url 'users:profile' ques_com.user.username %}">
+                            {% display_name ques_com.user %} </a>
+                        {% endif %}
+                        <span
+                            class="mr-1 prior-font text-muted">{{ ques_com.timestamp|naturaltime }}</span>
+                        {% if ques_com.edited %}
+                        <span class="mr-1 text-muted">(Edited)</span>
+                        {% endif %}
+                        {% if request.user.username == ques_com.user.username  %}
+                        <!-- <span class="text-muted submit-status"> -->
+                        <a class="mr-1 text-decoration-none"
+                            onclick="edit_ques_comment('{{ques_com.id}}'); return false;" href="#">Edit</a>
+                        <!-- </span> -->
+                        <div id="edit_ques_comment-form-{{ques_com.id}}" style="display:none;">
+                            <form id="comment-edit-form" method='POST'
+                                action="{% url 'support:question_comment_edit' ques_com.id  %}">
+                                {% csrf_token %}
+                                <textarea id="edit-ques-text-{{ ques_com.id }}"
+                                    class="form-control mb-2 add-cmt-txt-area" rows='4' id="exampleFormControlTextarea1"
+                                    name='content' required></textarea>
+                                <input type="hidden" name="reply_id" value="{{msg.children.last.id }}">
+                                <input type="hidden" name="parent_id" value="{{ msg.id }}">
+                                <div class='col ml-auto text-right px-0'><button
+                                        class='btn p-0 pl-1 pr-1 prior-font pull-right btn-primary btn-sm'
+                                        type='submit'><i class="fas fa-reply"></i>Update</button>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %}
+                        {% if request.user.username == ques_com.user.username and forloop.last %}
+                        <span class="text-muted">
+                            <a onclick="ondelete();" class="text-decoration-none sh-ed-td"
+                                href="{% url 'support:question_comment_delete' ques_com.id %}">Delete</a>
+                        </span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <a class="text-decoration-none fs" id="ask-doubt"
+                        onclick="askQuery();return false;" data-toggle="tooltip"
+                        title="Clarify your doubts with user before submit the answer" href="">add
+                        a comment</a>
+                    {% if request.user.is_authenticated %}
+                    <div id="ask-form" style="display: none;">
+                        <form id="cmt-txt-area" method='POST' action="{% url 'support:ques_comm' question.id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea class="form-control add-cmt-txt-area" id="exampleFormControlTextarea1"
+                                    name='content' placeholder='write your reply' rows="2" required></textarea>
+                            </div>
+                            <div class="">
+                                <button type="submit" id="another-btn"
+                                    class="btn fs_teen prior-font btn-primary pl-1 pr-1 p-0">Add a Comment</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div id="ask-form" style="display:none;">
+                        <form id="comment-form" method='POST'
+                            action="{% url 'account_login' %}?next={{ request.path }}">
+                            {% csrf_token %}
+                            <textarea id="loginreply" onkeydown="myLoginRedirect('reply')" row='10'
+                                class='form-control mb-2' rows='4' cols='50' placeholder='write your reply'
+                                name='replied'></textarea>
+                            <div class="fs_teen col ml-auto text-right px-0"><button
+                                    class='btn fs_teen p-0 pl-1 pr-1 prior-font pull-right btn-primary btn-sm'><i
+                                        class="fa fa-reply" aria-hidden="true"></i>Add a comment</button></div>
+                        </form>
+                    </div>
+                    {% endif %}
+                    <br>
+                    <hr>
+                    <!-- No.of question starts here -->
+                    {% if comment_obj %}
+                    {% if comment_obj.count == 1 %}
+                    <div class="mb-4 prior-font fs_medium">
+                        <span class="prior-font fs_medium pull-right">{{ comment_obj.count }}</span>
+                        Answer
+                    </div>
+                    {% else %}
+                    <div class="mb-4 prior-font fs_medium">
+                        <span class="prior-font fs_medium pull-right">{{ comment_obj.count }}</span>
+                        Answers
+                    </div>
+                    {% endif %}
+                    <!-- END No.of question starts here -->
+                    <!-- Answers section description -->
+                    {% for msg in comment_obj %}
+                   
+                    <div class="m-0 row container-msg">
+                        <div class="col-sm-1 p-0 col-2">
+                            <div class="">
+                                <!-- Resolved button for user to choose the answer -->
+                                <div class="left-vote-col text-center">
+                                    <input class="text-center" type="hidden" id="currentdownURL-{{msg.id}}"
+                                        value="{% url 'support:vote_comment' msg.id 'down' %}" />
+                                    <input class="text-center" id="userdetail" type="hidden"
+                                        value={{request.user.username}}>
+                                    <input class="text-center" type="hidden" id="currentupURL-{{msg.id}}"
+                                        value="{% url 'support:vote_comment' msg.id 'up' %}" />
+                                    <div class="upvote-col" id="vote-count-up-{{ msg.id }}">
+                                        {% if msg.comments.upvote_count != 0 %}
+                                        {{ msg.comments.upvote_count }} {% endif %} </div>
+                                    <a class="" id="{{ msg.id }}"
+                                        onclick="upVote('{{ msg.id }}');return false;">
+                                        <img width="30" height="25" data-toggle="tooltip"
+                                            title="Click here if {{ msg.user.username }}(techion) answer is helpful"
+                                            class="mt-2 mb-2" src="{% static 'blogs/images/upvote.png'%}"
+                                            alt=""></a>
+                                    <br>
+                                    <a class="" id="{{ msg.id }}"
+                                        onclick="downVote('{{ msg.id }}');return false;">
+                                        <img width="30" height="25" data-toggle="tooltip"
+                                            title="Click here if {{ msg.user.username }}(techion) answer is not useful"
+                                            class="mb-2" src="{% static 'blogs/images/downvote.png'%}"
+                                            alt=""></a>
+                                    <div class="downvote-col" id="vote-count-down-{{ msg.id }}">
+                                        {% if msg.comments.downvote_count != 0 %}
+                                        {{ msg.comments.downvote_count }}{% endif %}</div>
+                                </div>
+                                <!-- ex -->
+                                  {% for ans in answer_obj %}
+                                   
+                                   
+                                    {% if ans.verified and ans.comment_id == msg.id %}
+                                   
+                                      <div id="verifiedimgsym" 
+                                          class="mt-2 fs prior-font text-center text-muted submit-status res-ver verify-icpn-pl">
+                                          <img width="30" height="35" class="verify-img"
+                                              src="{% static 'blogs/images/check-mark.png' %}" alt=""><br>Verified
+                                      </div>
+                                      {% endif %}
+                                      {% endfor %}
+                                <!-- ex -->
+                            </div>
+                        </div>
+                        <div class="col-sm-11 col-10 p-0 pl-3">
+                            <div class="">
+                                <div class="fs_med wordwrap comments-msg" id="msg_content_{{msg.id}}">
+                                    <p id="wordwrap edit-msg">
+                                        {{ msg.comment|safe }}
+                                    </p>
+                                </div>
+                                <!-- Answer related name, message and date -->
+                                <div class="d-flex flex-wrap mt-3 fs_teen">
+                                    {% if request.user.username == msg.user.username %}
+                                    <div class="mb-2" id="reply_content_{{child_comment.id}}">
+                                        <span class="text-muted">
+                                            <a class="mr-2 prior-font text-decoration-none"
+                                                href="{% url 'support:ques_answ_edit' msg.id  object.id %}">Edit</a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+                                    {% if not msg.children %}
+                                    {% if request.user.username == msg.user.username %}
+                                    <div class="mb-2">
+                                        <span class="text-muted">
+                                            <a class="mr-2 prior-font text-decoration-none"
+                                                href="{% url 'comments:comment_delete' msg.id 'question' %}">Delete</a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                    <div style=""
+                                        class="answer-user-div mb-3 prior-font rounded pl-2 pr-2 pb-2 pt-1 ml-auto rounded">
+                                        <div class="prior-font fs text-muted fs">
+                                            Submitted {{ msg.timestamp|naturaltime }}
+                                        </div>
+                                        <div class="row mt-1 ml-0 mr-0 ">
+                                            <div class="my-auto col-3 m-0 p-0">
+                                                <img class="rounded-circle img-name"
+                                                    src="{{ msg.user.profile.image.url }}" width="40" height="40">
+                                            </div>
+                                            {% if  msg.user.username == 'aruntck' %}
+                                            <div class="col-9 p-0 pl-1 my-auto mx-auto text-muted">
+                                                <a href="{% url 'users:profile' msg.user.username %}"
+                                                    class="wordwrap prior-font fs text-decoration-none">{% display_name msg.user %}</a>
+                                                <p class="fs prior-font font-weight-bold text-secondary">
+                                                  <img width="18" height="18"
+                                                  src="{% static 'blogs/images/icons8-knight-helmet-480.png' %}" alt="" title="Teckiy SME">
+                                                    
+                                                </p>
+                                            </div>
+                                            {% else %}
+                                            <div class="col-9 p-0 pl-1 my-auto mx-auto text-muted">
+                                              <a href="{% url 'users:profile' msg.user.username %}"
+                                                  class="wordwrap prior-font fs text-decoration-none">{% display_name msg.user %}</a>
+                                              </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- subcomment for answer section begins -->
+                                {% for child_comment in msg.children  %}
+                                <hr class="m-0">
+                                <div class="pb-1 pt-1 fs">
+                                    <span class="mr-1 wordwrap sub-comment"
+                                        id="reply_content_{{child_comment.id}}">{{ child_comment.comment|markdown|safe}}</span>
+                                    -
+                                    {% if child_comment.user.username == 'aruntck' %}
+                                    <a class="mr-1"
+                                        href="{% url 'users:profile' child_comment.user.username %}">
+                                        {% display_name child_comment.user %}<span class="mr-1 fs prior-font font-weight-bold text-danger">
+                                          <img width="18" height="18"
+                                    src="{% static 'blogs/images/icons8-knight-helmet-480.png' %}" alt="" title="Teckiy SME">
+                                           </span>
+                                    </a>
+                                    {% else %}
+                                    <a class="mr-1 text-decoration-none prior-font bg-light"
+                                        href="{% url 'users:profile' child_comment.user.username %}">{% display_name child_comment.user %}
+                                    </a>
+                                    {% endif %}
+                                <!-- </a> -->
+                                    <span
+                                        class="mr-1 text-muted">{{ child_comment.timestamp|naturaltime }}</span>
+                                    {% if request.user.username == child_comment.user.username and forloop.last %}
+                                    <span class="mr-1 text-muted">
+                                        <a class="text-decoration-none"
+                                            onclick="edit_reply('{{msg.id}}','{{child_comment.id}}'); return false;"
+                                            href="#">Edit</a>
+                                    </span>
+                                    <span class="mr-1 text-muted">
+                                        <a class="text-decoration-none"
+                                            href="{% url 'comments:reply_delete' child_comment.id 'question' %}">Delete</a>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <!-- ENDS if the subcomment is the last comment then edit and delete option should appear as in below code -->
+                                {% endfor %}
+                                <!-- END of sub comment for loop-->
+                                <!-- sub comment for answer-->
+                                {% if request.user.username == question.user.username or request.user.username == msg.user.username or request.user.username == 'aruntck' %}
+                                <!-- <hr class="hr-mt hr-mt-qp"> -->
+                                <a class="text-decoration-none fs" id="add-comment-{{msg.id}}"
+                                    onclick="addComment( '{{msg.id}}');return false;" href="">add
+                                    a comment</a>
+                                {% endif %}
+
+                                <!-- edit section for subcomments -->
+                                {% if request.user.is_authenticated %}
+                                <div id="edit-form-{{msg.id}}" style="display: none;">
+                                    <form id="comment-edit-form" method='POST'
+                                        action="{% url 'comments:reply_question_edit' question.id %}">
+                                        {% csrf_token %}
+                                        <!-- removed lang:code section code block-->
+                                        <textarea id="edittext-{{ msg.id }}" class="form-control mb-2 add-cmt-txt-area"
+                                            rows='4' name='comment' required></textarea>
+                                        <input type="hidden" name="reply_id" value="{{msg.children.last.id }}">
+                                        <input type="hidden" name="parent_id" value="{{ msg.id }}">
+                                        <div class='col ml-auto text-right px-0'><button
+                                                class='btn p-0 pl-1 pr-1 prior-font pull-right btn-primary btn-sm'
+                                                type='submit'><i class="fas fa-reply"></i>Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- edit section for subcomments -->
+                                <!-- ADD A COMMENT & TEXT AREA APPEAR DISAPPEAR SECTION -->
+
+                                <!-- Textbox appear/disappear -->
+                                <div id="reply_form_{{msg.id}}" style="display: none;">
+                                    <form id="cmt-txt-area" method='POST'
+                                        action="{% url 'comments:comment_question_view' question.id %}">
+                                        {% csrf_token %}
+                                        <div class="marked-content-show">
+                                            {% comment %} <input type="hidden" onkeypress="codeBlock()">
+                                            {% endcomment %}
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control add-cmt-txt-area"
+                                                id="exampleFormControlTextarea1" name='comment'
+                                                placeholder='write your reply' rows="5" required></textarea>
+                                        </div>
+                                        <input type="hidden" name="parent_id" value="{{ msg.id }}">
+                                        <div class="another-btn-pl">
+                                            <button type="submit" id="another-btn"
+                                                class="btn fs_teen p-0 pl-1 pr-1 prior-font btn-primary">Add a
+                                                Comment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                {% else %}
+                                <div id="reply_form_{{msg.id}}" style="display: none;">
+                                    <form id="comment-form" method='POST'
+                                        action="{% url 'account_login' %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        <textarea id="loginreply" onkeydown="myLoginRedirect('reply')" row='10'
+                                            class='form-control mb-2' rows='4' cols='50' placeholder='write your reply'
+                                            name='replied'></textarea>
+                                        <div class='fs_teen col ml-auto text-right px-0'><button
+                                                class='btn pull-right btn-primary btn-sm'><i class="fa fa-reply"
+                                                    aria-hidden="true"></i>Add a comment</button></div>
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Answer related name, message and date ends -->
+                    <hr>
+                    
+                    {% endfor %}
+                    {% endif %}
+                    <!-- Removed endif from here -->
+                    <!-- END OF COMMENTS -->
+
+                    <!-- POST YOUR ANSWER SECTION -->
+                    {% if question.status != 'C'  %}
+                    {% if request.user.is_authenticated %}
+                    <form id="comment-form" method='POST'
+                        action="{% url 'comments:comment_question_view' question.id %}">
+                        {% csrf_token %}
+                        <div id="div_id_comment" class="mt-5 form-group">
+                            <label for="id_comment" class="col-form-label">
+                                <h5 class="prior-font all-tkt-fs">Your Answer</h5>
+                            </label>
+                            <div class="mt-3 text-area-pl">
+                                <div class="django-ckeditor-widget answer-sctn txt-area-pl" data-field-id="id_comment">
+                                    <textarea class="ckeditoruploadingwidget form-control txt-area-wh" id="id_comment"
+                                        name="comment" rows="10" cols="60" required data-processed="0"
+                                        data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Custom&quot;, &quot;height&quot;: &quot;20%&quot;, &quot;width&quot;: &quot;auto&quot;, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;tabindex&quot;: -1, &quot;tabSpaces&quot;: 0, &quot;fillEmptyBlocks&quot;: false, &quot;toolbar_Custom&quot;: [[&quot;Bold&quot;, &quot;Image&quot;, &quot;CodeSnippet&quot;, &quot;Maximize&quot;, &quot;ShowBlocks&quot;, &quot;Form&quot;, &quot;Checkbox&quot;, &quot;Radio&quot;, &quot;TextField&quot;, &quot;Textarea&quot;, &quot;Select&quot;, &quot;Button&quot;, &quot;list&quot;, &quot;indent&quot;, &quot;Cut&quot;, &quot;Copy&quot;, &quot;Paste&quot;, &quot;PasteText&quot;, &quot;PasteFromWord&quot;, &quot;-&quot;, &quot;Undo&quot;, &quot;Redo&quot;, &quot;blocks&quot;, &quot;align&quot;, &quot;bidi&quot;, &quot;NumberedList&quot;, &quot;BulletedList&quot;, &quot;-&quot;, &quot;Outdent&quot;, &quot;Indent&quot;, &quot;-&quot;, &quot;Blockquote&quot;, &quot;CreateDiv&quot;, &quot;-&quot;, &quot;JustifyLeft&quot;, &quot;JustifyCenter&quot;, &quot;JustifyRight&quot;, &quot;JustifyBlock&quot;, &quot;-&quot;, &quot;BidiLtr&quot;, &quot;BidiRtl&quot;, &quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;]], &quot;extraPlugins&quot;: &quot;codesnippet&quot;, &quot;filebrowserUploadUrl&quot;: &quot;/ckeditor/upload/&quot;, &quot;filebrowserBrowseUrl&quot;: &quot;/ckeditor/browse/&quot;, &quot;language&quot;: &quot;en-us&quot;}"
+                                        data-external-plugin-resources="[]" data-id="id_comment"
+                                        data-type="ckeditortype">
+                                                            </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="commentmsgtest"
+                            class="float-right btn btn-primary btn-sm mt-2 mb-5">
+                            Post Your Answer
+                        </button>
+                    </form>
+                    {% else %}
+                    <form class="mb-4" id="commentform" method='POST'
+                        action="{% url 'account_login' %}?next={{ request.path }}">
+                        {% csrf_token %}
+                        <div id="div_id_comment" class="form-group"> <label for="id_comment" class="col-form-label">
+                                <h5>Your Answer</h5>
+                            </label>
+                            <div class="">
+                                <div class="django-ckeditor-widget" data-field-id="id_comment"
+                                    style="display: inline-block;"> <textarea
+                                        class="ckeditoruploadingwidget form-control" cols="40" id="id_comment"
+                                        name="comment" rows="10" required data-processed="0"
+                                        data-config="{&quot;skin&quot;: &quot;moono-lisa&quot;, &quot;toolbar_Basic&quot;: [[&quot;Source&quot;, &quot;-&quot;, &quot;Bold&quot;, &quot;Italic&quot;]], &quot;toolbar_Full&quot;: [[&quot;Styles&quot;, &quot;Format&quot;, &quot;Bold&quot;, &quot;Italic&quot;, &quot;Underline&quot;, &quot;Strike&quot;, &quot;SpellChecker&quot;, &quot;Undo&quot;, &quot;Redo&quot;], [&quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;], [&quot;Image&quot;, &quot;Flash&quot;, &quot;Table&quot;, &quot;HorizontalRule&quot;], [&quot;TextColor&quot;, &quot;BGColor&quot;], [&quot;Smiley&quot;, &quot;SpecialChar&quot;], [&quot;Source&quot;]], &quot;toolbar&quot;: &quot;Custom&quot;, &quot;height&quot;: &quot;20%&quot;, &quot;width&quot;: &quot;auto&quot;, &quot;filebrowserWindowWidth&quot;: 940, &quot;filebrowserWindowHeight&quot;: 725, &quot;tabindex&quot;: -1, &quot;tabSpaces&quot;: 0, &quot;fillEmptyBlocks&quot;: false, &quot;toolbar_Custom&quot;: [[&quot;Bold&quot;, &quot;Image&quot;, &quot;CodeSnippet&quot;, &quot;Maximize&quot;, &quot;ShowBlocks&quot;, &quot;Form&quot;, &quot;Checkbox&quot;, &quot;Radio&quot;, &quot;TextField&quot;, &quot;Textarea&quot;, &quot;Select&quot;, &quot;Button&quot;, &quot;list&quot;, &quot;indent&quot;, &quot;Cut&quot;, &quot;Copy&quot;, &quot;Paste&quot;, &quot;PasteText&quot;, &quot;PasteFromWord&quot;, &quot;-&quot;, &quot;Undo&quot;, &quot;Redo&quot;, &quot;blocks&quot;, &quot;align&quot;, &quot;bidi&quot;, &quot;NumberedList&quot;, &quot;BulletedList&quot;, &quot;-&quot;, &quot;Outdent&quot;, &quot;Indent&quot;, &quot;-&quot;, &quot;Blockquote&quot;, &quot;CreateDiv&quot;, &quot;-&quot;, &quot;JustifyLeft&quot;, &quot;JustifyCenter&quot;, &quot;JustifyRight&quot;, &quot;JustifyBlock&quot;, &quot;-&quot;, &quot;BidiLtr&quot;, &quot;BidiRtl&quot;, &quot;Link&quot;, &quot;Unlink&quot;, &quot;Anchor&quot;]], &quot;extraPlugins&quot;: &quot;codesnippet&quot;, &quot;filebrowserUploadUrl&quot;: &quot;/ckeditor/upload/&quot;, &quot;filebrowserBrowseUrl&quot;: &quot;/ckeditor/browse/&quot;, &quot;language&quot;: &quot;en-us&quot;}"
+                                        data-external-plugin-resources="[]" data-id="id_comment"
+                                        data-type="ckeditortype"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" id="commentmsg" class="btn btn-primary btn-sm mt-2 mb-5 float-right">Post
+                            Your
+                            Answer</button>
+                    </form>
+                    {% endif %}
+                    {% else %}
+                    <div
+                        class="text-center fs_teen bg-light font-weight-bold pt-1 pb-1 rounded text-muted click-to-submit">
+                        Comments are turned off as the ticket is closed by the User/Teckiy
+                        SME's. If
+                        you still
+                        have questions then
+                        <br>
+                        <a class="text-decoration-none prior-font click-to-submit click-to-submit-color"
+                            href="{% url 'support:create' %}">Submit a
+                            New Ticket</a>
+                    </div>
+                    {% endif %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <!-- POP UP ALERT to show that you need to login to answer -->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p>Please <strong>Login/Register</strong> to write your answer !!!
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{% url 'account_login' %}?next={{ request.path }}">
+                                        <input type="submit" class="btn btn-primary" value="Login" />
+                                    </form>
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of question description -->
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                <a class="btn btn-outline-primary mb-4"
+                    href="?{% paginate_url 'page' 1 request.GET.urlencode %}">First</a>
+                <a class="btn btn-outline-primary mb-4"
+                    href="?{% paginate_url 'page' page_obj.previous_page_number request.GET.urlencode %}">Previous</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <a class="btn  btn-primary mb-4"
+                    href="?{% paginate_url 'page' num request.GET.urlencode %}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn  btn-outline-primary mb-4"
+                    href="?{% paginate_url 'page' num request.GET.urlencode %}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="btn btn-outline-primary mb-4"
+                    href="?{% paginate_url 'page' page_obj.next_page_number request.GET.urlencode %}">Next</a>
+                <a class="btn  btn-outline-primary mb-4"
+                    href="?{% paginate_url 'page' page_obj.paginator.num_pages request.GET.urlencode %}">Last</a>
+                {% endif %}
+                {% endif %}
+                <!-- End of Pagination-->
+            </div>
+        </div>
+        <br>
+
+    </div>
+    <!-- end of center section -->
+
+    <!-- Blogs, Ads, FAQ's section -->
+    <div class="col-lg-3 col-12 p-3 pl-4 fs wordwrap pb-0 pt-2 right-fixed-cards-sctn">
+        {% include "blogs/rightsctn_common.html"%}
+    </div>
+</div>
+
+{% endblock content %}
+{% block extrajs %}
+<script type='text/javascript'>
+    userAuthenticate = "{{ request.user.username }}"
+    CKEDITOR.on('instanceCreated', function (e) {
+        e.editor.on('contentDom', function () {
+            e.editor.document.on('keyup', function (event) {
+                // keyup event in ckeditor
+                if (userAuthenticate === '') {
+                    $('.modal').modal('show');
+                }
+            }
+            );
+        });
+    });
+    function myLoginRedirect(event) {
+        if (event === 'comment') {
+            $('.modal').modal('show');
+            document.getElementById('logincmt').value = "";
+        }
+        else if (event == 'reply') {
+            $('.modal').modal('show');
+        }
+
+    }
+
+    function commentEditUpdFunc(commentId) {
+        // document.getElementById("updateform").style.display = "block";
+        alert(commentId)
+    }
+        //do work
+</script>
+<script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+<script
+    type='text/javascript'>kofiwidget2.init('Support Us on Ko-fi', '#29abe0', 'N4N41MX56'); kofiwidget2.draw();</script>
+<script type="text/javascript">
+    function edit_reply(msg_id, reply_id) {
+        let editValue = document.getElementById("edittext-" + msg_id)
+        document.getElementById("edit-form-" + msg_id).style.display = "block";
+        let editTextContent = document.getElementById("reply_content_" + reply_id).innerText;
+        // console.log(editTextContent)
+        editValue.innerHTML = editTextContent
+        // document.getElementById("edittext").innerHTML = document.getElementById("msg_content_" + reply_id).value;
+        document.getElementById("reply_form_" + msg_id).style.display = "none";
+    }
+
+    function edit_comment(msg_id) {
+        let editCommentValue = document.getElementById("edittext-" + msg_id)
+        // console.log(editValue)
+        document.getElementById("edit-form-" + msg_id).style.display = "block";
+        let editTextContent = document.getElementById("msg_content_" + msg_id).innerText;
+        console.log(editTextContent)
+        editCommentValue.innerHTML = editTextContent
+        // document.getElementById("edittext").innerHTML = document.getElementById("msg_content_" + reply_id).value;
+        document.getElementById("reply_form_" + msg_id).style.display = "none";
+    }
+
+
+    function edit_ques_comment(ques_comm_id) {
+        let editValue = document.getElementById("edit-ques-text-" + ques_comm_id)
+        document.getElementById("edit_ques_comment-form-" + ques_comm_id).style.display = "block";
+        let editTextContent = document.getElementById("edit_quest_content_" + ques_comm_id).innerText;
+        console.log(editTextContent)
+        editValue.innerHTML = editTextContent
+        // document.getElementById("edittext").innerHTML = document.getElementById("msg_content_" + reply_id).value;
+        // document.getElementById("edit_ques_comment-form-" + msg_id).style.display = "none";
+    }
+
+    function ondelete() {
+        alert("Are you sure you want to delete your response ?")
+    }
+
+</script>
+<script type="text/javascript">
+    function addComment(msg_id) {
+        let textBoxDisplay = document.getElementById("reply_form_" + msg_id)
+        textBoxDisplay.style.display = "block";
+    }
+    function askQuery() {
+        let askBoxDisplay = document.getElementById("ask-form")
+        askBoxDisplay.style.display = "block";
+    }
+    function displayVerify() {
+        let verifyDisplay = document.getElementById("verifiedSym")
+        verifyDisplay.style.display = "block";
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<script>
+    $('#myModal').modal(show)
+</script>
+<script>
+    function toggleVisibility(msg_id) {
+        var el = document.getElementById(msg_id);
+        if (el.style.display == "block") {
+            el.style.display = "none";
+        }
+        else {
+            el.style.display = "block";
+        }
+    }
+</script>
+<script type="text/javascript" src="{% static 'support/js/vote.js' %}"></script>
+<script>
+  
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+  function ticetClose(){
+    console.log(window.location.href)
+        verifiedAnswer = []
+        $('input[type=checkbox]:checked').each(function () { 
+          var status = (this.checked ? $(this).val() : ""); 
+          // console.log('Status ', status)
+          var id = $(this).attr("id");
+          
+          verifiedAnswer.push(id)
+          postAnswer()
+          
+        });
+        function postAnswer(){
+          var loc = window.location;
+          var protocol = loc.protocol
+          console.log(protocol)
+          let questionId = document.getElementById('questionId').value
+          console.log(questionId)
+          $.ajax({
+            data: {
+                 csrfmiddlewaretoken:getCookie('csrftoken'),
+                },
+                url:  protocol+'//'+loc.host+`/suport/answer/${verifiedAnswer}/${questionId}/`,
+                method: "POST",
+                success: function(data){
+
+                            location.reload();
+                },
+                error: function(data){
+                  console.log(data)
+        }
+          });
+        }
+
+  }
+  
+</script>
+{% endblock extrajs %}

@@ -1,0 +1,41 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="parent-container p-2">
+    <div class="row">
+
+        <div class="col-12">
+            <div class="container-fluid top-box top-box-edit-page m-0 p-0 rounded"
+                style="box-shadow: 0 0 20px #28b0ee;">
+                <div class="text-decoration-none edit-pg-title text-center prior-font font-weight-bold">Edit
+                    Profile</div>
+            </div>
+            <div class="container mb-5 w-95 pt-3 pb-3 middle-container middle-container-sm-scrn">
+                <div class="tabcontent edit-tabcontent p-3 mt-3">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ p_form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- posts end -->
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+{% endblock extrajs %}

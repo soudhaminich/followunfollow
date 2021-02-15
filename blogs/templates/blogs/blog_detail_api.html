@@ -1,0 +1,38 @@
+{% extends "blogs/base.html" %}
+<!-- {% block title %}
+	Teckiy - {{ post.title }}
+{% endblock title %} -->
+{% load static %}
+
+{% load notifications_tags %}
+{% load markdown_deux_tags %}
+{% load crispy_forms_tags %}
+{% block internal_css %}
+{% endblock  %}
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="box-element">
+        {% include "blogs/side_navbar.html" %}
+    </div>
+
+
+    <div class="col-lg-8">
+        <div id="post-detail"></div>
+        <div id="load-comments"></div>
+    </div>
+</div>
+<div id="app">
+    <p>[[ info ]]</p>
+</div>
+{% endblock content %}
+
+{% block extrajs  %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+
+<script type="text/javascript" src="{% static 'blogs/js/post.js' %}"></script>
+{% endblock extrajs %}

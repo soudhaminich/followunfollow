@@ -1,0 +1,89 @@
+{% extends "blogs/base_profile.html" %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="p-2">
+    <div class="row">
+        <div class="col-lg-2 d-lg-block d-none pl-0 pr-3">
+            {% include "users/profileleftnav.html" %}
+        </div>
+        <div class="col-lg-10 col-12 pl-0 pr-0">
+            <div class="container-fluid top-box m-0 p-0 rounded" style="box-shadow: 0 0 20px #28b0ee;">
+                {% include "users/profileleftnav_mobile.html" %}
+            </div>
+            {% include "users/profile-head.html" %}
+            <!-- posts -->
+            <div id="Posts" class="tabcontent p-3 mt-4">
+                {% if posts %}
+                <div class="w-100 d-flex flex-wrap mr-4 mb-4 justify-content-around">
+                    {% for t in posts %}
+                    <div class="card profile-post-card mb-5 mr-3">
+                        <img height="200" class="card-img-top" src="{%static 'blogs/images/blog-post-pen.png'%}"
+                            alt="Card image cap">
+                        <div class="card-body bg-light text-center text-justify">
+                            <h5 class="card-title prior-font mb-3"><a class="text-decoration-none"
+                                    href="{% url 'blogs:detail' t.slug %}">
+                                    {{ t.title }}
+                                </a></h5>
+                            {% if user == t.author %}
+                            <a href="{% url 'blogs:edit' t.slug %}">
+                                <button class=" btn btn-primary">Edit</button>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <!-- newly added section -->
+                <div class="text-center font-weight-bold mb-2 prior-font" style="font-size:25px;">No Posts to be
+                    displayed</div>
+                {% if request.user == profile.user %}
+                <div class="text-center prior-font">
+                    Start writing your first <strong>Blog </strong>today
+                    <br>
+                    <button type="button" class="btn btn-primary mt-3"><a class="text-white text-decoration-none"
+                            href="{% url 'blogs:create'%}">Write
+                            a Post</a></button>
+                    {% endif %}
+                </div>
+                <!-- newly added section ends -->
+                {% endif %}
+            </div>
+            <!-- posts end -->
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extrajs  %}
+
+<script>
+    $('a').on('click', function () {
+        var target = $(this).attr('rel');
+        $("#" + target).show().siblings("div").hide();
+    });
+</script>
+<script>
+    document.getElementById("defaultTab").click();
+    function openTab(evt, profile) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(profile).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock extrajs %}
